@@ -1,0 +1,1863 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#ffd9a8">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 10 10%27%3E%3Ccircle cx=%275%27 cy=%275%27 r=%274.5%27 fill=%27%23e0a458%27/%3E%3C/svg%3E">
+<title>쫀득 쿠키 가게</title>
+<style>
+html{font-size:clamp(14px,min(2.5vh,4.4vw),30px)}
+html,body{margin:0;height:100%;overflow:hidden;background:#ffe9c9;overscroll-behavior:none;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent;font-family:system-ui,-apple-system,"Segoe UI","Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",Roboto,sans-serif;color:#4a2c1a}
+#app{position:fixed;left:0;top:0;width:100vw;height:100dvh;overflow:hidden}
+#c{position:absolute;left:0;top:0;width:100%;height:100%;display:block;touch-action:none}
+#ui{position:absolute;inset:0;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);pointer-events:none;display:flex;flex-direction:column;justify-content:space-between}
+.hide{display:none!important}
+.btn{pointer-events:auto;min-height:48px;min-width:48px;padding:.4rem 1rem;border:0;border-radius:1rem;background:#fff6e6;color:#4a2c1a;font:inherit;font-weight:800;box-shadow:0 .25rem 0 #d9a066;cursor:pointer;touch-action:manipulation}
+.btn:active{transform:translateY(.15rem);box-shadow:0 .1rem 0 #d9a066}
+.btn.on{background:#ffb347;box-shadow:0 .25rem 0 #c9731a}
+.btn.big{background:#ff7a59;color:#fff;box-shadow:0 .25rem 0 #c24a2e;font-size:1.2rem}
+.btn:disabled{opacity:.45}
+#top{display:flex;gap:.5rem;align-items:flex-start;justify-content:space-between;padding:.5rem}
+.chip{background:#fff6e6cc;border-radius:1rem;padding:.35rem .8rem;font-weight:800;box-shadow:0 .2rem 0 #d9a06688}
+#order{flex:1;max-width:28rem;background:#fff6e6e6;border-radius:1rem;padding:.5rem .8rem;box-shadow:0 .2rem 0 #d9a06688}
+#say{font-weight:800}
+#need{font-size:.85rem;opacity:.85;margin-top:.15rem}
+#bot{display:flex;flex-direction:column;align-items:center;gap:.5rem;padding:.5rem .5rem .8rem}
+#cuts,#acts{display:flex;gap:.5rem;flex-wrap:wrap;justify-content:center}
+#bake{width:min(88vw,28rem);background:#fff6e6e6;border-radius:1rem;padding:.6rem .8rem;text-align:center;pointer-events:auto}
+#barw{position:relative;height:1.6rem;border-radius:1rem;background:linear-gradient(90deg,#f5e2b8 0%,#f5e2b8 55%,#d9a05a 55%,#b9742a 75%,#4a2a14 90%,#222 100%);overflow:hidden;margin:.4rem 0}
+#zone{position:absolute;top:0;bottom:0;border:.15rem solid #3bb36b;border-radius:1rem;box-sizing:border-box;background:#3bb36b44}
+#cur{position:absolute;top:-.1rem;bottom:-.1rem;width:.3rem;background:#fff;box-shadow:0 0 .3rem #000}
+#toast{position:absolute;left:50%;top:38%;transform:translate(-50%,-50%);font-size:1.6rem;font-weight:900;color:#fff;text-shadow:0 .15rem 0 #c24a2e,0 0 .6rem #0006;text-align:center;pointer-events:none;opacity:0;transition:opacity .2s;max-width:90vw}
+#toast.show{opacity:1}
+.scr{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.8rem;background:#ffe9c9ee;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);text-align:center;z-index:5}
+.scr h1{font-size:2.2rem;margin:0;color:#c24a2e;text-shadow:0 .15rem 0 #fff}
+.scr p{margin:0;max-width:24rem}
+.row{display:flex;gap:.5rem;flex-wrap:wrap;justify-content:center}
+.sc{display:grid;grid-template-columns:auto auto;gap:.2rem 1rem;font-weight:800;font-size:1.1rem}
+.btn.sm{padding:.25rem .55rem;font-size:.85rem;min-height:48px}
+#tops,#cuts{max-width:min(96vw,34rem)}
+#ach{position:absolute;left:50%;top:4.5rem;transform:translate(-50%,-2rem);background:#3b2a1d;color:#ffe08a;padding:.5rem 1rem;border-radius:1rem;font-weight:800;opacity:0;transition:all .25s;pointer-events:none;z-index:9;white-space:nowrap;max-width:94vw;overflow:hidden;text-overflow:ellipsis}
+#ach.show{opacity:1;transform:translate(-50%,0)}
+#adOffer{pointer-events:auto}
+#ad{background:#1b1b2f;color:#fff;z-index:20;justify-content:center}
+#ad .box{width:min(80vw,22rem);aspect-ratio:16/10;background:linear-gradient(135deg,#ff7a59,#ffd36e,#7ad7ff);border-radius:1rem;display:flex;align-items:center;justify-content:center;font-size:2rem;font-weight:900;color:#fff;text-shadow:0 .15rem 0 #0006}
+#bAdSkip{position:absolute;right:.8rem;top:.8rem;background:#ffffffcc;z-index:21;pointer-events:auto}
+#adCount{position:absolute;left:1rem;top:1rem;font-weight:800;background:#0008;padding:.3rem .7rem;border-radius:1rem}
+#shop{z-index:6}
+#result{background:linear-gradient(rgba(255,233,201,0) 0%,rgba(255,233,201,0) 32%,#ffe9c9f2 54%);justify-content:flex-end;padding-bottom:calc(2rem + env(safe-area-inset-bottom))}
+#shopList{display:flex;flex-direction:column;gap:.5rem;width:min(92vw,26rem)}
+#intro{z-index:30;background:#ffd9a8}
+#intro h1{font-size:2.6rem;animation:pop .9s ease-out both}
+#intro small{opacity:.7}
+#tInfo{font-weight:800}
+@keyframes pop{0%{transform:scale(.2) rotate(-8deg);opacity:0}70%{transform:scale(1.15) rotate(3deg);opacity:1}100%{transform:scale(1) rotate(0)}}
+.srow{display:flex;align-items:center;justify-content:space-between;gap:.6rem;width:100%;font-weight:700}
+.srow input[type=range]{width:45%;min-height:48px}
+.shead{font-weight:900;margin-top:.5rem;text-align:left;width:100%}
+#settings,#help,#dlg{z-index:12;background:#ffe9c9}
+#settings{justify-content:flex-start;overflow:auto;padding-top:calc(.8rem + env(safe-area-inset-top))}
+#setBody{display:flex;flex-direction:column;gap:.35rem;width:min(92vw,28rem)}
+#dlg{z-index:15}
+#dlgTa{width:min(88vw,24rem);height:7rem;font-size:.8rem;pointer-events:auto;user-select:text;-webkit-user-select:text;border-radius:.6rem;border:2px solid #d9a066;padding:.4rem;background:#fff}
+#helpBody{white-space:pre-line;text-align:left;font-weight:700}
+#err{z-index:40;background:#3b1d14;color:#fff}
+#err h1{color:#ffb4a0}
+#errMsg{font-family:monospace;font-size:.8rem;opacity:.8;word-break:break-all}
+#fps{position:absolute;left:.4rem;bottom:.3rem;font:700 .7rem monospace;background:#0007;color:#9f9;padding:.1rem .4rem;border-radius:.4rem;z-index:50;pointer-events:none}
+#dbg{position:absolute;right:.3rem;top:4.2rem;z-index:50;display:flex;flex-direction:column;gap:.3rem;pointer-events:auto}
+#dbgBtns{display:flex;flex-direction:column;gap:.3rem}
+#joy{position:absolute;bottom:calc(9rem + env(safe-area-inset-bottom));width:var(--js,7rem);height:var(--js,7rem);border-radius:50%;background:#fff6e688;border:.2rem solid #d9a066;touch-action:none;pointer-events:auto;z-index:4}
+#joyKnob{position:absolute;left:25%;top:25%;width:50%;height:50%;border-radius:50%;background:#ff7a59;box-shadow:0 .2rem 0 #c24a2e;pointer-events:none}
+#photoBar{position:absolute;left:0;right:0;bottom:calc(.8rem + env(safe-area-inset-bottom));display:flex;gap:.5rem;justify-content:center;z-index:11;opacity:.85}
+#safe{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);height:min(100dvh,177.78vw);aspect-ratio:9/16;border:.15rem dashed #fff;box-sizing:border-box;pointer-events:none;z-index:10;box-shadow:0 0 0 100vmax #0000004d}
+body.photo #ui,body.photo #toast,body.photo #ach,body.photo #fps,body.photo #dbg{display:none!important}
+body.cb #zone{border-color:#0072b2;background:repeating-linear-gradient(45deg,#0072b277 0 .4rem,#ffffff66 .4rem .8rem)}
+body.cb #barw{background:linear-gradient(90deg,#f0e442 0%,#f0e442 55%,#0072b2 55%,#009e73 75%,#d55e00 90%,#000 100%)}
+body.cb .btn.on{outline:.2rem dashed #000}
+body.one #bot{align-items:flex-end}
+body.one #cuts,body.one #tops,body.one #acts{justify-content:flex-end}
+body.one #top{padding-bottom:0}
+@media (max-width:520px){#top{flex-wrap:wrap}#order{order:3;flex-basis:100%;max-width:none}}
+@media (max-height:480px) and (orientation:landscape){#bot{flex-direction:row;flex-wrap:wrap;justify-content:center;align-items:flex-end;padding-bottom:.3rem}#cuts,#tops,#acts{flex-wrap:nowrap}#bot .btn{min-height:48px}#joy{bottom:4rem}}
+</style>
+</head>
+<body>
+<div id="app">
+<canvas id="c"></canvas>
+<div id="ui">
+<div id="top" class="hide">
+<div class="chip" id="gold">0</div>
+<div id="order"><div id="say"></div><div id="need"></div></div>
+<div class="row"><div class="chip" id="tmr">0</div><button class="btn" id="bFs">⛶</button><button class="btn" id="bPause">⏸</button></div>
+</div>
+<div id="bot" class="hide">
+<div id="bake" class="hide"><div id="bakeT"></div><div id="barw"><div id="zone"></div><div id="cur"></div></div><button class="btn big" id="bOut"></button></div>
+<div id="cuts"></div>
+<div id="tops"></div>
+<div id="acts"><button class="btn" id="bKnead"></button><button class="btn big" id="bStamp"></button></div>
+</div>
+</div>
+<div id="toast"></div>
+<div id="title" class="scr"><h1 id="tT"></h1><p id="tS"></p><div id="tInfo"></div><button class="btn big" id="bStart"></button><div class="row"><button class="btn" id="bDaily"></button><button class="btn" id="bShop"></button><button class="btn" id="bSetTitle">⚙️</button></div></div>
+<div id="pause" class="scr hide"><h1 id="pT"></h1><div class="row"><button class="btn big" id="bResume"></button><button class="btn" id="bToTitle"></button><button class="btn" id="bSetPause">⚙️</button></div></div>
+<div id="adOffer" class="scr hide"><h1>🔥</h1><p id="adOfferT"></p><div class="row"><button class="btn big" id="bAdWatch"></button><button class="btn" id="bAdNo"></button></div></div>
+<div id="ad" class="scr hide"><div id="adTitle" class="chip" style="color:#4a2c1a"></div><div class="box">🍪 SUPER COOKIE 🍪</div><div id="adCount"></div><button class="btn" id="bAdSkip"></button></div>
+<div id="shop" class="scr hide"><h1 id="shopT"></h1><div id="shopGold" class="chip"></div><div id="shopList"></div><button class="btn big" id="bShopBack"></button></div>
+<div id="intro" class="scr"><h1>🍪 쫀득 쿠키 🍪</h1><small id="bSkipIntro"></small></div>
+<div id="ach"></div>
+<div id="joy" class="hide"><div id="joyKnob"></div></div>
+<div id="settings" class="scr hide"><h1 id="setT"></h1><div id="vibNote"></div><div id="setBody"></div><button class="btn big" id="bSetClose"></button></div>
+<div id="help" class="scr hide"><h1 id="helpT"></h1><div id="helpBody"></div><button class="btn big" id="bHelpClose"></button></div>
+<div id="dlg" class="scr hide"><p id="dlgMsg"></p><textarea id="dlgTa" class="hide"></textarea><div class="row"><button class="btn big" id="bDlgOk"></button><button class="btn" id="bDlgNo"></button></div></div>
+<div id="err" class="scr hide"><h1 id="errT"></h1><p id="errMsg"></p><button class="btn big" id="bRestart"></button></div>
+<div id="dbg" class="hide"><div id="dbgBtns"></div></div>
+<div id="fps" class="hide"></div>
+<div id="safe" class="hide"></div>
+<div id="photoBar" class="hide"><button class="btn" id="bAngle">📷</button><button class="btn" id="bSlow">🐢</button><button class="btn big" id="bPhotoExit">✕</button></div>
+<div id="result" class="scr hide"><h1 id="rT"></h1><div class="sc" id="rS"></div><p id="rM"></p><button class="btn big" id="bNext"></button></div>
+</div>
+<script type="module">
+import * as THREE from './three.module.min.js';
+
+const CONFIG = {
+  saveKey: 'jjondeuk_cookie_save',
+  saveVersion: 2,
+  fixedStep: 1 / 60,
+  maxDelta: 0.1,
+  maxSteps: 4,
+  pixelRatioMax: 2,
+  pixelRatioMin: 0.6,
+  dough: { grid: 20, radius: 1.6, base: 0.3, spring: 38, damp: 0.86, smooth: 0.18, plastic: 0.82, grabRadius: 0.55, tearRatio: 4.6, minThick: 0.03, maxVerts: 600 },
+  cutter: { size: 0.9, samples: 56 },
+  bake: { time: 4.2, zoneMin: 0.55, zoneMax: 0.75, burn: 0.9, puff: 0.35 },
+  score: { wAcc: 0.4, wFin: 0.35, wSpd: 0.25, timeLimit: 40, tipBase: 4, firstTip: 30, goldPerPoint: 0.12 },
+  camera: { fov: 42, tilt: 1.05, dist: 6.2 },
+  fps: { sample: 30, low: 38, high: 56, step: 0.1 },
+  levels: 20,
+  bigOrders: [9, 19],
+  ad: { seconds: 5, flee: 3 },
+  xpPerOrder: 30,
+  xpPerLevel: 90,
+  bonus: { firstWin: 60, levelUp: 40, perfectBake: 8, bigTip: 3, daily: 3 },
+  audio: { master: 0.7, bgm: 0.5, sfx: 0.8, voices: 10 },
+  decorPrices: [40, 70, 110, 160, 220, 300],
+  top: { count: 22 },
+  defaults: { mv: 0.7, bv: 0.5, sv: 0.8, vib: 1, q: 3, fps: 2, rs: 1, shadow: 1, part: 1, shake: 1, js: 1, jx: 1, jflip: 0, joyOn: 0, sens: 1, one: 0, cb: 0, lang: 'ko', fpsShow: 0, keys: { pause: 'Escape', act: 'Space', knead: 'KeyR', top: 'KeyT', fs: 'KeyF', photo: 'KeyP', help: 'KeyH' } },
+  quality: [{ scale: 0.7, shadow: 0, fx: 24, map: 512 }, { scale: 0.85, shadow: 1, fx: 48, map: 1024 }, { scale: 1, shadow: 1, fx: 72, map: 1024 }],
+  joy: { base: 7, speed: 2.6, dead: 0.12 },
+  photo: { slow: 0.3 },
+  shake: { decay: 7, tear: 0.05, stamp: 0.08 },
+  autoRecover: { minAlive: 0.25 },
+  lowEnd: { cores: 4, memory: 4 }
+};
+
+const $ = (id) => document.getElementById(id);
+const clamp = (v, a, b) => (v < a ? a : v > b ? b : v);
+const lerp = (a, b, t) => a + (b - a) * t;
+
+const LANG = {
+  ko: {
+    title: '쫀득 쿠키 가게', sub: '반죽을 쭉 당겨서 틀로 찍고 구워봐 ㅋㅋ', start: '영업 시작!',
+    pause: '잠깐 쉬는 중~', resume: '계속하기', toTitle: '타이틀로', knead: '다시 뭉치기', stamp: '찍기!', out: '꺼내기!',
+    stampOn: '위치 잡고 탭!', bake: '굽는 중... 초록 구간에서 꺼내!', next: '다음 손님', gold: '골드',
+    acc: '정확도', fin: '완성도', spd: '속도', total: '총점', tip: '팁',
+    thick: '두툼하게', normal: '적당하게', thin: '얇게', circle: '동글', star: '별', heart: '하트',
+    raw: '덜 익었잖아 ㅋㅋ', perfect: '딱 좋아!', burnt: '탔다 ㅋㅋ', torn: '반죽 끊김! 뭉쳐서 다시!', miss: '틀이 반죽 밖이야 ㅋㅋ',
+    firstTip: '첫 주문 보너스!', pullHint: '반죽을 손가락으로 쭉 당겨봐!', chewy: '쫀득~! +5🪙', tipLine: '팁', perfectCnt: '딱 좋음 보너스',
+    c0: '동글', c1: '별', c2: '하트', c3: '네모', c4: '세모', c5: '꽃', c6: '달', c7: '마름모', c8: '고양이', c9: '물고기',
+    t0: '토핑 없음', t1: '초코칩', t2: '스프링클', t3: '딸기잼', topN: '토핑', skip: '건너뛰기',
+    lvUp: '레벨 업!', unlockCut: '새 틀 해금: ', unlockTop: '새 토핑 해금: ', firstWin: '첫 승리 보너스!', bigOrder: '대형 주문!', dailyOrder: '일일 특별 주문', dailyDone: '오늘 완료!',
+    shop: '가게 꾸미기', back: '뒤로', buy: '구매', owned: '보유', cantBuy: '골드 부족 ㅋㅋ', d0: '체크 식탁보', d1: '귀여운 화분', d2: '반짝 전구', d3: '쿠키 진열대', d4: '쫀득 간판', d5: '푹신 러그',
+    adTitle: '광고', adSkip: '건너뛰기', adClose: '닫기 ✕', adText: '광고 보면 안 탄 걸로 해준대 ㅋㅋ', adWatch: '광고 보고 되돌리기', adNo: '그냥 탄 거 낼래', adRevive: '안 탄 걸로 해줬다 ㅋㅋ', adFlee: '잡아봐 ㅋㅋ',
+    ach: '업적', a0: '첫 쫀득', a1: '첫 주문 완료', a2: '불맛 장인', a3: '대형 주문 클리어', a4: '부자 입문', a5: '인테리어 시작', a6: '일일 특별 주문', a7: '3성 연속',
+    item: '번째 쿠키', pieces: '개 주문', rewards: '보상', xp: '경험치', plv: '가게 레벨', bakeDone: '다 구웠어!', perfectBonus: '딱 좋음 보너스!'
+  },
+  en: {
+    title: 'Chewy Cookie Shop', sub: 'Stretch the dough, stamp it and bake it lol', start: 'Open Shop!',
+    pause: 'Taking a break~', resume: 'Resume', toTitle: 'Title', knead: 'Knead again', stamp: 'Stamp!', out: 'Take out!',
+    stampOn: 'Aim and tap!', bake: 'Baking... pull it out in the green!', next: 'Next customer', gold: 'Gold',
+    acc: 'Accuracy', fin: 'Finish', spd: 'Speed', total: 'Total', tip: 'Tip',
+    thick: 'thick', normal: 'normal', thin: 'thin', circle: 'Round', star: 'Star', heart: 'Heart',
+    raw: 'Undercooked lol', perfect: 'Perfect!', burnt: 'Burnt lol', torn: 'Dough snapped! Knead again!', miss: 'Cutter is off the dough lol',
+    firstTip: 'First order bonus!', pullHint: 'Drag the dough with your finger!', chewy: 'Chewy~! +5🪙', tipLine: 'Tip', perfectCnt: 'Perfect bake bonus',
+    c0: 'Round', c1: 'Star', c2: 'Heart', c3: 'Square', c4: 'Triangle', c5: 'Flower', c6: 'Moon', c7: 'Diamond', c8: 'Cat', c9: 'Fish',
+    t0: 'No topping', t1: 'Choc chips', t2: 'Sprinkles', t3: 'Berry jam', topN: 'Topping', skip: 'Skip',
+    lvUp: 'Level up!', unlockCut: 'New cutter: ', unlockTop: 'New topping: ', firstWin: 'First win bonus!', bigOrder: 'Big order!', dailyOrder: 'Daily special', dailyDone: 'Done today!',
+    shop: 'Decorate shop', back: 'Back', buy: 'Buy', owned: 'Owned', cantBuy: 'Not enough gold lol', d0: 'Checked cloth', d1: 'Cute plant', d2: 'Fairy lights', d3: 'Cookie shelf', d4: 'Chewy sign', d5: 'Fluffy rug',
+    adTitle: 'AD', adSkip: 'Skip', adClose: 'Close ✕', adText: 'Watch an ad and it counts as not burnt lol', adWatch: 'Watch ad to undo', adNo: 'Serve it burnt', adRevive: 'Un-burnt it lol', adFlee: 'Catch me lol',
+    ach: 'Achievements', a0: 'First chew', a1: 'First order', a2: 'Flame master', a3: 'Big order cleared', a4: 'Rich beginner', a5: 'Decor started', a6: 'Daily special', a7: '3 stars streak',
+    item: 'cookie', pieces: 'pieces', rewards: 'Rewards', xp: 'XP', plv: 'Shop Lv', bakeDone: 'Baked!', perfectBonus: 'Perfect bonus!'
+  }
+};
+let lang = 'ko';
+const T = (k) => LANG[lang][k] || LANG.ko[k] || k;
+
+const store = {
+  mem: null,
+  ok: true,
+  load() {
+    try {
+      const raw = localStorage.getItem(CONFIG.saveKey);
+      if (!raw) return this.fresh();
+      const d = JSON.parse(raw);
+      if (!d || typeof d !== 'object' || !(d.v >= 1) || typeof d.gold !== 'number') return this.fresh();
+      return this.fix(d);
+    } catch (e) {
+      this.ok = false;
+      return this.mem || this.fresh();
+    }
+  },
+  fresh() { return { v: CONFIG.saveVersion, gold: 0, level: 0, firstDone: false, xp: 0, plv: 1, unlocked: 7, tops: 0, decor: 0, ach: 0, daily: -1, streak: 0, pulls: 0, burnt: 0, settings: Object.assign({}, CONFIG.defaults, { keys: Object.assign({}, CONFIG.defaults.keys) }) }; },
+  fix(d) {
+    const f = this.fresh();
+    for (const k in f) if (k !== 'settings' && (typeof d[k] !== typeof f[k] || (typeof d[k] === 'number' && !isFinite(d[k])))) d[k] = f[k];
+    const st = Object.assign({}, f.settings, d.settings), ks = Object.assign({}, f.settings.keys, st.keys);
+    for (const k in f.settings) { if (k !== 'keys' && typeof st[k] !== typeof f.settings[k]) st[k] = f.settings[k]; }
+    for (const k in f.settings.keys) if (typeof ks[k] !== 'string') ks[k] = f.settings.keys[k];
+    st.keys = ks;
+    ['mv', 'bv', 'sv', 'part'].forEach((k) => { st[k] = clamp(st[k], 0, 1); });
+    st.rs = clamp(st.rs, 0.5, 1); st.js = clamp(st.js, 0.6, 1.6); st.sens = clamp(st.sens, 0.5, 2);
+    st.q = clamp(Math.floor(st.q), 0, 3); st.fps = clamp(Math.floor(st.fps), 0, 2);
+    if (st.lang !== 'ko' && st.lang !== 'en') st.lang = 'ko';
+    d.settings = st;
+    d.v = CONFIG.saveVersion;
+    d.gold = Math.max(0, Math.floor(d.gold)); d.level = Math.max(0, Math.floor(d.level));
+    return d;
+  },
+  save(d) {
+    this.mem = d;
+    if (!this.ok) return;
+    try { localStorage.setItem(CONFIG.saveKey, JSON.stringify(d)); } catch (e) { this.ok = false; }
+  }
+};
+let save = store.load();
+
+const canvas = $('c');
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: 'high-performance' });
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0xffe3bd);
+const camera = new THREE.PerspectiveCamera(CONFIG.camera.fov, 1, 0.1, 50);
+const hemi = new THREE.HemisphereLight(0xfff4e0, 0xc9946a, 1.0);
+const sun = new THREE.DirectionalLight(0xffffff, 1.7);
+sun.position.set(3, 6, 2);
+sun.castShadow = true;
+sun.shadow.mapSize.set(1024, 1024);
+sun.shadow.camera.left = -4; sun.shadow.camera.right = 4; sun.shadow.camera.top = 4; sun.shadow.camera.bottom = -4;
+scene.add(hemi, sun);
+
+function makeTexture(size, painter) {
+  const cv = document.createElement('canvas');
+  cv.width = cv.height = size;
+  painter(cv.getContext('2d'), size);
+  const t = new THREE.CanvasTexture(cv);
+  t.colorSpace = THREE.SRGBColorSpace;
+  t.wrapS = t.wrapT = THREE.RepeatWrapping;
+  return t;
+}
+const woodTex = makeTexture(256, (g, s) => {
+  g.fillStyle = '#c98f55'; g.fillRect(0, 0, s, s);
+  for (let i = 0; i < 70; i++) { g.strokeStyle = 'rgba(' + (90 + (i % 5) * 8) + ',55,25,0.18)'; g.lineWidth = 1 + (i % 3); g.beginPath(); g.moveTo(0, i * 3.7); g.bezierCurveTo(s * 0.3, i * 3.7 + 6, s * 0.7, i * 3.7 - 6, s, i * 3.7); g.stroke(); }
+});
+woodTex.repeat.set(3, 3);
+const doughTex = makeTexture(128, (g, s) => {
+  g.fillStyle = '#f6d9a0'; g.fillRect(0, 0, s, s);
+  for (let i = 0; i < 260; i++) { g.fillStyle = 'rgba(' + (200 + (i % 40)) + ',' + (160 + (i % 30)) + ',100,0.18)'; g.beginPath(); g.arc((i * 53) % s, (i * 97) % s, 1 + (i % 3), 0, 6.283); g.fill(); }
+});
+const table = new THREE.Mesh(new THREE.PlaneGeometry(14, 14), new THREE.MeshStandardMaterial({ map: woodTex, roughness: 0.85 }));
+table.rotation.x = -Math.PI / 2;
+table.position.y = -0.02;
+table.receiveShadow = true;
+scene.add(table);
+
+const view = { w: 1, h: 1, pr: 1, scale: 1, user: 1 };
+function resize() {
+  const w = Math.max(160, window.innerWidth), h = Math.max(160, window.innerHeight);
+  view.w = w; view.h = h;
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, CONFIG.pixelRatioMax) * view.scale * view.user);
+  renderer.setSize(w, h, false);
+  camera.aspect = w / h;
+  const c = CONFIG.camera;
+  const need = 2 * CONFIG.dough.radius * 1.12;
+  const vf = THREE.MathUtils.degToRad(c.fov);
+  const dv = (need / 2) / Math.tan(vf / 2);
+  const hf = 2 * Math.atan(Math.tan(vf / 2) * camera.aspect);
+  const dh = (need / 2) / Math.tan(hf / 2);
+  const d = Math.max(dv * 1.15, dh) * 1.12;
+  camBase.set(0, Math.sin(c.tilt) * d, Math.cos(c.tilt) * d * 0.5 + 0.2);
+  camera.position.copy(camBase);
+  camera.lookAt(0, 0, -0.1);
+  camera.updateProjectionMatrix();
+}
+window.addEventListener('resize', resize);
+window.addEventListener('orientationchange', () => setTimeout(resize, 120));
+if (window.visualViewport) window.visualViewport.addEventListener('resize', resize);
+
+const DC = CONFIG.dough;
+const GN = DC.grid + 1;
+const GV = GN * GN;
+const SP = (2 * DC.radius) / DC.grid;
+const inside = new Int16Array(GV);
+let insideCount = 0;
+const ox = new Float32Array(GV), oz = new Float32Array(GV);
+const px = new Float32Array(GV), pz = new Float32Array(GV);
+const vx = new Float32Array(GV), vz = new Float32Array(GV);
+const mx = new Float32Array(GV), mz = new Float32Array(GV);
+const tx = new Float32Array(GV), tz = new Float32Array(GV);
+const tear = new Uint8Array(GV);
+const thick = new Float32Array(GV);
+const strch = new Float32Array(GV);
+const grabbed = new Uint8Array(GV);
+const nb = new Int16Array(GV * 4).fill(-1);
+const edgeA = [], edgeB = [];
+const posArr = new Float32Array(GV * 3);
+const colArr = new Float32Array(GV * 3);
+const tearArr = new Float32Array(GV);
+const uvArr = new Float32Array(GV * 2);
+const idxList = [];
+for (let j = 0; j < GN; j++) {
+  for (let i = 0; i < GN; i++) {
+    const id = j * GN + i;
+    ox[id] = -DC.radius + i * SP;
+    oz[id] = -DC.radius + j * SP;
+    uvArr[id * 2] = i / DC.grid;
+    uvArr[id * 2 + 1] = j / DC.grid;
+  }
+}
+const inCircle = new Uint8Array(GV);
+for (let id = 0; id < GV; id++) {
+  if (ox[id] * ox[id] + oz[id] * oz[id] <= (DC.radius + 0.001) * (DC.radius + 0.001)) { inCircle[id] = 1; inside[insideCount++] = id; }
+}
+for (let j = 0; j < GN; j++) {
+  for (let i = 0; i < GN; i++) {
+    const id = j * GN + i;
+    if (!inCircle[id]) continue;
+    if (i > 0 && inCircle[id - 1]) nb[id * 4] = id - 1;
+    if (i < GN - 1 && inCircle[id + 1]) nb[id * 4 + 1] = id + 1;
+    if (j > 0 && inCircle[id - GN]) nb[id * 4 + 2] = id - GN;
+    if (j < GN - 1 && inCircle[id + GN]) nb[id * 4 + 3] = id + GN;
+    if (i < GN - 1 && inCircle[id + 1]) { edgeA.push(id); edgeB.push(id + 1); }
+    if (j < GN - 1 && inCircle[id + GN]) { edgeA.push(id); edgeB.push(id + GN); }
+    if (i < GN - 1 && j < GN - 1) {
+      const a = id, b = id + 1, c = id + GN, d = id + GN + 1;
+      if (inCircle[b] && inCircle[c] && inCircle[d]) idxList.push(a, c, b, b, c, d);
+    }
+  }
+}
+const edgeCount = edgeA.length;
+const edgeAi = Int16Array.from(edgeA), edgeBi = Int16Array.from(edgeB);
+
+const doughGeo = new THREE.BufferGeometry();
+const posAttr = new THREE.BufferAttribute(posArr, 3).setUsage(THREE.DynamicDrawUsage);
+const colAttr = new THREE.BufferAttribute(colArr, 3).setUsage(THREE.DynamicDrawUsage);
+const tearAttr = new THREE.BufferAttribute(tearArr, 1).setUsage(THREE.DynamicDrawUsage);
+doughGeo.setAttribute('position', posAttr);
+doughGeo.setAttribute('color', colAttr);
+doughGeo.setAttribute('aTear', tearAttr);
+doughGeo.setAttribute('uv', new THREE.BufferAttribute(uvArr, 2));
+doughGeo.setAttribute('normal', new THREE.BufferAttribute(new Float32Array(GV * 3), 3).setUsage(THREE.DynamicDrawUsage));
+doughGeo.setIndex(idxList);
+const doughMat = new THREE.MeshStandardMaterial({ map: doughTex, vertexColors: true, roughness: 0.55, side: THREE.DoubleSide });
+doughMat.onBeforeCompile = (sh) => {
+  sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nattribute float aTear;\nvarying float vTear;').replace('#include <begin_vertex>', '#include <begin_vertex>\nvTear=aTear;');
+  sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nvarying float vTear;').replace('#include <clipping_planes_fragment>', '#include <clipping_planes_fragment>\nif(vTear>0.5) discard;');
+};
+const doughMesh = new THREE.Mesh(doughGeo, doughMat);
+doughMesh.castShadow = true;
+doughMesh.receiveShadow = true;
+doughMesh.frustumCulled = false;
+scene.add(doughMesh);
+
+const dstat = { tears: 0, maxS: 1, dirty: true };
+function kneadDough() {
+  for (let k = 0; k < insideCount; k++) {
+    const id = inside[k];
+    px[id] = mx[id] = ox[id]; pz[id] = mz[id] = oz[id];
+    vx[id] = vz[id] = 0; tear[id] = 0; grabbed[id] = 0;
+  }
+  dstat.tears = 0; dstat.dirty = true;
+}
+kneadDough();
+
+function doughStep(dt) {
+  const spring = DC.spring, damp = DC.damp, pl = DC.plastic, sm = DC.smooth;
+  for (let k = 0; k < insideCount; k++) {
+    const id = inside[k];
+    if (grabbed[id]) continue;
+    const gx = ox[id] + (mx[id] - ox[id]) * pl, gz = oz[id] + (mz[id] - oz[id]) * pl;
+    vx[id] = (vx[id] + (gx - px[id]) * spring * dt) * damp;
+    vz[id] = (vz[id] + (gz - pz[id]) * spring * dt) * damp;
+  }
+  for (let k = 0; k < insideCount; k++) {
+    const id = inside[k];
+    let sx = 0, sz = 0, c = 0;
+    for (let n = 0; n < 4; n++) {
+      const j = nb[id * 4 + n];
+      if (j < 0) continue;
+      sx += px[j]; sz += pz[j]; c++;
+    }
+    tx[id] = c ? sx / c - px[id] : 0;
+    tz[id] = c ? sz / c - pz[id] : 0;
+  }
+  for (let k = 0; k < insideCount; k++) {
+    const id = inside[k];
+    if (grabbed[id]) continue;
+    px[id] += vx[id] * dt + tx[id] * sm;
+    pz[id] += vz[id] * dt + tz[id] * sm;
+  }
+  for (let e = 0; e < edgeCount && !dbg.god; e++) {
+    const a = edgeAi[e], b = edgeBi[e];
+    if (tear[a] && tear[b]) continue;
+    const dx = px[a] - px[b], dz = pz[a] - pz[b];
+    if (dx * dx + dz * dz > SP * SP * DC.tearRatio * DC.tearRatio) {
+      tear[a] = 1; tear[b] = 1;
+      mx[a] = ox[a]; mz[a] = oz[a]; mx[b] = ox[b]; mz[b] = oz[b];
+      grabbed[a] = 0; grabbed[b] = 0;
+      dstat.tears++;
+      onTear((px[a] + px[b]) * 0.5, (pz[a] + pz[b]) * 0.5);
+    }
+  }
+  dstat.dirty = true;
+}
+
+const doughCol = new THREE.Color(0xf3cf8c), paleCol = new THREE.Color(0xfff0cf);
+function doughRefresh() {
+  let maxS = 1;
+  for (let k = 0; k < insideCount; k++) {
+    const id = inside[k];
+    let s = 0, c = 0;
+    for (let n = 0; n < 4; n++) {
+      const j = nb[id * 4 + n];
+      if (j < 0) continue;
+      const dx = px[id] - px[j], dz = pz[id] - pz[j];
+      s += Math.sqrt(dx * dx + dz * dz); c++;
+    }
+    s = c ? s / c / SP : 1;
+    strch[id] = s;
+    if (s > maxS) maxS = s;
+    const t = clamp(DC.base / (s * s), DC.minThick, DC.base * 1.4);
+    thick[id] = t;
+    posArr[id * 3] = px[id]; posArr[id * 3 + 1] = t; posArr[id * 3 + 2] = pz[id];
+    const pale = clamp(1 - t / DC.base, 0, 1);
+    colArr[id * 3] = lerp(doughCol.r, paleCol.r, pale);
+    colArr[id * 3 + 1] = lerp(doughCol.g, paleCol.g, pale);
+    colArr[id * 3 + 2] = lerp(doughCol.b, paleCol.b, pale);
+    tearArr[id] = tear[id];
+  }
+  dstat.maxS = maxS;
+  posAttr.needsUpdate = true; colAttr.needsUpdate = true; tearAttr.needsUpdate = true;
+  doughGeo.computeVertexNormals();
+  dstat.dirty = false;
+}
+doughRefresh();
+
+function arcPts(pts, cx, cy, r, a0, a1, n) {
+  for (let i = 0; i <= n; i++) { const a = a0 + (a1 - a0) * i / n; pts.push(cx + Math.cos(a) * r, cy + Math.sin(a) * r); }
+}
+function polyPts(pts, verts, sub) {
+  const n = verts.length / 2;
+  for (let i = 0; i < n; i++) {
+    const j = (i + 1) % n;
+    for (let k = 0; k < sub; k++) { const t = k / sub; pts.push(lerp(verts[i * 2], verts[j * 2], t), lerp(verts[i * 2 + 1], verts[j * 2 + 1], t)); }
+  }
+}
+function shapePts(kind) {
+  const pts = [];
+  if (kind === 0) for (let i = 0; i < 40; i++) { const a = (i / 40) * 6.2832; pts.push(Math.cos(a), Math.sin(a)); }
+  else if (kind === 1) for (let i = 0; i < 10; i++) { const a = (i / 10) * 6.2832 + 1.5708, r = i % 2 ? 0.48 : 1; pts.push(Math.cos(a) * r, Math.sin(a) * r); }
+  else if (kind === 2) for (let i = 0; i < 48; i++) { const t = (i / 48) * 6.2832; pts.push(16 * Math.pow(Math.sin(t), 3) / 17, (13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t)) / 17 + 0.05); }
+  else if (kind === 3) for (let i = 0; i < 48; i++) { const t = (i / 48) * 6.2832, c = Math.cos(t), sn = Math.sin(t); pts.push(Math.sign(c) * Math.pow(Math.abs(c), 0.35) * 0.9, Math.sign(sn) * Math.pow(Math.abs(sn), 0.35) * 0.9); }
+  else if (kind === 4) polyPts(pts, [0, 1.05, -0.95, -0.7, 0.95, -0.7], 6);
+  else if (kind === 5) for (let i = 0; i < 70; i++) { const t = (i / 70) * 6.2832, r = 0.72 + 0.28 * Math.cos(5 * t); pts.push(Math.cos(t) * r, Math.sin(t) * r); }
+  else if (kind === 6) { arcPts(pts, 0, 0, 1, 0.8226, 6.2832 - 0.8226, 20); arcPts(pts, 0.42, 0, 0.78, -1.2394, -5.0438, 16); }
+  else if (kind === 7) polyPts(pts, [0, 1.1, 0.75, 0, 0, -1.1, -0.75, 0], 4);
+  else if (kind === 8) {
+    const d = 0.0174533, cy = -0.1, r = 0.88;
+    pts.push(Math.cos(108 * d) * r, cy + Math.sin(108 * d) * r, -0.68, 1.0);
+    arcPts(pts, 0, cy, r, 152 * d, 388 * d, 20);
+    pts.push(0.68, 1.0, Math.cos(72 * d) * r, cy + Math.sin(72 * d) * r);
+  }
+  else {
+    for (let i = 0; i <= 16; i++) { const t = -2.2 + (4.4 * i) / 16; pts.push(0.2 + 0.8 * Math.cos(t), 0.5 * Math.sin(t)); }
+    pts.push(-0.95, 0.65, -0.7, 0, -0.95, -0.65);
+  }
+  return pts;
+}
+function insidePoly(pts, x, y) {
+  let r = false;
+  const n = pts.length / 2;
+  for (let i = 0, j = n - 1; i < n; j = i++) {
+    const xi = pts[i * 2], yi = pts[i * 2 + 1], xj = pts[j * 2], yj = pts[j * 2 + 1];
+    if ((yi > y) !== (yj > y) && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi) r = !r;
+  }
+  return r;
+}
+const cutters = [];
+const extrude = { depth: 1, bevelEnabled: true, bevelThickness: 0.05, bevelSize: 0.04, bevelSegments: 2, curveSegments: 6 };
+function buildCutter(kind, nameKey) {
+  const pts = shapePts(kind);
+  const sh = new THREE.Shape();
+  sh.moveTo(pts[0], pts[1]);
+  for (let i = 1; i < pts.length / 2; i++) sh.lineTo(pts[i * 2], pts[i * 2 + 1]);
+  const geo = new THREE.ExtrudeGeometry(sh, extrude);
+  geo.rotateX(-Math.PI / 2);
+  const sm = [];
+  for (let a = -1; a <= 1.0001; a += 0.16) for (let b = -1; b <= 1.0001; b += 0.16) if (insidePoly(pts, a, b)) sm.push(a, b);
+  return { geo, samples: Float32Array.from(sm), nameKey };
+}
+for (let i = 0; i < 10; i++) cutters.push(buildCutter(i, 'c' + i));
+const cutEmoji = ['⚪', '⭐', '❤️', '⬛', '🔺', '🌸', '🌙', '🔷', '🐱', '🐟'];
+
+const cookieMat = new THREE.MeshStandardMaterial({ color: 0xf1c27a, roughness: 0.7, transparent: true, opacity: 1 });
+const cookie = new THREE.Mesh(cutters[0].geo, cookieMat);
+cookie.castShadow = true;
+cookie.visible = false;
+scene.add(cookie);
+
+const TC = CONFIG.top.count;
+const topMesh = new THREE.InstancedMesh(new THREE.SphereGeometry(0.06, 6, 5), new THREE.MeshStandardMaterial({ roughness: 0.5 }), TC);
+topMesh.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
+topMesh.frustumCulled = false;
+topMesh.visible = false;
+scene.add(topMesh);
+const topDummy = new THREE.Object3D();
+const topCol = new THREE.Color();
+const sprinkleCols = [0xff5d8f, 0x4fc3f7, 0xffd54f, 0x81c784, 0xba68c8];
+function placeToppings(kind, ci) {
+  topMesh.visible = kind > 0;
+  if (!kind) return;
+  const s = cutters[ci].samples, n = s.length / 2, size = CONFIG.cutter.size;
+  const cnt = kind === 3 ? 6 : TC;
+  for (let i = 0; i < TC; i++) {
+    if (i >= cnt) { topDummy.scale.setScalar(0); topDummy.position.set(0, 0, 0); topDummy.rotation.set(0, 0, 0); }
+    else {
+      const k = (i * 7 + 3) % n;
+      topDummy.position.set(s[k * 2] * size * 0.8, 0.01, -s[k * 2 + 1] * size * 0.8);
+      topDummy.rotation.set(0, i * 1.7, 0);
+      if (kind === 1) topDummy.scale.set(1.1, 0.7, 1.1);
+      else if (kind === 2) topDummy.scale.set(0.45, 0.45, 1.7);
+      else topDummy.scale.set(1.9, 0.6, 1.9);
+    }
+    topDummy.updateMatrix();
+    topMesh.setMatrixAt(i, topDummy.matrix);
+    topMesh.setColorAt(i, topCol.setHex(kind === 1 ? 0x3a2012 : kind === 2 ? sprinkleCols[i % 5] : 0xc2183f));
+  }
+  topMesh.instanceMatrix.needsUpdate = true;
+  if (topMesh.instanceColor) topMesh.instanceColor.needsUpdate = true;
+}
+
+const cov = { frac: 0, thick: 0.2, ok: false };
+function coverage(cx, cz, ci) {
+  const c = cutters[ci], s = c.samples, size = CONFIG.cutter.size;
+  let hit = 0, tsum = 0;
+  const n = s.length / 2;
+  for (let i = 0; i < n; i++) {
+    const wx = cx + s[i * 2] * size, wz = cz - s[i * 2 + 1] * size;
+    let best = 1e9, bi = -1;
+    for (let k = 0; k < insideCount; k++) {
+      const id = inside[k];
+      const dx = px[id] - wx, dz = pz[id] - wz;
+      const d = dx * dx + dz * dz;
+      if (d < best) { best = d; bi = id; }
+    }
+    const lim = SP * 0.9 * Math.max(1, strch[bi]);
+    if (bi >= 0 && !tear[bi] && best < lim * lim) { hit++; tsum += thick[bi]; }
+  }
+  cov.frac = n ? hit / n : 0;
+  cov.thick = hit ? tsum / hit : DC.base;
+  return cov.frac;
+}
+
+const FXN = 72;
+const fxMesh = new THREE.InstancedMesh(new THREE.SphereGeometry(0.05, 6, 5), new THREE.MeshStandardMaterial({ color: 0xffffff }), FXN);
+fxMesh.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
+fxMesh.frustumCulled = false;
+fxMesh.setColorAt(0, new THREE.Color(1, 1, 1));
+const fxPos = new Float32Array(FXN * 3), fxVel = new Float32Array(FXN * 3), fxLife = new Float32Array(FXN);
+const fxDummy = new THREE.Object3D();
+const fxColor = new THREE.Color();
+let fxNext = 0, fxLimit = FXN;
+scene.add(fxMesh);
+for (let i = 0; i < FXN; i++) { fxDummy.position.set(0, -9, 0); fxDummy.scale.setScalar(0); fxDummy.updateMatrix(); fxMesh.setMatrixAt(i, fxDummy.matrix); fxMesh.setColorAt(i, fxColor.setHex(0xffffff)); }
+function burst(x, y, z, n, hex) {
+  n = Math.min(Math.round(n * SET.part), fxLimit);
+  for (let k = 0; k < n; k++) {
+    const i = fxNext; fxNext = (fxNext + 1) % fxLimit;
+    fxPos[i * 3] = x; fxPos[i * 3 + 1] = y; fxPos[i * 3 + 2] = z;
+    const a = Math.random() * 6.283, sp = 0.8 + Math.random() * 1.8;
+    fxVel[i * 3] = Math.cos(a) * sp; fxVel[i * 3 + 1] = 1.5 + Math.random() * 2; fxVel[i * 3 + 2] = Math.sin(a) * sp;
+    fxLife[i] = 0.7 + Math.random() * 0.4;
+    fxMesh.setColorAt(i, fxColor.setHex(hex));
+  }
+  if (fxMesh.instanceColor) fxMesh.instanceColor.needsUpdate = true;
+}
+function fxUpdate(dt) {
+  for (let i = 0; i < FXN; i++) {
+    if (fxLife[i] <= 0) continue;
+    fxLife[i] -= dt;
+    fxVel[i * 3 + 1] -= 7 * dt;
+    fxPos[i * 3] += fxVel[i * 3] * dt; fxPos[i * 3 + 1] += fxVel[i * 3 + 1] * dt; fxPos[i * 3 + 2] += fxVel[i * 3 + 2] * dt;
+    if (fxPos[i * 3 + 1] < 0.03) { fxPos[i * 3 + 1] = 0.03; fxVel[i * 3 + 1] *= -0.3; }
+    fxDummy.position.set(fxPos[i * 3], fxPos[i * 3 + 1], fxPos[i * 3 + 2]);
+    fxDummy.scale.setScalar(fxLife[i] > 0 ? Math.min(1, fxLife[i] * 3) : 0);
+    fxDummy.updateMatrix();
+    fxMesh.setMatrixAt(i, fxDummy.matrix);
+  }
+  fxMesh.instanceMatrix.needsUpdate = true;
+}
+function onTear(x, z) { burst(x, 0.2, z, 8, 0xf6d9a0); flash('torn'); sfx('tear'); doShake(CONFIG.shake.tear); }
+
+const audio = { ctx: null, master: null, bgmG: null, sfxG: null, voices: [], vi: 0, bgmV: [], noiseG: null, filt: null, next: 0, step: 0, vol: { master: CONFIG.audio.master, bgm: CONFIG.audio.bgm, sfx: CONFIG.audio.sfx }, vib: true, sizz: false };
+const vibrateOk = typeof navigator !== 'undefined' && typeof navigator.vibrate === 'function';
+function vib(ms) { if (vibrateOk && audio.vib) navigator.vibrate(ms); }
+function audioApplyVol() {
+  if (!audio.ctx) return;
+  audio.master.gain.value = audio.vol.master;
+  audio.bgmG.gain.value = audio.vol.bgm * 0.35;
+  audio.sfxG.gain.value = audio.vol.sfx;
+}
+function audioInit() {
+  if (audio.ctx) { if (audio.ctx.state === 'suspended') audio.ctx.resume(); return; }
+  const AC = window.AudioContext || window.webkitAudioContext;
+  if (!AC) return;
+  try {
+    const c = new AC();
+    audio.ctx = c;
+    audio.master = c.createGain(); audio.bgmG = c.createGain(); audio.sfxG = c.createGain();
+    audio.bgmG.connect(audio.master); audio.sfxG.connect(audio.master); audio.master.connect(c.destination);
+    const mk = (type, dest) => {
+      const o = c.createOscillator(), g = c.createGain();
+      o.type = type; g.gain.value = 0; o.connect(g); g.connect(dest); o.start();
+      return { o, g };
+    };
+    for (let i = 0; i < CONFIG.audio.voices; i++) audio.voices.push(mk(i % 2 ? 'square' : 'triangle', audio.sfxG));
+    for (let i = 0; i < 3; i++) audio.bgmV.push(mk(i === 0 ? 'triangle' : 'sine', audio.bgmG));
+    const buf = c.createBuffer(1, c.sampleRate, c.sampleRate), d = buf.getChannelData(0);
+    for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+    const src = c.createBufferSource();
+    src.buffer = buf; src.loop = true;
+    audio.filt = c.createBiquadFilter(); audio.filt.type = 'bandpass'; audio.filt.frequency.value = 2000; audio.filt.Q.value = 1.2;
+    audio.noiseG = c.createGain(); audio.noiseG.gain.value = 0;
+    src.connect(audio.filt); audio.filt.connect(audio.noiseG); audio.noiseG.connect(audio.sfxG); src.start();
+    audio.next = c.currentTime + 0.1;
+    audioApplyVol();
+  } catch (e) { audio.ctx = null; }
+}
+function tone(f, dur, vol, slide) {
+  const c = audio.ctx;
+  if (!c) return;
+  const v = audio.voices[audio.vi++ % audio.voices.length], t = c.currentTime;
+  v.o.frequency.cancelScheduledValues(t);
+  v.o.frequency.setValueAtTime(f, t);
+  if (slide) v.o.frequency.exponentialRampToValueAtTime(Math.max(30, slide), t + dur);
+  v.g.gain.cancelScheduledValues(t);
+  v.g.gain.setValueAtTime(0.0001, t);
+  v.g.gain.linearRampToValueAtTime(vol, t + 0.012);
+  v.g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+}
+function noiseHit(dur, f, vol) {
+  const c = audio.ctx;
+  if (!c) return;
+  const t = c.currentTime;
+  audio.filt.frequency.cancelScheduledValues(t);
+  audio.filt.frequency.setValueAtTime(f, t);
+  audio.noiseG.gain.cancelScheduledValues(t);
+  audio.noiseG.gain.setValueAtTime(vol, t);
+  audio.noiseG.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+}
+function setSizzle(on) {
+  const c = audio.ctx;
+  if (!c || audio.sizz === on) return;
+  audio.sizz = on;
+  const t = c.currentTime;
+  audio.filt.frequency.cancelScheduledValues(t);
+  audio.filt.frequency.setValueAtTime(5200, t);
+  audio.noiseG.gain.cancelScheduledValues(t);
+  audio.noiseG.gain.linearRampToValueAtTime(on ? 0.12 : 0.0001, t + 0.15);
+}
+const SFX = {
+  click: () => tone(660, 0.07, 0.15, 880),
+  pop: () => tone(300, 0.12, 0.25, 700),
+  stretch: (s) => tone(160 + (s - 1) * 240, 0.1, 0.1, 200 + (s - 1) * 300),
+  tear: () => { noiseHit(0.18, 3200, 0.35); tone(520, 0.14, 0.18, 120); vib(25); },
+  stamp: () => { tone(140, 0.16, 0.4, 60); noiseHit(0.08, 900, 0.3); vib(30); },
+  ding: () => { tone(880, 0.25, 0.25); setTimeout(() => tone(1320, 0.4, 0.22), 90); },
+  coin: () => { tone(988, 0.08, 0.2); setTimeout(() => tone(1319, 0.2, 0.2), 70); },
+  fail: () => { tone(300, 0.3, 0.25, 110); setTimeout(() => tone(200, 0.35, 0.25, 80), 140); },
+  win: () => { [523, 659, 784, 1047].forEach((f, i) => setTimeout(() => tone(f, 0.28, 0.22), i * 90)); },
+  boing: () => tone(220, 0.35, 0.25, 520)
+};
+function sfx(name, a) { if (audio.ctx && SFX[name]) SFX[name](a); }
+const bgmNotes = [[48, 55, 64, 67, 72, 67, 64, 55], [45, 52, 60, 64, 69, 64, 60, 52], [41, 48, 57, 60, 65, 60, 57, 48], [43, 50, 59, 62, 67, 62, 59, 50]];
+const midiF = (m) => 440 * Math.pow(2, (m - 69) / 12);
+function bgmUpdate() {
+  const c = audio.ctx;
+  if (!c || c.state !== 'running') return;
+  if (audio.next < c.currentTime - 0.5) audio.next = c.currentTime + 0.05;
+  const stepDur = 0.2;
+  while (audio.next < c.currentTime + 0.25) {
+    const bar = Math.floor(audio.step / 8) % 4, k = audio.step % 8, n = bgmNotes[bar][k], t = audio.next;
+    const m = audio.bgmV[1], b = audio.bgmV[0];
+    m.o.frequency.setValueAtTime(midiF(n + 12), t);
+    m.g.gain.cancelScheduledValues(t);
+    m.g.gain.setValueAtTime(0.0001, t);
+    m.g.gain.linearRampToValueAtTime(0.5, t + 0.02);
+    m.g.gain.exponentialRampToValueAtTime(0.0001, t + stepDur * 0.9);
+    if (k % 4 === 0) {
+      b.o.frequency.setValueAtTime(midiF(bgmNotes[bar][0] - 12), t);
+      b.g.gain.cancelScheduledValues(t);
+      b.g.gain.setValueAtTime(0.0001, t);
+      b.g.gain.linearRampToValueAtTime(0.7, t + 0.02);
+      b.g.gain.exponentialRampToValueAtTime(0.0001, t + stepDur * 3.5);
+    }
+    audio.next += stepDur; audio.step++;
+  }
+}
+function unlockAudio() { audioInit(); }
+['pointerdown', 'keydown', 'touchend'].forEach((n) => window.addEventListener(n, unlockAudio, { passive: true }));
+
+const CUST = [
+  { e: '🐰', col: 0xffb6c1, ko: { n: '몽실이', ask: '쫀득하게 부탁해 ㅋㅋ', good: '미쳤다 ㅋㅋ 쫀득 그 자체!', mid: '음~ 나쁘진 않네 ㅋㅋ', bad: '이건 좀 킹받네 ㅋㅋ' }, en: { n: 'Mongsil', ask: 'Make it chewy lol', good: 'Insane lol! So chewy!', mid: 'Hmm not bad lol', bad: 'That is kinda annoying lol' } },
+  { e: '🦦', col: 0xb08968, ko: { n: '쫀돌이', ask: '나 배고파 빨리빨리 ㅋㅋ', good: '와 이건 인정 ㅋㅋ', mid: '먹을 만하다~', bad: '배고픈데 눈물난다 ㅋㅋ' }, en: { n: 'Jjondol', ask: 'So hungry, hurry lol', good: 'Okay respect lol', mid: 'Edible~', bad: 'Hungry and crying lol' } },
+  { e: '🐸', col: 0x8fd694, ko: { n: '호이', ask: '이거 완전 내 취향 각이야 ㅋㅋ', good: '개구리가 울었다 ㅋㅋ 감동', mid: '그럭저럭 폴짝~', bad: '개굴… 이게 뭐야 ㅋㅋ' }, en: { n: 'Hoy', ask: 'This is totally my thing lol', good: 'The frog cried lol', mid: 'So-so, ribbit~', bad: 'Ribbit... what is this lol' } },
+  { e: '🐶', col: 0xf0c987, ko: { n: '뭉치', ask: '꼬리 흔들 준비 완료 ㅋㅋ', good: '꼬리 프로펠러 됐다 ㅋㅋ', mid: '멍! 괜찮아~', bad: '낑… 이건 아니야 ㅋㅋ' }, en: { n: 'Mungchi', ask: 'Tail wag ready lol', good: 'Tail propeller mode lol', mid: 'Woof! It is fine~', bad: 'Whimper... nope lol' } },
+  { e: '🐧', col: 0x9fb8d6, ko: { n: '쫑이', ask: '뒤뚱뒤뚱 기다리는 중 ㅋㅋ', good: '날아갈 것 같아 ㅋㅋ', mid: '뒤뚱~ 오케이', bad: '펭… 실망이야 ㅋㅋ' }, en: { n: 'Jjong', ask: 'Waddling and waiting lol', good: 'I could fly lol', mid: 'Waddle~ okay', bad: 'Peng... disappointed lol' } },
+  { e: '🐱', col: 0x6b6b7a, ko: { n: '깜장이', ask: '흥 별로 기대 안 해 ㅋㅋ', good: '…솔직히 맛있어 ㅋㅋ 인정', mid: '냥 그냥 그래', bad: '내 시간 돌려줘 ㅋㅋ' }, en: { n: 'Kkamjang', ask: 'Hmph, low expectations lol', good: '...honestly tasty lol', mid: 'Meh, so-so', bad: 'Give me my time back lol' } }
+];
+const custGrp = new THREE.Group();
+const custBodyMat = new THREE.MeshStandardMaterial({ color: 0xffb6c1, roughness: 0.6 });
+const custDark = new THREE.MeshStandardMaterial({ color: 0x2b1b12, roughness: 0.4 });
+const custBody = new THREE.Mesh(new THREE.SphereGeometry(0.5, 16, 12), custBodyMat);
+custBody.scale.set(1, 0.9, 1); custBody.position.y = 0.45; custBody.castShadow = true;
+const eyeGeo = new THREE.SphereGeometry(0.07, 8, 6);
+const eyeL = new THREE.Mesh(eyeGeo, custDark), eyeR = new THREE.Mesh(eyeGeo, custDark);
+eyeL.position.set(-0.17, 0.55, 0.43); eyeR.position.set(0.17, 0.55, 0.43);
+const earGeo = new THREE.SphereGeometry(0.16, 8, 6);
+const earL = new THREE.Mesh(earGeo, custBodyMat), earR = new THREE.Mesh(earGeo, custBodyMat);
+earL.position.set(-0.32, 0.95, 0); earR.position.set(0.32, 0.95, 0);
+earL.scale.set(0.8, 1.4, 0.8); earR.scale.set(0.8, 1.4, 0.8);
+custGrp.add(custBody, eyeL, eyeR, earL, earR);
+custGrp.position.set(0, 0, -2.5);
+scene.add(custGrp);
+const cust = { cur: 0, anim: 0, type: '', enter: 0 };
+function custSet(i) {
+  cust.cur = i % CUST.length;
+  custBodyMat.color.setHex(CUST[cust.cur].col);
+  cust.enter = 1; cust.anim = 0; cust.type = '';
+}
+function custReact(type) { cust.type = type; cust.anim = 0; }
+function custUpdate(dt) {
+  if (cust.enter > 0) cust.enter = Math.max(0, cust.enter - dt * 1.6);
+  const e = cust.enter * cust.enter;
+  custGrp.position.x = -4 * e;
+  cust.anim += dt;
+  let y = Math.sin(cust.anim * 2) * 0.02, sx = 1, sy = 1, rz = 0;
+  if (cust.type === 'good') { y = Math.abs(Math.sin(cust.anim * 9)) * 0.35; sy = 1 + Math.sin(cust.anim * 18) * 0.05; }
+  else if (cust.type === 'bad') { rz = Math.sin(cust.anim * 30) * 0.12 * Math.max(0, 1 - cust.anim * 0.6); sx = 1.05; sy = 0.92; }
+  else if (cust.type === 'mid') { rz = Math.sin(cust.anim * 4) * 0.08; }
+  custGrp.position.y = y;
+  custGrp.scale.set(sx, sy, 1);
+  custGrp.rotation.z = rz;
+}
+
+const checkTex = makeTexture(128, (g, s) => {
+  for (let y = 0; y < 8; y++) for (let x = 0; x < 8; x++) { g.fillStyle = (x + y) % 2 ? '#fff1f1' : '#ff9aa6'; g.fillRect(x * s / 8, y * s / 8, s / 8, s / 8); }
+});
+checkTex.repeat.set(6, 6);
+const decor = [];
+const plant = new THREE.Group();
+const pot = new THREE.Mesh(new THREE.CylinderGeometry(0.25, 0.18, 0.3, 10), new THREE.MeshStandardMaterial({ color: 0xc8643c }));
+pot.position.y = 0.15;
+const leaf = new THREE.Mesh(new THREE.SphereGeometry(0.3, 10, 8), new THREE.MeshStandardMaterial({ color: 0x5dbb63 }));
+leaf.position.y = 0.55;
+plant.add(pot, leaf); plant.position.set(-1.9, 0, -2.0);
+const bulbs = new THREE.InstancedMesh(new THREE.SphereGeometry(0.06, 8, 6), new THREE.MeshStandardMaterial({ color: 0xffffff, emissive: 0xffffff, emissiveIntensity: 0.9 }), 14);
+{
+  const dm = new THREE.Object3D(), cc = new THREE.Color(), pal = [0xff7a8a, 0xffd36e, 0x7ad7ff, 0xa6ff9c];
+  for (let i = 0; i < 14; i++) { const t = i / 13; dm.position.set(-3 + 6 * t, 0.5 + Math.sin(t * 3.14) * -0.25 + 0.4, -3.1); dm.updateMatrix(); bulbs.setMatrixAt(i, dm.matrix); bulbs.setColorAt(i, cc.setHex(pal[i % 4])); }
+}
+const shelf = new THREE.Group();
+const shelfBoard = new THREE.Mesh(new THREE.BoxGeometry(1.2, 0.08, 0.5), new THREE.MeshStandardMaterial({ color: 0x9b6a3c }));
+shelfBoard.position.y = 0.6;
+const shelfLeg = new THREE.Mesh(new THREE.BoxGeometry(1.1, 0.6, 0.4), new THREE.MeshStandardMaterial({ color: 0xb98550 }));
+shelfLeg.position.y = 0.3;
+shelf.add(shelfBoard, shelfLeg);
+for (let i = 0; i < 3; i++) { const m = new THREE.Mesh(new THREE.CylinderGeometry(0.14, 0.14, 0.05, 12), new THREE.MeshStandardMaterial({ color: 0xe0a458 })); m.position.set(-0.35 + i * 0.35, 0.68, 0); shelf.add(m); }
+shelf.position.set(2.1, 0, -2.2);
+const signTex = makeTexture(256, (g, s) => {
+  g.fillStyle = '#ff7a59'; g.fillRect(0, 0, s, s * 0.5);
+  g.fillStyle = '#fff'; g.font = 'bold 44px system-ui,sans-serif'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText('쫀득 쿠키', s / 2, s * 0.25);
+});
+signTex.repeat.set(1, 0.5);
+signTex.wrapS = signTex.wrapT = THREE.ClampToEdgeWrapping;
+const sign = new THREE.Mesh(new THREE.PlaneGeometry(1.8, 0.9), new THREE.MeshStandardMaterial({ map: signTex }));
+sign.position.set(0, 1.1, -3.3);
+const rug = new THREE.Mesh(new THREE.CircleGeometry(2.3, 32), new THREE.MeshStandardMaterial({ color: 0xff9fb3 }));
+rug.rotation.x = -Math.PI / 2; rug.position.y = -0.005;
+rug.receiveShadow = true;
+const decorObjs = [null, plant, bulbs, shelf, sign, rug];
+for (let i = 1; i < decorObjs.length; i++) { decorObjs[i].visible = false; scene.add(decorObjs[i]); }
+function decorApply() {
+  const d = save.decor;
+  table.material.map = d & 1 ? checkTex : woodTex;
+  table.material.needsUpdate = true;
+  for (let i = 1; i < decorObjs.length; i++) decorObjs[i].visible = !!(d & (1 << i));
+}
+
+const oven = new THREE.Group();
+const ovenMat = new THREE.MeshStandardMaterial({ color: 0x3a3a44, roughness: 0.6 });
+const tray = new THREE.Mesh(new THREE.BoxGeometry(3.2, 0.05, 3.2), new THREE.MeshStandardMaterial({ color: 0x9a9aa6, metalness: 0.6, roughness: 0.4 }));
+tray.position.y = -0.01; tray.receiveShadow = true;
+const wallB = new THREE.Mesh(new THREE.BoxGeometry(3.8, 1.6, 0.2), ovenMat); wallB.position.set(0, 0.8, -1.9);
+const wallL = new THREE.Mesh(new THREE.BoxGeometry(0.2, 1.6, 3.8), ovenMat); wallL.position.set(-1.9, 0.8, 0);
+const wallR = new THREE.Mesh(new THREE.BoxGeometry(0.2, 1.6, 3.8), ovenMat); wallR.position.set(1.9, 0.8, 0);
+const glow = new THREE.Mesh(new THREE.PlaneGeometry(2.6, 0.7), new THREE.MeshBasicMaterial({ color: 0xb8461a }));
+glow.position.set(0, 0.7, -1.78);
+oven.add(tray, wallB, wallL, wallR, glow);
+oven.visible = false;
+scene.add(oven);
+const ovenLight = new THREE.PointLight(0xff8a3a, 0, 8);
+ovenLight.position.set(0, 1.2, 0);
+scene.add(ovenLight);
+const env = { mix: 0, bgA: new THREE.Color(0xffe3bd), bgB: new THREE.Color(0x3a1f12), tmp: new THREE.Color() };
+function envUpdate(dt, target) {
+  env.mix += (target - env.mix) * (1 - Math.exp(-5 * dt));
+  const m = env.mix;
+  oven.visible = m > 0.03;
+  scene.background.copy(env.bgA).lerp(env.bgB, m);
+  hemi.intensity = lerp(1.0, 0.45, m);
+  sun.intensity = lerp(1.7, 0.6, m);
+  ovenLight.intensity = m * (2.2 + Math.sin(G.t * 12) * 0.25);
+  table.visible = m < 0.5;
+}
+
+const camBase = new THREE.Vector3(), camLook = new THREE.Vector3(0, 0, -0.1), camTP = new THREE.Vector3(), camTL = new THREE.Vector3(), camCur = new THREE.Vector3(), camLC = new THREE.Vector3();
+let camReady = false;
+function camUpdate(dt) {
+  camTP.copy(camBase); camTL.set(0, 0, -0.1);
+  if (G.screen === 'play' || G.screen === 'result') {
+    if (G.phase === 'bake') { camTP.set(0, camBase.y * 0.78, camBase.z * 0.8); camTL.set(0, 0.2, -0.3); }
+    else if (G.phase === 'serve') { camTP.copy(camBase).multiplyScalar(0.66); camTL.set(G.sx, 0.1, G.sz + (G.screen === 'result' ? 0.3 : 0.2)); }
+  }
+  if (photo.on) photoCam();
+  if (!camReady) { camCur.copy(camTP); camLC.copy(camTL); camReady = true; }
+  const k = 1 - Math.exp(-6 * dt);
+  camCur.lerp(camTP, k); camLC.lerp(camTL, k);
+  camera.position.copy(camCur);
+  shakeUpdate(dt);
+  camera.lookAt(camLC);
+}
+
+const threadGeo = new THREE.BufferGeometry();
+const threadPos = new Float32Array(edgeCount * 6);
+const threadAttr = new THREE.BufferAttribute(threadPos, 3).setUsage(THREE.DynamicDrawUsage);
+threadGeo.setAttribute('position', threadAttr);
+threadGeo.setDrawRange(0, 0);
+const threads = new THREE.LineSegments(threadGeo, new THREE.LineBasicMaterial({ color: 0xfff0cf }));
+threads.frustumCulled = false;
+scene.add(threads);
+function threadsUpdate() {
+  let n = 0;
+  for (let e = 0; e < edgeCount; e++) {
+    const a = edgeAi[e], b = edgeBi[e];
+    if (tear[a] || tear[b]) continue;
+    const dx = px[a] - px[b], dz = pz[a] - pz[b];
+    if (dx * dx + dz * dz > SP * SP * 2.6 * 2.6) {
+      threadPos[n * 6] = px[a]; threadPos[n * 6 + 1] = thick[a] * 0.6; threadPos[n * 6 + 2] = pz[a];
+      threadPos[n * 6 + 3] = px[b]; threadPos[n * 6 + 4] = thick[b] * 0.6; threadPos[n * 6 + 5] = pz[b];
+      n++;
+    }
+  }
+  threadGeo.setDrawRange(0, n * 2);
+  threadAttr.needsUpdate = true;
+}
+
+const ACH = [
+  { id: 0, k: 'a0' }, { id: 1, k: 'a1' }, { id: 2, k: 'a2' }, { id: 3, k: 'a3' },
+  { id: 4, k: 'a4' }, { id: 5, k: 'a5' }, { id: 6, k: 'a6' }, { id: 7, k: 'a7' }
+];
+const achQueue = [];
+let achBusy = false;
+function achNext() {
+  if (achBusy || !achQueue.length) return;
+  achBusy = true;
+  const el = $('ach');
+  el.textContent = '🏆 ' + T('ach') + ': ' + T(achQueue.shift()) + '  🪙+25';
+  el.classList.add('show');
+  sfx('win');
+  setTimeout(() => { el.classList.remove('show'); setTimeout(() => { achBusy = false; achNext(); }, 250); }, 1800);
+}
+function unlockAch(i) {
+  if (save.ach & (1 << i)) return false;
+  save.ach |= 1 << i;
+  save.gold += 25;
+  store.save(save);
+  updateGold();
+  achQueue.push(ACH[i].k);
+  achNext();
+  return true;
+}
+
+function rng(seed) {
+  let s = seed >>> 0;
+  return () => { s = (s * 1664525 + 1013904223) >>> 0; return s / 4294967296; };
+}
+const cutUnlockAt = [0, 0, 0, 2, 4, 6, 8, 11, 14, 17];
+const topUnlockAt = [0, 1, 3, 6];
+function unlockedList(mask, n) { const a = []; for (let i = 0; i < n; i++) if (mask & (1 << i)) a.push(i); return a; }
+function dayKey() { const d = new Date(); return Math.floor((d.getTime() - d.getTimezoneOffset() * 60000) / 86400000); }
+function makeOrder(level, daily) {
+  const L = level % CONFIG.levels, tier = Math.floor(level / CONFIG.levels);
+  const r = rng(daily ? dayKey() * 7919 + 17 : level * 977 + 13);
+  const shapes = unlockedList(save.unlocked, cutters.length);
+  const tops = unlockedList(save.tops | 1, 4);
+  const big = !daily && CONFIG.bigOrders.indexOf(L) >= 0;
+  const n = daily ? 2 : big ? 3 : 1;
+  const items = [];
+  for (let i = 0; i < n; i++) {
+    let shape = level === 0 && !daily ? 0 : shapes[Math.floor(r() * shapes.length)];
+    let thick = level === 0 && !daily ? 'normal' : ['normal', 'thick', 'thin'][Math.floor(r() * (L < 2 ? 2 : 3))];
+    if (L === 1) thick = 'thick';
+    const useTop = daily || L >= 3 ? r() < (daily || big ? 0.8 : 0.5) : false;
+    const top = useTop && tops.length > 1 ? tops[1 + Math.floor(r() * (tops.length - 1))] : 0;
+    items.push({ shape, thick, top });
+  }
+  return { level, daily: !!daily, big, items, cust: daily ? 5 : level % CUST.length, limit: CONFIG.score.timeLimit * n * (1 + tier * 0.1) };
+}
+function itemText(it) {
+  return T('c' + it.shape) + ' · ' + T(it.thick) + (it.top ? ' · ' + T('t' + it.top) : '');
+}
+function needText(o) {
+  let s = '';
+  for (let i = 0; i < o.items.length; i++) s += (i ? '  /  ' : '') + (o.items.length > 1 ? (i + 1) + '. ' : '') + itemText(o.items[i]);
+  return s;
+}
+function sayOf(o) {
+  const c = CUST[o.cust][lang];
+  return CUST[o.cust].e + ' ' + (o.big ? '🔥 ' + T('bigOrder') + ' ' : o.daily ? '⭐ ' + T('dailyOrder') + ' ' : '') + c.n + ': ' + c.ask;
+}
+
+const G = { screen: 'title', phase: 'pull', ci: 0, top: 0, order: null, item: 0, results: [], t: 0, tSec: -1, bakeP: 0, sx: 0, sz: 0, serveT: 0, grabHinted: false, stampId: -1, revived: false, thickAvg: 0.3, cover: 1, baseScaleY: 0.3, daily: false, adT: 0, adReady: false, adFlee: 0, adCb: null, maxPull: 1, pullSfxT: 0 };
+const orderThick = { thick: [0.3, 0.5], normal: [0.22, 0.38], thin: [0.05, 0.2] };
+const topEmoji = ['🚫', '🍫', '🌈', '🍓'];
+
+let toastTimer = 0;
+function flash(key, ms) {
+  const el = $('toast');
+  el.textContent = T(key);
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), ms || 900);
+}
+function show(id, on) { $(id).classList.toggle('hide', !on); }
+
+const cutBtns = [], topBtns = [];
+for (let i = 0; i < cutters.length; i++) {
+  const b = document.createElement('button');
+  b.className = 'btn sm';
+  b.addEventListener('click', () => { sfx('click'); selectCutter(i); });
+  $('cuts').appendChild(b);
+  cutBtns.push(b);
+}
+for (let i = 0; i < 4; i++) {
+  const b = document.createElement('button');
+  b.className = 'btn sm';
+  b.addEventListener('click', () => { sfx('click'); selectTop(i); });
+  $('tops').appendChild(b);
+  topBtns.push(b);
+}
+function refreshLocks() {
+  for (let i = 0; i < cutBtns.length; i++) {
+    const open = !!(save.unlocked & (1 << i));
+    cutBtns[i].textContent = cutEmoji[i] + ' ' + T('c' + i);
+    cutBtns[i].classList.toggle('hide', !open);
+  }
+  for (let i = 0; i < 4; i++) {
+    const open = i === 0 || !!(save.tops & (1 << i));
+    topBtns[i].textContent = topEmoji[i] + ' ' + T('t' + i);
+    topBtns[i].classList.toggle('hide', !open);
+  }
+}
+function refreshTitle() {
+  $('tInfo').textContent = '🪙 ' + save.gold + '  ·  ' + T('plv') + ' ' + save.plv + '  ·  ' + T('ach') + ' ' + countBits(save.ach) + '/8';
+  $('bDaily').textContent = '⭐ ' + T('dailyOrder') + (save.daily === dayKey() ? ' ✔' : '');
+  $('bShop').textContent = '🛋️ ' + T('shop');
+}
+function countBits(v) { let n = 0; while (v) { n += v & 1; v >>= 1; } return n; }
+function refreshTexts() {
+  $('tT').textContent = T('title'); $('tS').textContent = T('sub'); $('bStart').textContent = T('start');
+  $('pT').textContent = T('pause'); $('bResume').textContent = T('resume'); $('bToTitle').textContent = T('toTitle');
+  $('bKnead').textContent = T('knead'); $('bOut').textContent = T('out'); $('bNext').textContent = T('next');
+  $('bAdWatch').textContent = T('adWatch'); $('bAdNo').textContent = T('adNo'); $('adOfferT').textContent = T('adText');
+  $('adTitle').textContent = T('adTitle'); $('shopT').textContent = T('shop'); $('bShopBack').textContent = T('back'); $('bSkipIntro').textContent = T('skip');
+  refreshLocks(); refreshStampBtn(); refreshTitle();
+  if (G.order) { $('say').textContent = sayOf(G.order); updateNeed(); }
+  updateGold();
+}
+function refreshStampBtn() { $('bStamp').textContent = G.phase === 'stamp' ? T('stampOn') : T('stamp'); }
+function updateGold() { $('gold').textContent = '🪙 ' + save.gold; }
+function updateNeed() {
+  if (!G.order) return;
+  const it = G.order.items[G.item];
+  $('need').textContent = (G.order.items.length > 1 ? (G.item + 1) + '/' + G.order.items.length + ' · ' : '') + itemText(it) + (G.phase === 'pull' ? '  —  ' + T('pullHint') : '');
+}
+
+function selectCutter(i) {
+  if (!(save.unlocked & (1 << i))) return;
+  G.ci = i;
+  cookie.geometry = cutters[i].geo;
+  for (let k = 0; k < cutBtns.length; k++) cutBtns[k].classList.toggle('on', k === i);
+  if (G.phase === 'stamp') updateGhost();
+}
+function selectTop(i) {
+  if (i && !(save.tops & (1 << i))) return;
+  G.top = i;
+  for (let k = 0; k < topBtns.length; k++) topBtns[k].classList.toggle('on', k === i);
+}
+
+function setPhase(p) {
+  G.phase = p;
+  const pl = p === 'pull' || p === 'stamp';
+  show('cuts', pl); show('tops', pl); show('acts', pl);
+  show('bake', p === 'bake');
+  cookie.visible = p === 'stamp' || p === 'bake' || p === 'serve';
+  topMesh.visible = (p === 'bake' || p === 'serve') && G.top > 0;
+  doughMesh.visible = pl;
+  threads.visible = pl;
+  if (p !== 'bake') setSizzle(false);
+  refreshStampBtn();
+  updateNeed();
+}
+
+function beginItem() {
+  G.bakeP = 0; G.revived = false; G.maxPull = 1;
+  kneadDough();
+  cookie.rotation.set(0, 0, 0);
+  cookieMat.opacity = 1;
+  cookieMat.color.setHex(0xf1c27a);
+  selectCutter(unlockedList(save.unlocked, cutters.length)[0]);
+  selectTop(0);
+  setPhase('pull');
+  doughRefresh();
+}
+function startGame(daily) {
+  G.daily = !!daily;
+  G.order = makeOrder(save.level, G.daily);
+  G.item = 0; G.results.length = 0; G.t = 0; G.tSec = -1;
+  wakeOn();
+  custSet(G.order.cust);
+  G.screen = 'play';
+  show('title', false); show('result', false); show('pause', false); show('shop', false);
+  show('top', true); show('bot', true);
+  $('say').textContent = sayOf(G.order);
+  beginItem();
+  flash(G.order.big ? 'bigOrder' : 'pullHint', 1600);
+}
+
+function updateGhost() {
+  coverage(G.sx, G.sz, G.ci);
+  cookie.position.set(G.sx, 0, G.sz);
+  cookie.scale.set(CONFIG.cutter.size, Math.max(0.05, cov.thick), CONFIG.cutter.size);
+  const good = cov.frac >= 0.85;
+  cookieMat.opacity = good ? 0.8 : 0.5;
+  cookieMat.color.setHex(good ? 0xf1c27a : 0xff8a8a);
+}
+function toStamp() { G.sx = 0; G.sz = 0; setPhase('stamp'); cookie.visible = true; updateGhost(); sfx('click'); }
+
+function doStamp() {
+  const f = coverage(G.sx, G.sz, G.ci);
+  if (f < 0.85) { flash(f < 0.4 ? 'miss' : 'torn'); sfx('fail'); return; }
+  cookie.scale.set(CONFIG.cutter.size, Math.max(0.06, cov.thick), CONFIG.cutter.size);
+  cookie.position.set(G.sx, 0, G.sz);
+  cookieMat.opacity = 1;
+  cookieMat.color.setHex(0xf4dca8);
+  burst(G.sx, 0.3, G.sz, 14, 0xf6d9a0);
+  sfx('stamp'); doShake(CONFIG.shake.stamp);
+  G.thickAvg = cov.thick; G.cover = f; G.baseScaleY = cov.thick;
+  G.bakeP = 0; G.revived = false;
+  placeToppings(G.top, G.ci);
+  setPhase('bake');
+  $('bakeT').textContent = T('bake');
+  $('zone').style.left = CONFIG.bake.zoneMin * 100 + '%';
+  $('zone').style.width = (CONFIG.bake.zoneMax - CONFIG.bake.zoneMin) * 100 + '%';
+}
+
+const cRaw = new THREE.Color(0xf4dca8), cGold = new THREE.Color(0xd49a4a), cBrown = new THREE.Color(0x7a4a22), cBurn = new THREE.Color(0x2a1a10);
+function bakeColor(p) {
+  const B = CONFIG.bake;
+  if (p < B.zoneMin) return cookieMat.color.copy(cRaw).lerp(cGold, p / B.zoneMin * 0.6);
+  if (p < B.zoneMax) return cookieMat.color.copy(cRaw).lerp(cGold, 0.6 + 0.4 * (p - B.zoneMin) / (B.zoneMax - B.zoneMin));
+  if (p < B.burn) return cookieMat.color.copy(cGold).lerp(cBrown, (p - B.zoneMax) / (B.burn - B.zoneMax));
+  return cookieMat.color.copy(cBrown).lerp(cBurn, clamp((p - B.burn) / (1 - B.burn), 0, 1));
+}
+function bakeScore(p) {
+  const B = CONFIG.bake;
+  if (p < B.zoneMin) return 0.2 + 0.5 * p / B.zoneMin;
+  if (p <= B.zoneMax) return 1;
+  if (p <= B.burn) return 1 - 0.5 * (p - B.zoneMax) / (B.burn - B.zoneMax);
+  return 0.05;
+}
+
+function takeOut() {
+  if (G.phase !== 'bake' || G.screen !== 'play') return;
+  const p = Math.min(G.bakeP, 1);
+  if (p > CONFIG.bake.burn && !G.revived) { offerAd(p); return; }
+  finalizeItem(p);
+}
+function offerAd(p) {
+  G.burntP = p;
+  setPhase('ad');
+  show('adOffer', true);
+  sfx('fail'); vib(60);
+  save.burnt++;
+  unlockAch(2);
+  custReact('bad');
+}
+function finalizeItem(p) {
+  const B = CONFIG.bake, it = G.order.items[G.item];
+  const r = orderThick[it.thick], th = G.thickAvg;
+  const dist = th < r[0] ? r[0] - th : th > r[1] ? th - r[1] : 0;
+  const thScore = clamp(1 - dist / 0.12, 0, 1);
+  const topOk = it.top ? (G.top === it.top ? 1 : 0.6) : (G.top ? 0.85 : 1);
+  const acc = clamp(G.cover, 0, 1) * (G.ci === it.shape ? 1 : 0.35) * topOk;
+  const fin = 0.5 * thScore + 0.5 * bakeScore(p);
+  const state = p < B.zoneMin ? 'raw' : p <= B.zoneMax ? 'perfect' : p <= B.burn ? 'perfect' : 'burnt';
+  G.results.push({ acc, fin, perfect: p >= B.zoneMin && p <= B.zoneMax });
+  flash(state === 'perfect' ? 'perfect' : state, 1100);
+  sfx(state === 'perfect' ? 'ding' : 'fail');
+  setPhase('serve');
+  G.serveT = 0;
+  burst(G.sx, 0.5, G.sz, 18, 0xffe08a);
+}
+
+function showResult() {
+  const o = G.order, n = G.results.length;
+  let acc = 0, fin = 0, perf = 0;
+  for (let i = 0; i < n; i++) { acc += G.results[i].acc; fin += G.results[i].fin; if (G.results[i].perfect) perf++; }
+  acc /= n; fin /= n;
+  const spd = clamp(1 - G.t / o.limit, 0, 1);
+  const total = Math.round(100 * (CONFIG.score.wAcc * acc + CONFIG.score.wFin * fin + CONFIG.score.wSpd * spd));
+  let tip = CONFIG.score.tipBase + Math.round(total * CONFIG.score.goldPerPoint);
+  if (o.big) tip *= CONFIG.bonus.bigTip;
+  if (o.daily) tip *= CONFIG.bonus.daily;
+  const lines = [];
+  const perfBonus = perf * CONFIG.bonus.perfectBake;
+  lines.push('🪙 +' + tip + ' ' + T('tipLine'));
+  if (perf) lines.push('🔥 +' + perfBonus + ' ' + T('perfectCnt'));
+  let gold = tip + perfBonus;
+  let xp = CONFIG.xpPerOrder;
+  if (!save.firstDone) { save.firstDone = true; gold += CONFIG.bonus.firstWin; xp = CONFIG.xpPerLevel; lines.push('🎁 +' + CONFIG.bonus.firstWin + ' ' + T('firstWin')); }
+  save.xp += xp;
+  while (save.xp >= CONFIG.xpPerLevel) { save.xp -= CONFIG.xpPerLevel; save.plv++; gold += CONFIG.bonus.levelUp; lines.push('🆙 ' + T('lvUp') + ' Lv' + save.plv + ' 🪙+' + CONFIG.bonus.levelUp); }
+  if (o.daily) { save.daily = dayKey(); unlockAch(6); } else save.level++;
+  for (let i = 0; i < cutters.length; i++) if (!(save.unlocked & (1 << i)) && save.level >= cutUnlockAt[i]) { save.unlocked |= 1 << i; lines.push('🔓 ' + T('unlockCut') + T('c' + i)); }
+  for (let i = 1; i < 4; i++) if (!(save.tops & (1 << i)) && save.level >= topUnlockAt[i]) { save.tops |= 1 << i; lines.push('🔓 ' + T('unlockTop') + T('t' + i)); }
+  save.gold += gold;
+  if (total >= 85) save.streak++; else save.streak = 0;
+  store.save(save);
+  updateGold(); refreshLocks();
+  unlockAch(1);
+  if (o.big) unlockAch(3);
+  if (save.streak >= 3) unlockAch(7);
+  if (save.gold >= 100) unlockAch(4);
+  const stars = total >= 85 ? '⭐⭐⭐' : total >= 60 ? '⭐⭐' : total >= 30 ? '⭐' : '💦';
+  $('rT').textContent = stars + ' ' + total;
+  $('rS').innerHTML = '<span>' + T('acc') + '</span><span>' + Math.round(acc * 100) + '</span><span>' + T('fin') + '</span><span>' + Math.round(fin * 100) + '</span><span>' + T('spd') + '</span><span>' + Math.round(spd * 100) + '</span>';
+  const kind = total >= 80 ? 'good' : total >= 45 ? 'mid' : 'bad';
+  const c = CUST[o.cust][lang];
+  $('rM').innerHTML = CUST[o.cust].e + ' <b>' + c.n + '</b>: ' + c[kind] + '<br>' + lines.join('<br>');
+  custReact(kind);
+  if (kind === 'good') { sfx('win'); vib([30, 40, 30]); burst(0, 1, -2.2, 24, 0xff7a9a); } else if (kind === 'bad') sfx('fail');
+  sfx('coin');
+  G.screen = 'result';
+  show('result', true); show('top', false); show('bot', false);
+}
+
+function pauseGame() { if (G.screen !== 'play') return; joy.on = false; G.screen = 'pause'; show('pause', true); releaseAll(); setSizzle(false); }
+function resumeGame() { if (G.screen !== 'pause') return; G.screen = 'play'; show('pause', false); clockReset = true; }
+function toTitle() {
+  G.screen = 'title';
+  show('title', true); show('pause', false); show('result', false); show('top', false); show('bot', false); show('shop', false); show('adOffer', false);
+  setPhase('pull'); setSizzle(false); releaseAll();
+  refreshTitle();
+}
+const ray = new THREE.Raycaster();
+const ndc = new THREE.Vector2();
+const plane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
+const hitV = new THREE.Vector3();
+function worldPoint(e) {
+  ndc.set((e.clientX / view.w) * 2 - 1, -(e.clientY / view.h) * 2 + 1);
+  ray.setFromCamera(ndc, camera);
+  return ray.ray.intersectPlane(plane, hitV) ? hitV : null;
+}
+
+const slots = [];
+for (let i = 0; i < 3; i++) slots.push({ id: -1, n: 0, idx: new Int16Array(80), w: new Float32Array(80), lx: 0, lz: 0 });
+function slotFor(id) { for (let i = 0; i < slots.length; i++) if (slots[i].id === id) return slots[i]; return null; }
+function releaseSlot(s) {
+  for (let k = 0; k < s.n; k++) grabbed[s.idx[k]] = 0;
+  s.n = 0; s.id = -1;
+}
+function releaseAll() { for (let i = 0; i < slots.length; i++) if (slots[i].id !== -1) releaseSlot(slots[i]); }
+
+function beginGrab(s, x, z) {
+  const r = DC.grabRadius, inv = 1 / (0.5 * r * r);
+  let n = 0;
+  for (let k = 0; k < insideCount && n < 80; k++) {
+    const id = inside[k];
+    if (grabbed[id] || tear[id]) continue;
+    const dx = px[id] - x, dz = pz[id] - z;
+    const w = Math.exp(-(dx * dx + dz * dz) * inv);
+    if (w > 0.08) { s.idx[n] = id; s.w[n] = w; n++; }
+  }
+  if (n < 2) return false;
+  for (let k = 0; k < n; k++) { grabbed[s.idx[k]] = 1; vx[s.idx[k]] = 0; vz[s.idx[k]] = 0; }
+  s.n = n; s.lx = x; s.lz = z;
+  return true;
+}
+
+canvas.addEventListener('pointerdown', (e) => {
+  if (G.screen !== 'play') return;
+  e.preventDefault();
+  const p = worldPoint(e);
+  if (!p) return;
+  if (G.phase === 'pull') {
+    if (slotFor(e.pointerId)) return;
+    const s = slotFor(-1);
+    if (!s) return;
+    s.id = e.pointerId;
+    if (!beginGrab(s, p.x, p.z)) { s.id = -1; return; }
+    try { canvas.setPointerCapture(e.pointerId); } catch (err) {}
+    if (save.pulls === 0 && !G.grabHinted) { G.grabHinted = true; save.pulls = 1; save.gold += 5; store.save(save); updateGold(); flash('chewy', 900); burst(p.x, 0.3, p.z, 10, 0xffd36e); sfx('coin'); vib(15); unlockAch(0); }
+    sfx('pop');
+  } else if (G.phase === 'stamp') {
+    G.sx = clamp(p.x, -3, 3); G.sz = clamp(p.z, -3, 3);
+    G.stampId = e.pointerId;
+    updateGhost();
+  }
+});
+canvas.addEventListener('pointermove', (e) => {
+  if (G.screen !== 'play') return;
+  const p = worldPoint(e);
+  if (!p) return;
+  if (G.phase === 'pull') {
+    const s = slotFor(e.pointerId);
+    if (!s || !s.n) return;
+    let dx = p.x - s.lx, dz = p.z - s.lz;
+    const l = Math.sqrt(dx * dx + dz * dz);
+    if (l > 0.6) { dx *= 0.6 / l; dz *= 0.6 / l; }
+    s.lx += dx; s.lz += dz;
+    G.pullMoved = true;
+    for (let k = 0; k < s.n; k++) {
+      const id = s.idx[k];
+      if (tear[id]) { grabbed[id] = 0; continue; }
+      px[id] += dx * s.w[k] * SET.sens; pz[id] += dz * s.w[k] * SET.sens;
+      const r2 = px[id] * px[id] + pz[id] * pz[id];
+      if (r2 > 12) { const f = Math.sqrt(12 / r2); px[id] *= f; pz[id] *= f; }
+      mx[id] = px[id]; mz[id] = pz[id];
+    }
+  } else if (G.phase === 'stamp' && G.stampId === e.pointerId) {
+    G.sx = clamp(p.x, -3, 3); G.sz = clamp(p.z, -3, 3);
+    updateGhost();
+  }
+});
+function endPointer(e) {
+  const s = slotFor(e.pointerId);
+  if (s) { releaseSlot(s); sfx('boing'); }
+  if (G.screen === 'play' && G.phase === 'stamp' && G.stampId === e.pointerId) { G.stampId = -1; doStamp(); }
+}
+canvas.addEventListener('pointerup', endPointer);
+canvas.addEventListener('pointercancel', endPointer);
+['contextmenu', 'gesturestart', 'gesturechange', 'dblclick'].forEach((n) => document.addEventListener(n, (e) => e.preventDefault()));
+document.addEventListener('touchmove', (e) => { if (e.touches.length > 1 || e.target === canvas) e.preventDefault(); }, { passive: false });
+
+
+function primary() {
+  if (G.screen === 'title') startGame(false);
+  else if (G.screen === 'result') { show('result', false); G.screen = 'play'; show('top', true); show('bot', true); startGame(false); }
+  else if (G.screen === 'play') {
+    if (G.phase === 'pull') toStamp();
+    else if (G.phase === 'stamp') doStamp();
+    else if (G.phase === 'bake') takeOut();
+  } else if (G.screen === 'pause') resumeGame();
+}
+function kneadAgain() { if (G.phase === 'pull' || G.phase === 'stamp') { setPhase('pull'); kneadDough(); doughRefresh(); sfx('pop'); } }
+
+let adTimerShown = -1;
+function showRewardAd(onDone) {
+  G.screen = 'ad';
+  G.adCb = onDone; G.adT = CONFIG.ad.seconds; G.adReady = false; G.adFlee = 0; adTimerShown = -1;
+  const b = $('bAdSkip');
+  b.style.left = ''; b.style.top = ''; b.style.right = '0.8rem'; b.style.bottom = '';
+  b.textContent = T('adSkip') + ' ' + CONFIG.ad.seconds;
+  show('ad', true);
+}
+function adMoveSkip() {
+  const b = $('bAdSkip');
+  const w = view.w, h = view.h;
+  b.style.right = 'auto';
+  b.style.left = Math.floor(Math.random() * Math.max(1, w - 140)) + 'px';
+  b.style.top = Math.floor(80 + Math.random() * Math.max(1, h - 240)) + 'px';
+  G.adFlee++;
+  flash('adFlee', 600);
+}
+function adFinish() {
+  show('ad', false);
+  G.screen = 'play';
+  const cb = G.adCb; G.adCb = null;
+  clockReset = true;
+  if (cb) cb(true);
+}
+function adUpdate(dt) {
+  if (G.adReady) return;
+  G.adT -= dt;
+  const s = Math.max(0, Math.ceil(G.adT));
+  if (s !== adTimerShown) { adTimerShown = s; $('adCount').textContent = s > 0 ? String(s) : '✔'; }
+  if (G.adT <= 0) { G.adReady = true; const b = $('bAdSkip'); b.textContent = T('adClose'); b.style.right = '0.8rem'; b.style.left = ''; b.style.top = '0.8rem'; }
+}
+$('bAdSkip').addEventListener('pointerdown', (e) => { e.preventDefault(); if (!G.adReady && G.adFlee < CONFIG.ad.flee) adMoveSkip(); });
+$('bAdSkip').addEventListener('click', () => { if (G.adReady) adFinish(); else if (G.adFlee < CONFIG.ad.flee) adMoveSkip(); });
+$('bAdWatch').addEventListener('click', () => {
+  show('adOffer', false);
+  showRewardAd((ok) => {
+    if (!ok) return;
+    G.revived = true; G.bakeP = 0.66;
+    bakeColor(0.66);
+    flash('adRevive', 1300); sfx('win');
+    setPhase('bake');
+    finalizeItem(0.66);
+  });
+});
+$('bAdNo').addEventListener('click', () => { show('adOffer', false); setPhase('bake'); finalizeItem(1); });
+
+const decorBtns = [];
+function renderShop() {
+  const box = $('shopList');
+  if (!decorBtns.length) {
+    for (let i = 0; i < 6; i++) { const b = document.createElement('button'); b.className = 'btn'; b.addEventListener('click', () => buyDecor(i)); box.appendChild(b); decorBtns.push(b); }
+  }
+  $('shopGold').textContent = '🪙 ' + save.gold;
+  for (let i = 0; i < 6; i++) {
+    const own = !!(save.decor & (1 << i));
+    decorBtns[i].textContent = T('d' + i) + ' — ' + (own ? '✔ ' + T('owned') : '🪙 ' + CONFIG.decorPrices[i]);
+    decorBtns[i].classList.toggle('on', own);
+  }
+}
+function buyDecor(i) {
+  if (save.decor & (1 << i)) return;
+  if (save.gold < CONFIG.decorPrices[i]) { flash('cantBuy'); sfx('fail'); return; }
+  save.gold -= CONFIG.decorPrices[i];
+  save.decor |= 1 << i;
+  store.save(save);
+  decorApply(); renderShop(); refreshTitle(); updateGold();
+  sfx('coin'); unlockAch(5);
+}
+$('bShop').addEventListener('click', () => { sfx('click'); renderShop(); show('shop', true); });
+$('bShopBack').addEventListener('click', () => { sfx('click'); show('shop', false); refreshTitle(); });
+$('bDaily').addEventListener('click', () => { if (save.daily === dayKey()) { flash('dailyDone'); sfx('fail'); } else { sfx('click'); startGame(true); } });
+
+window.addEventListener('keydown', (e) => {
+  if (rebindBtn) {
+    e.preventDefault();
+    if (e.code !== 'Escape') {
+      for (const k in KB) if (KB[k] === e.code && k !== rebindAct) KB[k] = KB[rebindAct];
+      KB[rebindAct] = e.code;
+      persistSettings();
+    }
+    rebindBtn = null; refreshSettingsText();
+    return;
+  }
+  if (e.repeat || G.screen === 'error') return;
+  const k = e.code;
+  const dlgOpen = !$('dlg').classList.contains('hide');
+  if (k === KB.pause || k === 'Escape') {
+    if (dlgOpen) show('dlg', false);
+    else if (!$('help').classList.contains('hide')) show('help', false);
+    else if (!$('settings').classList.contains('hide')) closeSettings();
+    else if (photo.on) setPhoto(false);
+    else if (G.screen === 'play') pauseGame();
+    else if (G.screen === 'pause') resumeGame();
+    return;
+  }
+  if (dlgOpen || !$('settings').classList.contains('hide')) return;
+  if (k === KB.fs) { toggleFs(); return; }
+  if (k === KB.photo) { setPhoto(!photo.on); return; }
+  if (k === KB.help) { show('help', $('help').classList.contains('hide')); return; }
+  if (k === KB.act || k === 'Enter') { if (G.screen === 'ad' || G.screen === 'intro') return; e.preventDefault(); primary(); }
+  else if (G.screen === 'play') {
+    if (k === KB.knead) kneadAgain();
+    else if (k.startsWith('Digit')) { const n = (+k.slice(5) + 9) % 10; selectCutter(n); }
+    else if (k === KB.top) { let n = (G.top + 1) % 4; while (n && !(save.tops & (1 << n))) n = (n + 1) % 4; selectTop(n); }
+  }
+});
+$('bStart').addEventListener('click', () => { sfx('click'); startGame(false); });
+$('bPause').addEventListener('click', pauseGame);
+$('bResume').addEventListener('click', resumeGame);
+$('bToTitle').addEventListener('click', toTitle);
+$('bSetTitle').addEventListener('click', openSettings);
+$('bSetPause').addEventListener('click', openSettings);
+$('bSetClose').addEventListener('click', closeSettings);
+$('bHelpClose').addEventListener('click', () => show('help', false));
+$('bNext').addEventListener('click', () => { sfx('click'); startGame(false); });
+$('bKnead').addEventListener('click', kneadAgain);
+$('bStamp').addEventListener('click', () => { if (G.phase === 'pull') toStamp(); else if (G.phase === 'stamp') doStamp(); });
+$('bOut').addEventListener('click', takeOut);
+document.addEventListener('visibilitychange', () => { if (document.hidden) pauseGame(); if (audio.ctx) { if (document.hidden) audio.ctx.suspend(); else audio.ctx.resume(); } });
+window.addEventListener('blur', pauseGame);
+
+function endIntro() {
+  if (G.screen !== 'intro') return;
+  G.screen = 'title';
+  show('intro', false);
+}
+$('intro').addEventListener('pointerdown', endIntro);
+
+Object.assign(LANG.ko, {
+  settings: '설정', sMaster: '마스터 볼륨', sBgm: 'BGM 볼륨', sSfx: '효과음 볼륨', sVib: '진동', sQual: '그래픽 품질', sFps: '프레임 제한', sRes: '해상도 스케일',
+  sShadow: '그림자', sPart: '파티클 양', sShake: '화면 흔들림', sJoyOn: '조이스틱(틀 이동)', sJoySize: '조이스틱 크기', sJoyPos: '조이스틱 위치', sJoyFlip: '조이스틱 좌우 반전',
+  sSens: '감도', sOne: '한 손 모드', sCb: '색약 모드', sLang: '언어', sFpsShow: 'FPS 표시', sKeys: 'PC 키 설정', sPhoto: '촬영 모드', sHelp: '단축키 안내',
+  sExport: '세이브 내보내기', sImport: '세이브 가져오기', sReset: '데이터 초기화', sClose: '닫기', on: '켜짐', off: '꺼짐', qLow: '낮음', qMid: '보통', qHigh: '높음', qAuto: '자동',
+  f30: '30', f60: '60', fAuto: '자동', posL: '왼쪽', posR: '오른쪽', noVib: '이 기기는 진동을 지원하지 않아요',
+  kPause: '일시정지', kAct: '확인/찍기/꺼내기', kKnead: '다시 뭉치기', kTop: '토핑 바꾸기', kFs: '전체화면', kPhoto: '촬영 모드', kHelp: '단축키 안내',
+  pressKey: '키를 눌러줘...', resetAsk: '정말 다 지울 거야? 되돌릴 수 없어 ㅋㅋ', yes: '지울래', no: '아니야', copied: '복사했어!', importOk: '가져왔어!', importBad: '세이브가 이상해 ㅋㅋ', importGo: '가져오기', copy: '복사',
+  slow: '슬로모션', angle: '앵글', exit: '나가기', errTitle: '앗, 오류가 났어 ㅋㅋ', restart: '다시 시작', helpBody: '마우스/터치: 반죽 당기기 · 틀 위치 잡기\n멀티터치: 두 손가락 동시 당기기\n1~0: 틀 선택 · 마우스 휠 없음',
+  recovered: '반죽이 너무 끊겨서 다시 뭉쳤어!', dbgGold: '+골드', dbgNext: '다음 주문', dbgGod: '무적', dbgBig: '대형 주문', dbgAll: '전부 해금'
+});
+Object.assign(LANG.en, {
+  settings: 'Settings', sMaster: 'Master volume', sBgm: 'BGM volume', sSfx: 'SFX volume', sVib: 'Vibration', sQual: 'Graphics quality', sFps: 'Frame cap', sRes: 'Resolution scale',
+  sShadow: 'Shadows', sPart: 'Particles', sShake: 'Screen shake', sJoyOn: 'Joystick (move cutter)', sJoySize: 'Joystick size', sJoyPos: 'Joystick position', sJoyFlip: 'Flip joystick X',
+  sSens: 'Sensitivity', sOne: 'One-hand mode', sCb: 'Color-blind mode', sLang: 'Language', sFpsShow: 'Show FPS', sKeys: 'PC key bindings', sPhoto: 'Photo mode', sHelp: 'Shortcuts',
+  sExport: 'Export save', sImport: 'Import save', sReset: 'Reset data', sClose: 'Close', on: 'On', off: 'Off', qLow: 'Low', qMid: 'Medium', qHigh: 'High', qAuto: 'Auto',
+  f30: '30', f60: '60', fAuto: 'Auto', posL: 'Left', posR: 'Right', noVib: 'This device has no vibration',
+  kPause: 'Pause', kAct: 'Confirm/Stamp/Take out', kKnead: 'Knead again', kTop: 'Next topping', kFs: 'Fullscreen', kPhoto: 'Photo mode', kHelp: 'Shortcuts',
+  pressKey: 'Press a key...', resetAsk: 'Erase everything? This cannot be undone lol', yes: 'Erase', no: 'No', copied: 'Copied!', importOk: 'Imported!', importBad: 'Bad save data lol', importGo: 'Import', copy: 'Copy',
+  slow: 'Slow-mo', angle: 'Angle', exit: 'Exit', errTitle: 'Oops, an error happened lol', restart: 'Restart', helpBody: 'Mouse/touch: pull dough, place cutter\nMulti-touch: pull with two fingers\n1-0: pick cutter',
+  recovered: 'Dough was too torn, kneaded again!', dbgGold: '+Gold', dbgNext: 'Next order', dbgGod: 'God', dbgBig: 'Big order', dbgAll: 'Unlock all'
+});
+let SET = save.settings;
+const KB = SET.keys;
+const keyActions = [['pause', 'kPause'], ['act', 'kAct'], ['knead', 'kKnead'], ['top', 'kTop'], ['fs', 'kFs'], ['photo', 'kPhoto'], ['help', 'kHelp']];
+const qNames = ['qLow', 'qMid', 'qHigh', 'qAuto'];
+const schema = [
+  { k: 'mv', t: 'r', min: 0, max: 1, step: 0.05, l: 'sMaster' }, { k: 'bv', t: 'r', min: 0, max: 1, step: 0.05, l: 'sBgm' }, { k: 'sv', t: 'r', min: 0, max: 1, step: 0.05, l: 'sSfx' },
+  { k: 'vib', t: 'b', l: 'sVib', needVib: true },
+  { k: 'q', t: 's', opts: qNames, l: 'sQual' }, { k: 'fps', t: 's', opts: ['f30', 'f60', 'fAuto'], l: 'sFps' },
+  { k: 'rs', t: 'r', min: 0.5, max: 1, step: 0.05, l: 'sRes' }, { k: 'shadow', t: 'b', l: 'sShadow' }, { k: 'part', t: 'r', min: 0, max: 1, step: 0.25, l: 'sPart' }, { k: 'shake', t: 'b', l: 'sShake' },
+  { k: 'joyOn', t: 'b', l: 'sJoyOn' }, { k: 'js', t: 'r', min: 0.6, max: 1.6, step: 0.1, l: 'sJoySize' }, { k: 'jx', t: 's', opts: ['posL', 'posR'], l: 'sJoyPos' }, { k: 'jflip', t: 'b', l: 'sJoyFlip' },
+  { k: 'sens', t: 'r', min: 0.5, max: 2, step: 0.1, l: 'sSens' }, { k: 'one', t: 'b', l: 'sOne' }, { k: 'cb', t: 'b', l: 'sCb' },
+  { k: 'lang', t: 's', opts: ['ko', 'en'], names: ['한국어', 'English'], l: 'sLang' }, { k: 'fpsShow', t: 'b', l: 'sFpsShow' }
+];
+const rowEls = [];
+let rebindBtn = null, rebindAct = '';
+
+function persistSettings() { save.settings = SET; store.save(save); }
+function keyLabel(code) { return code.replace('Key', '').replace('Digit', '').replace('Arrow', '→'); }
+function buildSettings() {
+  const body = $('setBody');
+  body.textContent = '';
+  rowEls.length = 0;
+  for (let i = 0; i < schema.length; i++) {
+    const it = schema[i];
+    if (it.needVib && !vibrateOk) continue;
+    const row = document.createElement('div');
+    row.className = 'srow';
+    const lab = document.createElement('span');
+    row.appendChild(lab);
+    let ctl;
+    if (it.t === 'r') {
+      ctl = document.createElement('input');
+      ctl.type = 'range'; ctl.min = it.min; ctl.max = it.max; ctl.step = it.step; ctl.value = SET[it.k];
+      ctl.addEventListener('input', () => { SET[it.k] = +ctl.value; applySettings(); persistSettings(); });
+    } else {
+      ctl = document.createElement('button');
+      ctl.className = 'btn sm';
+      ctl.addEventListener('click', () => {
+        if (it.t === 'b') SET[it.k] = SET[it.k] ? 0 : 1;
+        else if (it.k === 'lang') SET.lang = SET.lang === 'ko' ? 'en' : 'ko';
+        else SET[it.k] = (SET[it.k] + 1) % it.opts.length;
+        applySettings(); persistSettings(); sfx('click');
+        refreshSettingsText();
+      });
+    }
+    row.appendChild(ctl);
+    body.appendChild(row);
+    rowEls.push({ it, lab, ctl });
+  }
+  const kh = document.createElement('div');
+  kh.className = 'shead'; kh.id = 'kHead';
+  body.appendChild(kh);
+  for (let i = 0; i < keyActions.length; i++) {
+    const row = document.createElement('div');
+    row.className = 'srow';
+    const lab = document.createElement('span');
+    const b = document.createElement('button');
+    b.className = 'btn sm';
+    b.addEventListener('click', () => beginRebind(keyActions[i][0], b));
+    row.append(lab, b);
+    body.appendChild(row);
+    keyActions[i][2] = lab; keyActions[i][3] = b;
+  }
+  const act = document.createElement('div');
+  act.className = 'row';
+  [['bPhoto', 'sPhoto', () => { closeSettings(); setPhoto(true); }], ['bHelp', 'sHelp', () => show('help', true)], ['bExport', 'sExport', openExport], ['bImport', 'sImport', openImport], ['bReset', 'sReset', askReset]].forEach((x) => {
+    const b = document.createElement('button');
+    b.className = 'btn sm'; b.id = x[0]; b.dataset.k = x[1];
+    b.addEventListener('click', x[2]);
+    act.appendChild(b);
+  });
+  body.appendChild(act);
+  refreshSettingsText();
+}
+function refreshSettingsText() {
+  $('setT').textContent = T('settings');
+  $('bSetClose').textContent = T('sClose');
+  for (let i = 0; i < rowEls.length; i++) {
+    const r = rowEls[i], it = r.it;
+    r.lab.textContent = T(it.l);
+    if (it.t === 'b') { r.ctl.textContent = SET[it.k] ? T('on') : T('off'); r.ctl.classList.toggle('on', !!SET[it.k]); }
+    else if (it.t === 's') r.ctl.textContent = it.names ? it.names[SET[it.k] === 'en' ? 1 : 0] : T(it.opts[SET[it.k]]);
+  }
+  if (!vibrateOk) $('vibNote').textContent = T('noVib');
+  $('kHead').textContent = T('sKeys');
+  for (let i = 0; i < keyActions.length; i++) { keyActions[i][2].textContent = T(keyActions[i][1]); keyActions[i][3].textContent = keyLabel(KB[keyActions[i][0]]); }
+  const bs = $('setBody').querySelectorAll('button[data-k]');
+  for (let i = 0; i < bs.length; i++) bs[i].textContent = T(bs[i].dataset.k);
+  $('helpT').textContent = T('sHelp'); $('bHelpClose').textContent = T('sClose');
+  let h = T('helpBody') + '\n';
+  for (let i = 0; i < keyActions.length; i++) h += T(keyActions[i][1]) + ': ' + keyLabel(KB[keyActions[i][0]]) + '\n';
+  $('helpBody').textContent = h;
+}
+function beginRebind(a, b) {
+  if (rebindBtn) rebindBtn.textContent = keyLabel(KB[rebindAct]);
+  rebindBtn = b; rebindAct = a;
+  b.textContent = T('pressKey');
+}
+function openSettings() { buildSettingsOnce(); show('settings', true); }
+function closeSettings() { show('settings', false); rebindBtn = null; }
+let settingsBuilt = false;
+function buildSettingsOnce() { if (!settingsBuilt) { buildSettings(); settingsBuilt = true; } else refreshSettingsText(); }
+
+const qualState = { level: 2, auto: false };
+let lowEnd = false;
+try { lowEnd = (navigator.hardwareConcurrency || 8) <= CONFIG.lowEnd.cores || (navigator.deviceMemory || 8) <= CONFIG.lowEnd.memory; } catch (e) { lowEnd = false; }
+function applyQuality(level) {
+  const q = CONFIG.quality[level];
+  qualState.level = level;
+  view.scale = Math.min(view.scale, q.scale);
+  view.qMax = q.scale;
+  sun.castShadow = !!(q.shadow && SET.shadow);
+  if (sun.shadow.mapSize.x !== q.map) { sun.shadow.mapSize.set(q.map, q.map); if (sun.shadow.map) { sun.shadow.map.dispose(); sun.shadow.map = null; } }
+  fxLimit = Math.max(1, Math.min(FXN, q.fx));
+  resize();
+}
+function applySettings() {
+  audio.vol.master = SET.mv; audio.vol.bgm = SET.bv; audio.vol.sfx = SET.sv; audio.vib = !!SET.vib;
+  audioApplyVol();
+  if (lang !== SET.lang) { lang = SET.lang; refreshTexts(); if (settingsBuilt) refreshSettingsText(); }
+  view.user = SET.rs;
+  qualState.auto = SET.q === 3;
+  applyQuality(SET.q === 3 ? (lowEnd ? 1 : 2) : SET.q);
+  document.body.classList.toggle('cb', !!SET.cb);
+  document.body.classList.toggle('one', !!SET.one);
+  $('fps').classList.toggle('hide', !SET.fpsShow);
+  applyJoy();
+}
+
+const photo = { on: false, angle: 0, slow: false };
+const shake = { amp: 0 };
+const camPresets = [[0, 1, 0.02], [0, 0.55, 0.85], [0.8, 0.7, 0.7]];
+function setPhoto(on) {
+  photo.on = on;
+  document.body.classList.toggle('photo', on);
+  show('photoBar', on);
+  show('safe', on);
+  if (!on) photo.slow = false;
+  $('bSlow').classList.toggle('on', photo.slow);
+  clockReset = true;
+}
+$('bSlow').addEventListener('click', () => { photo.slow = !photo.slow; $('bSlow').classList.toggle('on', photo.slow); });
+$('bAngle').addEventListener('click', () => { photo.angle = (photo.angle + 1) % 3; });
+$('bPhotoExit').addEventListener('click', () => setPhoto(false));
+function photoCam() {
+  const d = camBase.length() * 0.95, p = camPresets[photo.angle];
+  camTP.set(p[0] * d, p[1] * d, p[2] * d);
+  camTL.set(0, 0, -0.1);
+}
+
+function doShake(a) { shake.amp = Math.max(shake.amp, a); }
+function shakeUpdate(dt) {
+  if (shake.amp <= 0.001) { shake.amp = 0; return; }
+  const a = shake.amp * (SET.shake ? 1 : 0);
+  camera.position.x += (Math.random() - 0.5) * a;
+  camera.position.y += (Math.random() - 0.5) * a;
+  shake.amp *= Math.exp(-CONFIG.shake.decay * dt);
+}
+
+const joy = { on: false, id: -1, x: 0, z: 0, cx: 0, cy: 0, r: 1 };
+function applyJoy() {
+  const el = $('joy');
+  const s = CONFIG.joy.base * SET.js;
+  el.style.setProperty('--js', s + 'rem');
+  el.style.left = SET.jx ? 'auto' : '1rem';
+  el.style.right = SET.jx ? '1rem' : 'auto';
+}
+function joyShown() { return (SET.joyOn || SET.one) && G.screen === 'play' && G.phase === 'stamp'; }
+const joyEl = $('joy'), knobEl = $('joyKnob');
+joyEl.addEventListener('pointerdown', (e) => {
+  e.preventDefault(); e.stopPropagation();
+  const r = joyEl.getBoundingClientRect();
+  joy.on = true; joy.id = e.pointerId; joy.cx = r.left + r.width / 2; joy.cy = r.top + r.height / 2; joy.r = r.width / 2;
+  try { joyEl.setPointerCapture(e.pointerId); } catch (err) {}
+  joyMove(e);
+});
+function joyMove(e) {
+  let dx = (e.clientX - joy.cx) / joy.r, dy = (e.clientY - joy.cy) / joy.r;
+  const l = Math.sqrt(dx * dx + dy * dy);
+  if (l > 1) { dx /= l; dy /= l; }
+  if (SET.jflip) dx = -dx;
+  joy.x = l < CONFIG.joy.dead ? 0 : dx; joy.z = l < CONFIG.joy.dead ? 0 : dy;
+  knobEl.style.transform = 'translate(' + (dx * (SET.jflip ? -1 : 1) * 40) + '%,' + dy * 40 + '%)';
+}
+joyEl.addEventListener('pointermove', (e) => { if (joy.on && e.pointerId === joy.id) joyMove(e); });
+function joyEnd(e) { if (e.pointerId !== joy.id) return; joy.on = false; joy.id = -1; joy.x = 0; joy.z = 0; knobEl.style.transform = 'translate(0,0)'; }
+joyEl.addEventListener('pointerup', joyEnd);
+joyEl.addEventListener('pointercancel', joyEnd);
+function joyUpdate(dt) {
+  const vis = joyShown();
+  if (vis === joyEl.classList.contains('hide')) show('joy', vis);
+  if (!vis || !joy.on || (joy.x === 0 && joy.z === 0)) return;
+  G.sx = clamp(G.sx + joy.x * CONFIG.joy.speed * SET.sens * dt, -3, 3);
+  G.sz = clamp(G.sz + joy.z * CONFIG.joy.speed * SET.sens * dt, -3, 3);
+  updateGhost();
+}
+
+let wake = null;
+async function wakeOn() {
+  try { if ('wakeLock' in navigator && !wake) { wake = await navigator.wakeLock.request('screen'); wake.addEventListener('release', () => { wake = null; }); } } catch (e) { wake = null; }
+}
+document.addEventListener('visibilitychange', () => { if (!document.hidden && G.screen === 'play') wakeOn(); });
+
+const fsEl = document.documentElement;
+const fsOk = !!(document.fullscreenEnabled || document.webkitFullscreenEnabled);
+function toggleFs() {
+  try {
+    if (document.fullscreenElement || document.webkitFullscreenElement) { (document.exitFullscreen || document.webkitExitFullscreen).call(document); }
+    else (fsEl.requestFullscreen || fsEl.webkitRequestFullscreen).call(fsEl);
+  } catch (e) {}
+}
+if (!fsOk) { show('bFs', false); } else $('bFs').addEventListener('click', toggleFs);
+
+function showDialog(msg, withInput, okText, cancelText, onOk) {
+  $('dlgMsg').textContent = msg;
+  const ta = $('dlgTa');
+  ta.classList.toggle('hide', !withInput);
+  $('bDlgOk').textContent = okText; $('bDlgNo').textContent = cancelText;
+  show('dlg', true);
+  dlgOk = onOk;
+}
+let dlgOk = null;
+$('bDlgOk').addEventListener('click', () => { const f = dlgOk; if (f && f() === false) return; show('dlg', false); dlgOk = null; });
+$('bDlgNo').addEventListener('click', () => { show('dlg', false); dlgOk = null; });
+function encodeSave() { return btoa(unescape(encodeURIComponent(JSON.stringify(save)))); }
+function openExport() {
+  showDialog(T('sExport'), true, T('copy'), T('sClose'), () => {
+    const ta = $('dlgTa'); ta.select();
+    try { navigator.clipboard.writeText(ta.value); } catch (e) { try { document.execCommand('copy'); } catch (e2) {} }
+    flash('copied');
+    return false;
+  });
+  $('dlgTa').value = encodeSave();
+}
+function openImport() {
+  showDialog(T('sImport'), true, T('importGo'), T('sClose'), () => {
+    try {
+      const d = JSON.parse(decodeURIComponent(escape(atob($('dlgTa').value.trim()))));
+      if (!d || typeof d !== 'object' || !(d.v >= 1) || typeof d.gold !== 'number') throw new Error('bad');
+      save = store.fix(d);
+      SET = save.settings;
+      Object.assign(KB, SET.keys);
+      SET.keys = KB;
+      store.save(save);
+      applySettings(); decorApply(); refreshTexts(); settingsBuilt = false; buildSettingsOnce();
+      flash('importOk');
+    } catch (e) { flash('importBad'); return false; }
+  });
+  $('dlgTa').value = '';
+}
+function askReset() {
+  showDialog(T('resetAsk'), false, T('yes'), T('no'), () => {
+    save = store.fresh();
+    SET = save.settings;
+    Object.assign(KB, SET.keys);
+    SET.keys = KB;
+    store.save(save);
+    applySettings(); decorApply(); refreshTexts(); settingsBuilt = false; buildSettingsOnce();
+    toTitle();
+  });
+}
+
+function showError(msg) {
+  if (G.screen === 'error') return;
+  G.screen = 'error';
+  $('errMsg').textContent = String(msg).slice(0, 300);
+  $('errT').textContent = T('errTitle'); $('bRestart').textContent = T('restart');
+  show('err', true);
+}
+window.addEventListener('error', (e) => showError(e.message || 'error'));
+window.addEventListener('unhandledrejection', (e) => showError(e.reason && e.reason.message ? e.reason.message : 'rejection'));
+$('bRestart').addEventListener('click', () => location.reload());
+
+const dbg = { on: new URLSearchParams(location.search).get('debug') === '1', god: false };
+function dbgBuild() {
+  if (!dbg.on) return;
+  show('dbg', true);
+  const box = $('dbgBtns');
+  const add = (key, fn) => { const b = document.createElement('button'); b.className = 'btn sm'; b.textContent = T(key); b.addEventListener('click', fn); box.appendChild(b); return b; };
+  add('dbgGold', () => { save.gold += 500; store.save(save); updateGold(); });
+  add('dbgNext', () => { save.level++; store.save(save); if (G.screen === 'play') startGame(G.daily); });
+  add('dbgBig', () => { save.level = CONFIG.bigOrders[0]; store.save(save); if (G.screen === 'play') startGame(false); });
+  add('dbgAll', () => { save.unlocked = 1023; save.tops = 15; store.save(save); refreshLocks(); });
+  const g = add('dbgGod', () => { dbg.god = !dbg.god; g.classList.toggle('on', dbg.god); });
+  SET.fpsShow = 1; $('fps').classList.remove('hide');
+}
+const fpsInfo = { acc: 0, n: 0, last: 0 };
+function fpsUpdate(dt) {
+  if (!SET.fpsShow && !dbg.on) return;
+  fpsInfo.acc += dt; fpsInfo.n++;
+  if (fpsInfo.acc < 0.5) return;
+  let s = Math.round(fpsInfo.n / fpsInfo.acc) + ' fps · ' + (dt * 1000).toFixed(1) + ' ms';
+  if (dbg.on) s += ' · dc ' + renderer.info.render.calls + ' · tri ' + renderer.info.render.triangles + ' · x' + view.scale.toFixed(2);
+  $('fps').textContent = s;
+  fpsInfo.acc = 0; fpsInfo.n = 0;
+}
+
+const recover = { t: 0 };
+function recoverCheck(dt) {
+  recover.t += dt;
+  if (recover.t < 1) return;
+  recover.t = 0;
+  if (G.screen !== 'play') return;
+  if (G.phase === 'pull' || G.phase === 'stamp') {
+    let alive = 0;
+    for (let k = 0; k < insideCount; k++) if (!tear[inside[k]]) alive++;
+    if (alive < insideCount * CONFIG.autoRecover.minAlive) { releaseAll(); setPhase('pull'); kneadDough(); doughRefresh(); flash('recovered', 1400); }
+  }
+  if (G.phase !== 'stamp') G.stampId = -1;
+  if (G.phase === 'bake' && doughMesh.visible) doughMesh.visible = false;
+}
+
+let clockReset = true, lastT = 0, acc = 0;
+const perf = { n: 0, sum: 0 };
+function perfSample(dt) {
+  perf.sum += dt; perf.n++;
+  if (perf.n < CONFIG.fps.sample) return;
+  const fps = perf.n / perf.sum;
+  perf.n = 0; perf.sum = 0;
+  if (fps < CONFIG.fps.low && view.scale > CONFIG.pixelRatioMin) { view.scale = Math.max(CONFIG.pixelRatioMin, view.scale - CONFIG.fps.step); resize(); }
+  else if (fps < CONFIG.fps.low && qualState.auto && qualState.level > 0) applyQuality(qualState.level - 1);
+  else if (fps > CONFIG.fps.high && view.scale < (view.qMax || 1)) { view.scale = Math.min(view.qMax || 1, view.scale + CONFIG.fps.step * 0.5); resize(); }
+}
+
+function update(dt) {
+  if (G.screen === 'ad') { adUpdate(dt); fxUpdate(dt); return; }
+  if (G.screen !== 'pause') bgmUpdate();
+  if (G.screen !== 'play' && G.screen !== 'result') { fxUpdate(dt); return; }
+  if (G.screen === 'play') {
+    acc += dt;
+    let steps = 0;
+    while (acc >= CONFIG.fixedStep && steps < CONFIG.maxSteps) {
+      if (G.phase === 'pull' || G.phase === 'stamp') doughStep(CONFIG.fixedStep);
+      acc -= CONFIG.fixedStep; steps++;
+    }
+    if (steps === CONFIG.maxSteps) acc = 0;
+    joyUpdate(dt); recoverCheck(dt);
+    if (G.phase !== 'serve' && G.phase !== 'ad') {
+      G.t += dt;
+      const sec = Math.floor(G.t);
+      if (sec !== G.tSec) { G.tSec = sec; $('tmr').textContent = '⏱ ' + sec; }
+    }
+    if (G.phase === 'pull' || G.phase === 'stamp') {
+      if (dstat.dirty) { doughRefresh(); threadsUpdate(); }
+      if (G.pullMoved) {
+        G.pullSfxT -= dt;
+        if (G.pullSfxT <= 0) { sfx('stretch', dstat.maxS); G.pullSfxT = 0.12; }
+        G.pullMoved = false;
+        if (dstat.maxS > G.maxPull) G.maxPull = dstat.maxS;
+      }
+    } else if (G.phase === 'bake') {
+      G.bakeP += dt / CONFIG.bake.time;
+      const p = Math.min(G.bakeP, 1.0), k = Math.min(p / CONFIG.bake.zoneMax, 1);
+      bakeColor(p);
+      const sz = CONFIG.cutter.size * (1 + 0.08 * k);
+      cookie.scale.set(sz, Math.max(0.06, G.baseScaleY) * (1 + CONFIG.bake.puff * k), sz);
+      $('cur').style.left = p * 100 + '%';
+      setSizzle(true);
+      if (dbg.god && G.bakeP > CONFIG.bake.zoneMax - 0.02) G.bakeP = CONFIG.bake.zoneMax - 0.02;
+      if (G.bakeP >= 1.05) takeOut();
+    } else if (G.phase === 'serve') {
+      setSizzle(false);
+      G.serveT += dt;
+      cookie.rotation.y += dt * 2;
+      if (G.serveT > 1.8) {
+        if (G.item + 1 < G.order.items.length) { G.item++; beginItem(); flash('item', 600); }
+        else showResult();
+      }
+    }
+  } else {
+    cookie.rotation.y += dt * 1.6;
+  }
+  if (topMesh.visible) {
+    const k = cookie.scale.x / CONFIG.cutter.size;
+    topMesh.position.set(cookie.position.x, cookie.position.y + cookie.scale.y + 0.02, cookie.position.z);
+    topMesh.rotation.y = cookie.rotation.y;
+    topMesh.scale.set(k, 1, k);
+  }
+  fxUpdate(dt);
+}
+
+let lastRender = 0;
+function frame(now) {
+  requestAnimationFrame(frame);
+  if (G.screen === 'error') return;
+  const cap = SET.fps === 0 ? 30 : SET.fps === 1 ? 60 : 0;
+  if (cap && now - lastRender < 1000 / cap - 1.5) return;
+  lastRender = now;
+  if (clockReset) { lastT = now; clockReset = false; }
+  let dt = (now - lastT) / 1000;
+  lastT = now;
+  if (dt > CONFIG.maxDelta) dt = CONFIG.maxDelta;
+  if (dt < 0) dt = 0;
+  const ts = photo.slow ? CONFIG.photo.slow : 1;
+  try {
+    update(dt * ts);
+    custUpdate(dt * ts);
+    envUpdate(dt, G.phase === 'bake' && G.screen === 'play' ? 1 : 0);
+    camUpdate(dt);
+    renderer.render(scene, camera);
+    if (G.screen === 'play') perfSample(dt);
+    fpsUpdate(dt);
+  } catch (err) { showError(err && err.message ? err.message : 'error'); }
+}
+
+resize();
+decorApply();
+custSet(0);
+cust.enter = 0;
+applySettings();
+refreshTexts();
+buildSettingsOnce();
+dbgBuild();
+selectCutter(0);
+setPhase('pull');
+G.screen = 'intro';
+show('intro', true);
+setTimeout(endIntro, 2600);
+requestAnimationFrame(frame);
+window.__G = G;
+window.__game = { SET: () => SET, photo, setPhoto, openSettings, cookie, camera, THREE, G, CONFIG, cutters, save: () => save, doughStep, primary, startGame, pauseGame, resumeGame, view, renderer, dstat, beginGrab, slots, takeOut, showRewardAd, endIntro, decorApply, unlockAch };
+</script>
+</body>
+</html>
