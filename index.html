@@ -24,7 +24,7 @@ html,body{margin:0;height:100%;overflow:hidden;background:#ffe9c9;overscroll-beh
 #say{font-weight:800}
 #need{font-size:.85rem;opacity:.85;margin-top:.15rem}
 #bot{display:flex;flex-direction:column;align-items:center;gap:.5rem;padding:.5rem .5rem .8rem}
-#cuts,#acts{display:flex;gap:.5rem;flex-wrap:wrap;justify-content:center}
+#cuts,#tops,#acts,#flv{display:flex;gap:.5rem;flex-wrap:wrap;justify-content:center}
 #bake{width:min(88vw,28rem);background:#fff6e6e6;border-radius:1rem;padding:.6rem .8rem;text-align:center;pointer-events:auto}
 #barw{position:relative;height:1.6rem;border-radius:1rem;background:linear-gradient(90deg,#f5e2b8 0%,#f5e2b8 55%,#d9a05a 55%,#b9742a 75%,#4a2a14 90%,#222 100%);overflow:hidden;margin:.4rem 0}
 #zone{position:absolute;top:0;bottom:0;border:.15rem solid #3bb36b;border-radius:1rem;box-sizing:border-box;background:#3bb36b44}
@@ -37,7 +37,11 @@ html,body{margin:0;height:100%;overflow:hidden;background:#ffe9c9;overscroll-beh
 .row{display:flex;gap:.5rem;flex-wrap:wrap;justify-content:center}
 .sc{display:grid;grid-template-columns:auto auto;gap:.2rem 1rem;font-weight:800;font-size:1.1rem}
 .btn.sm{padding:.25rem .55rem;font-size:.85rem;min-height:48px}
-#tops,#cuts{max-width:min(96vw,34rem)}
+#tops,#cuts,#flv{max-width:min(96vw,34rem)}
+#cuts,#tops,#flv{flex-wrap:nowrap;overflow-x:auto;justify-content:flex-start;pointer-events:auto;scrollbar-width:none;padding:.1rem .3rem .4rem;touch-action:pan-x}
+#cuts::-webkit-scrollbar,#tops::-webkit-scrollbar,#flv::-webkit-scrollbar{display:none}
+#cuts .btn,#tops .btn,#flv .btn{flex:0 0 auto}
+#cuts .btn.hide,#tops .btn.hide{display:none!important}
 #ach{position:absolute;left:50%;top:4.5rem;transform:translate(-50%,-2rem);background:#3b2a1d;color:#ffe08a;padding:.5rem 1rem;border-radius:1rem;font-weight:800;opacity:0;transition:all .25s;pointer-events:none;z-index:9;white-space:nowrap;max-width:94vw;overflow:hidden;text-overflow:ellipsis}
 #ach.show{opacity:1;transform:translate(-50%,0)}
 #adOffer{pointer-events:auto}
@@ -45,12 +49,53 @@ html,body{margin:0;height:100%;overflow:hidden;background:#ffe9c9;overscroll-beh
 #ad .box{width:min(80vw,22rem);aspect-ratio:16/10;background:linear-gradient(135deg,#ff7a59,#ffd36e,#7ad7ff);border-radius:1rem;display:flex;align-items:center;justify-content:center;font-size:2rem;font-weight:900;color:#fff;text-shadow:0 .15rem 0 #0006}
 #bAdSkip{position:absolute;right:.8rem;top:.8rem;background:#ffffffcc;z-index:21;pointer-events:auto}
 #adCount{position:absolute;left:1rem;top:1rem;font-weight:800;background:#0008;padding:.3rem .7rem;border-radius:1rem}
-#shop{z-index:6}
+#shop{z-index:6;overflow-y:auto;justify-content:flex-start;padding-top:calc(.8rem + env(safe-area-inset-top));touch-action:pan-y;pointer-events:auto}
+#title{overflow-y:auto;touch-action:pan-y;pointer-events:auto}
 #result{background:linear-gradient(rgba(255,233,201,0) 0%,rgba(255,233,201,0) 32%,#ffe9c9f2 54%);justify-content:flex-end;padding-bottom:calc(2rem + env(safe-area-inset-bottom))}
 #shopList{display:flex;flex-direction:column;gap:.5rem;width:min(92vw,26rem)}
-#intro{z-index:30;background:#ffd9a8}
-#intro h1{font-size:2.6rem;animation:pop .9s ease-out both}
-#intro small{opacity:.7}
+#intro{z-index:30;background:radial-gradient(ellipse at 50% 45%,#0000 0%,#1a0f0a99 70%,#1a0f0acc 100%);color:#fff3df;justify-content:flex-end;padding-bottom:calc(14vh + env(safe-area-inset-bottom));gap:.6rem}
+#intro .eyebrow{letter-spacing:.7em;font-size:.8rem;font-weight:700;opacity:.8;animation:fade 1.6s .2s both}
+#intro h1{font-size:clamp(2.6rem,11vw,6rem);letter-spacing:.06em;font-weight:900;color:#ffe3b0;text-shadow:0 .1em 0 #7a3b17,0 0 .6em #ff9a3c88;margin:0;animation:rise 1.6s .5s cubic-bezier(.2,.8,.2,1) both}
+#intro .rule{width:min(60vw,22rem);height:2px;background:linear-gradient(90deg,#0000,#ffd08a,#0000);animation:fade 1.6s 1s both}
+#intro .tag{font-size:1rem;opacity:.85;animation:fade 1.6s 1.2s both}
+#coverBtns{display:flex;gap:.6rem;margin-top:.8rem;animation:fade 1.2s 1.6s both}
+#bRush{background:linear-gradient(#ffb04a,#ff7a2e);color:#fff;box-shadow:0 .3rem 0 #b84a12,0 0 1.4rem #ff9a3c88;font-size:1.25rem;padding:.6rem 2.4rem;animation:beat 1.4s ease-in-out infinite}
+@keyframes beat{50%{transform:scale(1.05)}}
+#coverBtns2{display:flex;gap:.6rem;margin-top:.4rem;animation:fade 1.2s 1.9s both}
+#rushSub{font-size:.9rem;opacity:.85;margin:0}
+#bCover{background:#ffe3b0;color:#4a2412;box-shadow:0 .25rem 0 #a8642a;font-size:1.15rem;letter-spacing:.2em;padding:.5rem 2.2rem}
+#coverVer{position:absolute;right:.8rem;bottom:calc(.5rem + env(safe-area-inset-bottom));font-size:.7rem;opacity:.5}
+@keyframes rise{0%{transform:translateY(1.2rem) scale(.96);opacity:0;filter:blur(.4rem)}100%{transform:none;opacity:1;filter:none}}
+@keyframes fade{0%{opacity:0}100%{opacity:1}}
+#slots{z-index:8;background:linear-gradient(#1a0f0acc,#1a0f0a99);color:#fff3df;justify-content:center}
+#slots h1{color:#ffe3b0;text-shadow:none;font-size:1.6rem;letter-spacing:.2em}
+#slotList{display:flex;flex-direction:column;gap:.6rem;width:min(92vw,28rem);pointer-events:auto}
+.slot{display:flex;align-items:center;gap:.7rem;background:#fff3dff0;color:#4a2c1a;border-radius:1rem;padding:.6rem .8rem;box-shadow:0 .25rem 0 #a8642a;min-height:4.4rem;text-align:left;cursor:pointer;touch-action:manipulation}
+.slot:active{transform:translateY(.15rem)}
+.slot .sn{font-size:1.6rem;font-weight:900;color:#c24a2e;min-width:2rem;text-align:center}
+.slot .si{flex:1;font-weight:800;line-height:1.25}
+.slot .si small{display:block;font-weight:600;opacity:.7;font-size:.78rem}
+.slot .sd{min-height:48px;min-width:48px}
+#missions{display:flex;flex-direction:column;gap:.3rem;width:min(92vw,24rem);font-size:.85rem;font-weight:700;text-align:left}
+.ms{display:flex;justify-content:space-between;align-items:center;gap:.5rem;background:#fff6e6cc;border-radius:.7rem;padding:.2rem .6rem}
+.ms .btn{min-height:36px;padding:.1rem .6rem;font-size:.8rem}
+#comboPop{position:absolute;left:50%;top:30%;transform:translate(-50%,-50%) scale(.6);font-size:2rem;font-weight:900;color:#ffe45e;text-shadow:0 .2rem 0 #b4400f,0 0 1rem #ff9a3c;text-align:center;white-space:pre;opacity:0;pointer-events:none;z-index:7}
+#comboPop.big{font-size:3rem;color:#fff08a}
+#comboPop.go{animation:cpop .9s cubic-bezier(.2,1.4,.3,1) both}
+@keyframes cpop{0%{opacity:0;transform:translate(-50%,-50%) scale(.4)}25%{opacity:1;transform:translate(-50%,-50%) scale(1.15)}70%{opacity:1;transform:translate(-50%,-60%) scale(1)}100%{opacity:0;transform:translate(-50%,-90%) scale(1)}}
+#rushHud{position:absolute;left:50%;top:calc(8.9rem + env(safe-area-inset-top));transform:translateX(-50%);display:flex;align-items:baseline;gap:.5rem;background:#2b140ccc;color:#fff3df;border-radius:1rem;padding:.15rem .9rem;pointer-events:none;z-index:6;font-weight:800}
+#rScore{font-size:1.6rem;color:#ffe45e;min-width:3ch;text-align:center}
+#rCombo{font-size:.95rem;color:#ffb04a}
+#tmr.warn{background:#ff5a4a;color:#fff;animation:beat .5s infinite}
+#rush{z-index:9;background:radial-gradient(ellipse at 50% 35%,#7a3a1ccc,#2b140cf2);color:#fff3df;gap:.5rem;overflow-y:auto;touch-action:pan-y;pointer-events:auto;justify-content:center}
+#rkTitle{letter-spacing:.3em;font-size:.85rem;opacity:.8;font-weight:800}
+#rkRank{font-size:1.15rem;font-weight:800;color:#ffd08a}
+#rkType{font-size:clamp(2.2rem,11vw,3.6rem);font-weight:900;line-height:1.1;text-align:center;text-shadow:0 0 1.2rem #0008;animation:rise .8s both}
+#rkLine{font-size:1.05rem;font-weight:700;text-align:center;max-width:min(88vw,26rem);opacity:.95}
+#rkStats{font-weight:700;opacity:.9}
+#rkVs{white-space:pre-line;font-weight:800;color:#ffe45e;text-align:center;min-height:1.2em}
+#rkName{width:min(80vw,16rem);text-align:center;font:inherit;font-weight:800;border:0;border-radius:.8rem;padding:.5rem;background:#fff3dfee;color:#4a2c1a;pointer-events:auto;touch-action:manipulation}
+#rank{font-weight:800;color:#c24a2e}
 #tInfo{font-weight:800}
 @keyframes pop{0%{transform:scale(.2) rotate(-8deg);opacity:0}70%{transform:scale(1.15) rotate(3deg);opacity:1}100%{transform:scale(1) rotate(0)}}
 .srow{display:flex;align-items:center;justify-content:space-between;gap:.6rem;width:100%;font-weight:700}
@@ -81,6 +126,111 @@ body.one #cuts,body.one #tops,body.one #acts{justify-content:flex-end}
 body.one #top{padding-bottom:0}
 @media (max-width:520px){#top{flex-wrap:wrap}#order{order:3;flex-basis:100%;max-width:none}}
 @media (max-height:480px) and (orientation:landscape){#bot{flex-direction:row;flex-wrap:wrap;justify-content:center;align-items:flex-end;padding-bottom:.3rem}#cuts,#tops,#acts{flex-wrap:nowrap}#bot .btn{min-height:48px}#joy{bottom:4rem}}
+.ic{width:1.1em;height:1.1em;display:inline-block;vertical-align:-.2em}
+[data-ic="play"]{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M7%204l13%208-13%208z%22%20fill%3D%22%23000%22%2F%3E%3C%2Fsvg%3E")}
+[data-ic="pause"]{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M6%204h4v16H6zM14%204h4v16h-4z%22%20fill%3D%22%23000%22%2F%3E%3C%2Fsvg%3E")}
+[data-ic="home"]{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M12%203l9%208h-3v9h-5v-6h-2v6H6v-9H3z%22%20fill%3D%22%23000%22%2F%3E%3C%2Fsvg%3E")}
+[data-ic="gear"]{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20fill-rule%3D%22evenodd%22%20fill%3D%22%23000%22%20d%3D%22M19.4%2013a7.6%207.6%200%20000-2l2-1.6-2-3.4-2.4%201a7.5%207.5%200%2000-1.7-1L15%203h-4l-.4%203a7.5%207.5%200%2000-1.7%201l-2.4-1-2%203.4%202%201.6a7.6%207.6%200%20000%202l-2%201.6%202%203.4%202.4-1a7.5%207.5%200%20001.7%201l.4%203h4l.4-3a7.5%207.5%200%20001.7-1l2.4%201%202-3.4zM12%2015.5a3.5%203.5%200%20100-7%203.5%203.5%200%20000%207z%22%2F%3E%3C%2Fsvg%3E")}
+[data-ic="bag"]{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20fill-rule%3D%22evenodd%22%20fill%3D%22%23000%22%20d%3D%22M4%208h16l-1.2%2012.2H5.2zM8.5%208V7a3.5%203.5%200%20017%200v1h-2V7a1.5%201.5%200%2000-3%200v1z%22%2F%3E%3C%2Fsvg%3E")}
+[data-ic="star"]{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M12%202l3%206.5%207%20.9-5.2%204.9%201.4%207L12%2017.8%205.8%2021.3l1.4-7L2%209.4l7-.9z%22%20fill%3D%22%23000%22%2F%3E%3C%2Fsvg%3E")}
+[data-ic="save"]{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20fill-rule%3D%22evenodd%22%20fill%3D%22%23000%22%20d%3D%22M4%203h13l3%203v15H4zM7%203v6h9V3zM8%2014h8v7H8z%22%2F%3E%3C%2Fsvg%3E")}
+[data-ic="bolt"]{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M13%202L5%2014h6l-1%208%208-12h-6z%22%20fill%3D%22%23000%22%2F%3E%3C%2Fsvg%3E")}
+[data-ic="share"]{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%23000%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%3E%3Ccircle%20cx%3D%2218%22%20cy%3D%225.5%22%20r%3D%223%22%2F%3E%3Ccircle%20cx%3D%226%22%20cy%3D%2212%22%20r%3D%223%22%2F%3E%3Ccircle%20cx%3D%2218%22%20cy%3D%2218.5%22%20r%3D%223%22%2F%3E%3Cpath%20d%3D%22M8.6%2010.6l6.8-3.8M8.6%2013.4l6.8%203.8%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E")}
+[data-ic="image"]{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%23000%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%223%22%20y%3D%224%22%20width%3D%2218%22%20height%3D%2216%22%20rx%3D%223%22%2F%3E%3Ccircle%20cx%3D%229%22%20cy%3D%2210%22%20r%3D%221.6%22%2F%3E%3Cpath%20d%3D%22M4%2018l5-5%204%204%203-3%204%204%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E")}
+[data-ic="phone"]{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%23000%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%3E%3Crect%20x%3D%227%22%20y%3D%222.5%22%20width%3D%2210%22%20height%3D%2219%22%20rx%3D%222.5%22%2F%3E%3Cpath%20d%3D%22M11%2018.5h2%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E")}
+[data-ic="link"]{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%23000%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%3E%3Cpath%20d%3D%22M10%2014a4%204%200%20005.7%200l3-3a4%204%200%2000-5.7-5.7l-1%201M14%2010a4%204%200%2000-5.7%200l-3%203a4%204%200%20005.7%205.7l1-1%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E")}
+[data-ic="retry"]{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%23000%22%20stroke-width%3D%222.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M20%2012a8%208%200%2011-2.4-5.7M20%204v5h-5%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E")}
+[data-ic="back"]{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%23000%22%20stroke-width%3D%222.6%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M15%205l-7%207%207%207%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E")}
+[data-ic="expand"]{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%23000%22%20stroke-width%3D%222.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M4%209V4h5M20%209V4h-5M4%2015v5h5M20%2015v5h-5%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E")}
+[data-ic="trash"]{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%23000%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M5%207h14M9%207V4h6v3M7%207l1%2013h8l1-13%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E")}
+[data-ic="check"]{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%23000%22%20stroke-width%3D%223%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M5%2012l5%205%209-10%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E")}
+[data-ic="trophy"]{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%23000%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M7%204h10v5a5%205%200%2001-10%200zM7%206H4v2a3%203%200%20003%203M17%206h3v2a3%203%200%2001-3%203M12%2014v4M8%2021h8M10%2018h4%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E")}
+[data-ic]::before{content:"";display:inline-block;width:1.25em;height:1.25em;vertical-align:-.28em;margin-right:.4em;background:currentColor;-webkit-mask:var(--ic) center/contain no-repeat;mask:var(--ic) center/contain no-repeat}
+[data-ic].io::before{margin:0;width:1.35em;height:1.35em}
+.btn.tile{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.2rem;min-width:4.6rem;min-height:4.2rem;font-size:.76rem;padding:.35rem .5rem;line-height:1.1}
+.btn.tile::before{width:1.9em;height:1.9em;margin:0}
+.btn.big[data-ic]::before{width:1.2em;height:1.2em}
+.btn.sm{display:flex;flex-direction:column;align-items:center;gap:0;min-width:max(3.6rem,48px);padding:.2rem .4rem;line-height:1.1}
+.btn.sm i{font-style:normal;font-size:1.45rem;line-height:1.2}
+.btn.sm span{font-size:.68rem;font-weight:800;white-space:nowrap}
+@media (max-height:520px){.btn.sm span{display:none}.btn.sm{min-width:48px;min-height:48px}}
+#order{display:flex;gap:.6rem;align-items:center}
+#ordTxt{flex:1;text-align:left;min-width:0}
+#avatar{flex:0 0 3rem;width:3rem;height:3rem;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.8rem;background:#ffd9a8;box-shadow:inset 0 -.2rem 0 #0002,0 .15rem 0 #d9a06688}
+.nc{display:inline-flex;align-items:center;gap:.25rem;background:#fff;border-radius:.7rem;padding:.1rem .45rem;margin:.15rem .25rem 0 0;font-weight:800;font-size:.78rem;box-shadow:0 .1rem 0 #d9a06666}
+.nc em{font-style:normal;font-size:1.05rem}
+.th{display:inline-block;width:.9rem;border-radius:.2rem;background:#c9873a}
+.th1{height:.25rem}.th2{height:.5rem}.th3{height:.8rem}
+.nhint{font-weight:700;opacity:.7;font-size:.78rem;margin-top:.15rem}
+#title{background:linear-gradient(#1a0f0a44,#1a0f0acc);color:#fff3df;gap:.7rem;justify-content:flex-start;padding-top:calc(1.4rem + env(safe-area-inset-top));padding-bottom:calc(1rem + env(safe-area-inset-bottom))}
+#title #tT{color:#ffe3b0;text-shadow:0 .12em 0 #7a3b17,0 0 .6em #ff9a3c66;font-size:2rem}
+#title #tS{opacity:.8;font-size:.85rem}
+.panel{width:min(92vw,26rem);background:#fff6e6f2;color:#4a2c1a;border-radius:1.4rem;padding:.8rem;box-shadow:0 .3rem 0 #d9a066,0 1rem 2rem #0005;display:flex;flex-direction:column;gap:.6rem;text-align:left}
+.phead{display:flex;align-items:center;gap:.7rem}
+#rankBadge{flex:0 0 3.6rem;width:3.6rem;height:3.6rem;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ffe9a8,#ffb347 60%,#c9731a);display:flex;align-items:center;justify-content:center;font-size:2rem;box-shadow:inset 0 -.25rem 0 #0003,0 .2rem 0 #a8642a}
+.pinfo{flex:1;min-width:0}
+#title #rank{color:#c24a2e;font-size:1.05rem}
+#xpBar{height:.6rem;border-radius:.4rem;background:#e9d0ac;overflow:hidden;margin-top:.3rem}
+#xpBar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#ffb347,#ff7a59);border-radius:.4rem}
+#tInfo{display:flex;gap:.4rem;flex-wrap:wrap}
+#tInfo .chip{font-size:.8rem;padding:.2rem .6rem}
+#missions{width:100%;color:#4a2c1a}
+.mh{font-weight:900;display:flex;align-items:center;gap:.35rem}
+.ms{display:flex;align-items:center;gap:.5rem;background:#fff;border-radius:.8rem;padding:.3rem .5rem}
+.ms .mi{flex:0 0 1.9rem;height:1.9rem;border-radius:50%;background:#ffe3b0;display:flex;align-items:center;justify-content:center;font-size:1.1rem}
+.ms .mb{flex:1;min-width:0}
+.ms .mt{font-size:.78rem;font-weight:800;line-height:1.15}
+.ms .bar{height:.45rem;border-radius:.3rem;background:#ecd9bb;margin-top:.2rem;overflow:hidden}
+.ms .bar i{display:block;height:100%;background:linear-gradient(90deg,#8fd36a,#4fb83a);border-radius:.3rem}
+.ms.done .mi{background:#b9ecaa}
+.ms .btn{min-height:36px;padding:.1rem .6rem;font-size:.78rem}
+.ms .ok{color:#3d9a2a;font-weight:900}
+#menuRow{display:flex;gap:.5rem;flex-wrap:wrap;justify-content:center;width:min(94vw,26rem)}
+#bStart{min-width:min(80vw,16rem);font-size:1.3rem;padding:.7rem 1.4rem}
+#bRush2{background:linear-gradient(#ffb04a,#ff7a2e);color:#fff;box-shadow:0 .25rem 0 #b84a12;min-width:min(80vw,16rem)}
+#pause{background:#1a0f0aeb;color:#fff3df}
+#pause h1{color:#ffe3b0;text-shadow:none}
+#shop{background:linear-gradient(#1a0f0af8,#1a0f0afc);color:#fff3df}
+#shop h1{color:#ffe3b0;text-shadow:none}
+#shopList{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;width:min(94vw,28rem)}
+.sec{grid-column:1/-1;text-align:left;font-weight:900;color:#ffd08a;margin-top:.4rem;display:flex;align-items:center;gap:.4rem}
+.card{position:relative;pointer-events:auto;display:flex;flex-direction:column;align-items:center;gap:.25rem;background:#fff6e6;color:#4a2c1a;border:0;border-radius:1.1rem;padding:.7rem .4rem .6rem;font:inherit;font-weight:800;box-shadow:0 .25rem 0 #d9a066;cursor:pointer;touch-action:manipulation;min-height:7.4rem}
+.card:active{transform:translateY(.15rem)}
+.card .ci{width:3.4rem;height:3.4rem;border-radius:1rem;background:#ffe3b0;display:flex;align-items:center;justify-content:center;font-size:2rem;box-shadow:inset 0 -.2rem 0 #0001}
+.card .cn{font-size:.85rem;line-height:1.1}
+.card .cp{background:#ffe08a;border-radius:.8rem;padding:.05rem .6rem;font-size:.85rem}
+.card.own{background:#d8f3cb;box-shadow:0 .25rem 0 #8cc57a}
+.card.own .ci{background:#b9ecaa}
+.card.own::after{content:"✓";position:absolute;right:.4rem;top:.4rem;width:1.4rem;height:1.4rem;border-radius:50%;background:#3d9a2a;color:#fff;font-size:.85rem;display:flex;align-items:center;justify-content:center}
+.card.own .cp{background:#3d9a2a;color:#fff}
+.card.wide{grid-column:1/-1;flex-direction:row;text-align:left;gap:.7rem;min-height:5rem;padding:.6rem .8rem}
+.card.wide .ct{flex:1;min-width:0}
+.pips{display:flex;gap:.25rem;margin-top:.25rem}
+.pips b{width:1.1rem;height:.5rem;border-radius:.3rem;background:#e2cfae}
+.pips b.on{background:linear-gradient(90deg,#ffb347,#ff7a59)}
+.card .cd{font-size:.72rem;font-weight:700;opacity:.75}
+.slot .av{flex:0 0 3rem;width:3rem;height:3rem;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ffe9a8,#ffb347 60%,#c9731a);display:flex;align-items:center;justify-content:center;font-size:1.6rem}
+.slot.empty .av{background:#e6d3b4;font-size:1.4rem;color:#a8642a}
+.slot .chips{display:flex;gap:.35rem;flex-wrap:wrap;margin-top:.15rem}
+.slot .chips span{background:#ffe3b0;border-radius:.6rem;padding:.02rem .45rem;font-size:.72rem;font-weight:800}
+.stars{display:flex;gap:.3rem;justify-content:center}
+.stars svg{width:2.6rem;height:2.6rem}
+.stars .on{fill:#ffc83d;stroke:#c9731a}
+.stars .off{fill:#e6d3b4;stroke:#b79a72}
+.rtot{font-size:2.4rem;font-weight:900;color:#c24a2e;line-height:1}
+.bars{display:flex;flex-direction:column;gap:.35rem;width:min(80vw,18rem);font-weight:800;font-size:.9rem}
+.bars .br{display:flex;align-items:center;gap:.5rem}
+.bars .br em{font-style:normal;font-size:1.2rem;width:1.6rem}
+.bars .bt{flex:1;height:.7rem;background:#e2cfae;border-radius:.4rem;overflow:hidden}
+.bars .bt i{display:block;height:100%;background:linear-gradient(90deg,#ffb347,#ff7a59);border-radius:.4rem}
+.bars .bv{width:2.2rem;text-align:right}
+.rm{display:flex;gap:.6rem;align-items:flex-start;text-align:left;background:#fff6e6;border-radius:1rem;padding:.6rem .8rem;max-width:min(92vw,26rem);box-shadow:0 .2rem 0 #d9a066}
+.rm .av{flex:0 0 2.8rem;width:2.8rem;height:2.8rem;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.7rem}
+#rkType .tb{display:inline-flex;align-items:center;justify-content:center;width:5.6rem;height:5.6rem;border-radius:50%;font-size:3.2rem;background:radial-gradient(circle at 35% 30%,#fff3,#0004);box-shadow:0 0 1.6rem var(--c),inset 0 0 0 .2rem var(--c);margin-bottom:.4rem}
+#rkType .tn{display:block}
+#rkStats{display:flex;gap:.4rem;flex-wrap:wrap;justify-content:center}
+#rkStats span{background:#fff3df22;border-radius:.8rem;padding:.15rem .6rem;font-size:.85rem}
+#rush .btn[data-ic]{display:inline-flex;align-items:center}
 </style>
 </head>
 <body>
@@ -89,23 +239,28 @@ body.one #top{padding-bottom:0}
 <div id="ui">
 <div id="top" class="hide">
 <div class="chip" id="gold">0</div>
-<div id="order"><div id="say"></div><div id="need"></div></div>
-<div class="row"><div class="chip" id="tmr">0</div><button class="btn" id="bFs">⛶</button><button class="btn" id="bPause">⏸</button></div>
+<div id="order"><div id="avatar"></div><div id="ordTxt"><div id="say"></div><div id="need"></div></div></div>
+<div class="row"><div class="chip" id="tmr">0</div><button class="btn" id="bFs" data-ic="expand" aria-label="fullscreen"></button><button class="btn" id="bPause" data-ic="pause" aria-label="pause"></button></div>
 </div>
 <div id="bot" class="hide">
 <div id="bake" class="hide"><div id="bakeT"></div><div id="barw"><div id="zone"></div><div id="cur"></div></div><button class="btn big" id="bOut"></button></div>
+<div id="flv"></div>
 <div id="cuts"></div>
 <div id="tops"></div>
 <div id="acts"><button class="btn" id="bKnead"></button><button class="btn big" id="bStamp"></button></div>
 </div>
 </div>
 <div id="toast"></div>
-<div id="title" class="scr"><h1 id="tT"></h1><p id="tS"></p><div id="tInfo"></div><button class="btn big" id="bStart"></button><div class="row"><button class="btn" id="bDaily"></button><button class="btn" id="bShop"></button><button class="btn" id="bSetTitle">⚙️</button></div></div>
-<div id="pause" class="scr hide"><h1 id="pT"></h1><div class="row"><button class="btn big" id="bResume"></button><button class="btn" id="bToTitle"></button><button class="btn" id="bSetPause">⚙️</button></div></div>
+<div id="comboPop"></div>
+<div id="rushHud" class="hide"><b id="rScore">0</b><span id="rCombo"></span></div>
+<div id="rush" class="scr hide"><div id="rkTitle"></div><div id="rkType"></div><div id="rkLine"></div><div id="rkRank"></div><div id="rkStats"></div><div id="rkVs"></div><input id="rkName" maxlength="12" autocomplete="off" aria-label="name"><button class="btn big" id="bShare" data-ic="share"></button><div class="row"><button class="btn" id="bCard" data-ic="image"></button><button class="btn" id="bStory" data-ic="phone"></button><button class="btn" id="bLink" data-ic="link"></button></div><div class="row"><button class="btn" id="bRushAgain" data-ic="retry"></button><button class="btn" id="bRushHome" data-ic="home"></button></div></div>
+<div id="title" class="scr hide"><h1 id="tT"></h1><p id="tS"></p><div class="panel"><div class="phead"><div id="rankBadge"></div><div class="pinfo"><div id="rank"></div><div id="xpBar"><i></i></div></div></div><div id="tInfo"></div><div id="missions"></div></div><button class="btn big" id="bStart" data-ic="play"></button><button class="btn" id="bRush2" data-ic="bolt"></button><div id="menuRow"><button class="btn tile" id="bDaily" data-ic="star"></button><button class="btn tile" id="bShop" data-ic="bag"></button><button class="btn tile" id="bSlotChg" data-ic="save"></button><button class="btn tile" id="bSetTitle" data-ic="gear"></button></div></div>
+<div id="pause" class="scr hide"><h1 id="pT"></h1><div class="row"><button class="btn big tile" id="bResume" data-ic="play"></button><button class="btn tile" id="bToTitle" data-ic="home"></button><button class="btn tile" id="bSetPause" data-ic="gear"></button></div></div>
 <div id="adOffer" class="scr hide"><h1>🔥</h1><p id="adOfferT"></p><div class="row"><button class="btn big" id="bAdWatch"></button><button class="btn" id="bAdNo"></button></div></div>
 <div id="ad" class="scr hide"><div id="adTitle" class="chip" style="color:#4a2c1a"></div><div class="box">🍪 SUPER COOKIE 🍪</div><div id="adCount"></div><button class="btn" id="bAdSkip"></button></div>
-<div id="shop" class="scr hide"><h1 id="shopT"></h1><div id="shopGold" class="chip"></div><div id="shopList"></div><button class="btn big" id="bShopBack"></button></div>
-<div id="intro" class="scr"><h1>🍪 쫀득 쿠키 🍪</h1><small id="bSkipIntro"></small></div>
+<div id="shop" class="scr hide"><h1 id="shopT"></h1><div id="shopGold" class="chip"></div><div id="shopList"></div><button class="btn big" id="bShopBack" data-ic="back"></button></div>
+<div id="intro" class="scr"><div class="eyebrow" id="cvEye"></div><h1 id="cvT"></h1><div class="rule"></div><div class="tag" id="cvTag"></div><div id="rushSub" class="tag"></div><div id="coverBtns"><button class="btn big" id="bRush" data-ic="bolt"></button></div><div id="coverBtns2"><button class="btn" id="bCover" data-ic="save"></button><button class="btn io" id="bSetCover" data-ic="gear" aria-label="settings"></button></div><small id="coverVer">v2</small><span id="bSkipIntro" class="hide"></span></div>
+<div id="slots" class="scr hide"><h1 id="slotT"></h1><div id="slotList"></div><button class="btn" id="bSlotBack" data-ic="back"></button></div>
 <div id="ach"></div>
 <div id="joy" class="hide"><div id="joyKnob"></div></div>
 <div id="settings" class="scr hide"><h1 id="setT"></h1><div id="vibNote"></div><div id="setBody"></div><button class="btn big" id="bSetClose"></button></div>
@@ -116,14 +271,15 @@ body.one #top{padding-bottom:0}
 <div id="fps" class="hide"></div>
 <div id="safe" class="hide"></div>
 <div id="photoBar" class="hide"><button class="btn" id="bAngle">📷</button><button class="btn" id="bSlow">🐢</button><button class="btn big" id="bPhotoExit">✕</button></div>
-<div id="result" class="scr hide"><h1 id="rT"></h1><div class="sc" id="rS"></div><p id="rM"></p><button class="btn big" id="bNext"></button></div>
+<div id="result" class="scr hide"><div id="rT"></div><div class="bars" id="rS"></div><div id="rM"></div><button class="btn big" id="bNext" data-ic="play"></button></div>
 </div>
 <script type="module">
 import * as THREE from './three.module.min.js';
 
 const CONFIG = {
   saveKey: 'jjondeuk_cookie_save',
-  saveVersion: 2,
+  saveVersion: 3,
+  slots: 3,
   fixedStep: 1 / 60,
   maxDelta: 0.1,
   maxSteps: 4,
@@ -131,18 +287,25 @@ const CONFIG = {
   pixelRatioMin: 0.6,
   dough: { grid: 20, radius: 1.6, base: 0.3, spring: 38, damp: 0.86, smooth: 0.18, plastic: 0.82, grabRadius: 0.55, tearRatio: 4.6, minThick: 0.03, maxVerts: 600 },
   cutter: { size: 0.9, samples: 56 },
-  bake: { time: 4.2, zoneMin: 0.55, zoneMax: 0.75, burn: 0.9, puff: 0.35 },
+  bake: { time: 4.2, baseMin: 0.55, baseMax: 0.75, zoneMin: 0.55, zoneMax: 0.75, burn: 0.9, puff: 0.35, zoneStep: 0.03 },
   score: { wAcc: 0.4, wFin: 0.35, wSpd: 0.25, timeLimit: 40, tipBase: 4, firstTip: 30, goldPerPoint: 0.12 },
   camera: { fov: 42, tilt: 1.05, dist: 6.2 },
   fps: { sample: 30, low: 38, high: 56, step: 0.1 },
-  levels: 20,
-  bigOrders: [9, 19],
+  levels: 40,
+  bigOrders: [9, 19, 29, 39],
+  vipOrders: [14, 24, 34],
+  upCost: [60, 120, 200, 320],
+  upMax: 4,
+  tearStep: 0.4,
+  promoStep: 0.12,
+  missionReward: 45,
+  missionAllBonus: 80,
   ad: { seconds: 5, flee: 3 },
   xpPerOrder: 30,
   xpPerLevel: 90,
   bonus: { firstWin: 60, levelUp: 40, perfectBake: 8, bigTip: 3, daily: 3 },
   audio: { master: 0.7, bgm: 0.5, sfx: 0.8, voices: 10 },
-  decorPrices: [40, 70, 110, 160, 220, 300],
+  decorPrices: [40, 70, 110, 160, 220, 300, 380, 470, 580, 800],
   top: { count: 22 },
   defaults: { mv: 0.7, bv: 0.5, sv: 0.8, vib: 1, q: 3, fps: 2, rs: 1, shadow: 1, part: 1, shake: 1, js: 1, jx: 1, jflip: 0, joyOn: 0, sens: 1, one: 0, cb: 0, lang: 'ko', fpsShow: 0, keys: { pause: 'Escape', act: 'Space', knead: 'KeyR', top: 'KeyT', fs: 'KeyF', photo: 'KeyP', help: 'KeyH' } },
   quality: [{ scale: 0.7, shadow: 0, fx: 24, map: 512 }, { scale: 0.85, shadow: 1, fx: 48, map: 1024 }, { scale: 1, shadow: 1, fx: 72, map: 1024 }],
@@ -159,57 +322,102 @@ const lerp = (a, b, t) => a + (b - a) * t;
 
 const LANG = {
   ko: {
-    title: '쫀득 쿠키 가게', sub: '반죽을 쭉 당겨서 틀로 찍고 구워봐 ㅋㅋ', start: '영업 시작!',
-    pause: '잠깐 쉬는 중~', resume: '계속하기', toTitle: '타이틀로', knead: '다시 뭉치기', stamp: '찍기!', out: '꺼내기!',
-    stampOn: '위치 잡고 탭!', bake: '굽는 중... 초록 구간에서 꺼내!', next: '다음 손님', gold: '골드',
+    title: '쫀득 쿠키 가게', eyebrow: 'A BAKERY STORY', tagline: '반죽은 거짓말을 하지 않는다', sub: '오늘도 오븐은 예열 중이다.', start: '영업 시작', coverStart: '시작하기',
+    pause: '잠시 휴식', resume: '계속', toTitle: '로비로', knead: '반죽 뭉치기', stamp: '찍기', out: '꺼내기',
+    stampOn: '위치를 잡고 손을 떼세요', bake: '굽는 중 — 초록 구간에서 꺼내세요', next: '다음 손님', gold: '골드',
     acc: '정확도', fin: '완성도', spd: '속도', total: '총점', tip: '팁',
-    thick: '두툼하게', normal: '적당하게', thin: '얇게', circle: '동글', star: '별', heart: '하트',
-    raw: '덜 익었잖아 ㅋㅋ', perfect: '딱 좋아!', burnt: '탔다 ㅋㅋ', torn: '반죽 끊김! 뭉쳐서 다시!', miss: '틀이 반죽 밖이야 ㅋㅋ',
-    firstTip: '첫 주문 보너스!', pullHint: '반죽을 손가락으로 쭉 당겨봐!', chewy: '쫀득~! +5🪙', tipLine: '팁', perfectCnt: '딱 좋음 보너스',
-    c0: '동글', c1: '별', c2: '하트', c3: '네모', c4: '세모', c5: '꽃', c6: '달', c7: '마름모', c8: '고양이', c9: '물고기',
-    t0: '토핑 없음', t1: '초코칩', t2: '스프링클', t3: '딸기잼', topN: '토핑', skip: '건너뛰기',
-    lvUp: '레벨 업!', unlockCut: '새 틀 해금: ', unlockTop: '새 토핑 해금: ', firstWin: '첫 승리 보너스!', bigOrder: '대형 주문!', dailyOrder: '일일 특별 주문', dailyDone: '오늘 완료!',
-    shop: '가게 꾸미기', back: '뒤로', buy: '구매', owned: '보유', cantBuy: '골드 부족 ㅋㅋ', d0: '체크 식탁보', d1: '귀여운 화분', d2: '반짝 전구', d3: '쿠키 진열대', d4: '쫀득 간판', d5: '푹신 러그',
-    adTitle: '광고', adSkip: '건너뛰기', adClose: '닫기 ✕', adText: '광고 보면 안 탄 걸로 해준대 ㅋㅋ', adWatch: '광고 보고 되돌리기', adNo: '그냥 탄 거 낼래', adRevive: '안 탄 걸로 해줬다 ㅋㅋ', adFlee: '잡아봐 ㅋㅋ',
-    ach: '업적', a0: '첫 쫀득', a1: '첫 주문 완료', a2: '불맛 장인', a3: '대형 주문 클리어', a4: '부자 입문', a5: '인테리어 시작', a6: '일일 특별 주문', a7: '3성 연속',
-    item: '번째 쿠키', pieces: '개 주문', rewards: '보상', xp: '경험치', plv: '가게 레벨', bakeDone: '다 구웠어!', perfectBonus: '딱 좋음 보너스!'
+    thick: '두툼하게', normal: '보통 두께', thin: '얇게',
+    raw: '덜 익었다', perfect: '완벽', burnt: '탔다', torn: '반죽이 끊어졌습니다. 다시 뭉치세요', miss: '틀이 반죽을 벗어났다',
+    firstTip: '첫 주문 보너스', pullHint: '반죽을 잡고 당기세요', chewy: '쫀득하군요. +5🪙', tipLine: '팁', perfectCnt: '완벽한 굽기 보너스',
+    c0: '원형', c1: '별', c2: '하트', c3: '사각', c4: '삼각', c5: '꽃', c6: '달', c7: '마름모', c8: '고양이', c9: '물고기', c10: '클로버', c11: '번개', c12: '구름', c13: '곰', c14: '물방울', c15: '왕관',
+    t0: '토핑 없음', t1: '초코칩', t2: '스프링클', t3: '딸기잼', t4: '아몬드', t5: '코코넛', t6: '블루베리', t7: '금박', t8: '시나몬', topN: '토핑',
+    fl0: '플레인', fl1: '초코', fl2: '말차', fl3: '딸기', flN: '반죽',
+    skip: '건너뛰기', lvUp: '레벨 업', unlockCut: '새 틀 해금: ', unlockTop: '새 토핑 해금: ', unlockFlavor: '새 반죽 해금: ', firstWin: '첫 승리 보너스',
+    bigOrder: '대형 주문', vipOrder: 'VIP 방문', dailyOrder: '일일 특별 주문', dailyDone: '오늘 분량은 끝났다',
+    shop: '가게', shopDecor: '인테리어', shopUp: '장비 업그레이드', back: '뒤로', buy: '구매', owned: '보유', cantBuy: '골드가 부족하다', maxed: '최대',
+    d0: '체크 식탁보', d1: '화분', d2: '전구 장식', d3: '진열대', d4: '간판', d5: '러그', d6: '쿠키 타워', d7: '풍선 장식', d8: '네온 사인', d9: '황금 트로피',
+    u0: '오븐 정비', u1: '반죽대 보강', u2: '간판 홍보', uD0: '완벽 구간이 넓어진다', uD1: '반죽이 잘 끊어지지 않는다', uD2: '팁이 늘어난다',
+    adTitle: '광고', adSkip: '건너뛰기', adClose: '닫기 ✕', adText: '광고 한 편이면 탄 쿠키도 없던 일이 된다. 세상 참 편하다.', adWatch: '광고 보고 없던 일로', adNo: '탄 채로 낸다', adRevive: '없던 일이 되었다', adFlee: '건너뛰기는 쉽게 잡히지 않는다',
+    ach: '업적', a0: '첫 손맛', a1: '개업 첫 주문', a2: '불꽃의 장인', a3: '대형 주문 완수', a4: '첫 저금', a5: '인테리어 입문', a6: '오늘의 특별 손님', a7: '3성 행진',
+    a8: '쿠키 50개', a9: '완벽주의자', a10: '맛의 팔레트', a11: '틀 수집가', a12: '인테리어 디자이너', a13: 'VIP 응대', a14: '만점', a15: '장비 투자',
+    item: '다음 쿠키', pieces: '개 주문', rewards: '보상', xp: '경험치', plv: '가게 Lv', bakeDone: '다 구웠다', perfectBonus: '완벽 보너스',
+    slotT: '세이브 슬롯', slotN: '슬롯', slotEmpty: '비어 있음', slotNew: '새로 시작', slotPlay: '이어하기', slotDel: '삭제', slotDelAsk: '이 슬롯의 진행 상황이 영구 삭제된다. 계속할까?', slotLast: '마지막 플레이', slotOrders: '주문', changeSlot: '슬롯 변경',
+    startShift: '영업 시작', missions: '오늘의 미션', mClaim: '받기', mDone: '완료', mAll: '모든 미션 완료 보너스',
+    m0: '완벽하게 구운 쿠키', m1: '주문 완료', m2: '3성 달성', m3: '쿠키 제작', m4: '반죽 당기기', m5: '토핑 올린 쿠키', m6: '대형·VIP 주문', m7: '팁 누적 골드',
+    rank0: '견습생', rank1: '제빵사', rank2: '숙련 제빵사', rank3: '장인', rank4: '명인', rank5: '전설의 파티시에', stat: '통계', cookiesMade: '만든 쿠키', best: '최고 점수',
+    perfectNote: '굽기 완벽', rawNote: '속이 덜 익었다', burntNote: '탄 맛이 난다', flavorMiss: '반죽 종류가 다르다'
   },
   en: {
-    title: 'Chewy Cookie Shop', sub: 'Stretch the dough, stamp it and bake it lol', start: 'Open Shop!',
-    pause: 'Taking a break~', resume: 'Resume', toTitle: 'Title', knead: 'Knead again', stamp: 'Stamp!', out: 'Take out!',
-    stampOn: 'Aim and tap!', bake: 'Baking... pull it out in the green!', next: 'Next customer', gold: 'Gold',
+    title: 'Chewy Cookie Shop', eyebrow: 'A BAKERY STORY', tagline: 'Dough never lies.', sub: 'The oven is preheating. Again.', start: 'Open shop', coverStart: 'Start',
+    pause: 'Break time', resume: 'Resume', toTitle: 'Lobby', knead: 'Knead again', stamp: 'Stamp', out: 'Take out',
+    stampOn: 'Aim, then release', bake: 'Baking — pull it out in the green', next: 'Next customer', gold: 'Gold',
     acc: 'Accuracy', fin: 'Finish', spd: 'Speed', total: 'Total', tip: 'Tip',
-    thick: 'thick', normal: 'normal', thin: 'thin', circle: 'Round', star: 'Star', heart: 'Heart',
-    raw: 'Undercooked lol', perfect: 'Perfect!', burnt: 'Burnt lol', torn: 'Dough snapped! Knead again!', miss: 'Cutter is off the dough lol',
-    firstTip: 'First order bonus!', pullHint: 'Drag the dough with your finger!', chewy: 'Chewy~! +5🪙', tipLine: 'Tip', perfectCnt: 'Perfect bake bonus',
-    c0: 'Round', c1: 'Star', c2: 'Heart', c3: 'Square', c4: 'Triangle', c5: 'Flower', c6: 'Moon', c7: 'Diamond', c8: 'Cat', c9: 'Fish',
-    t0: 'No topping', t1: 'Choc chips', t2: 'Sprinkles', t3: 'Berry jam', topN: 'Topping', skip: 'Skip',
-    lvUp: 'Level up!', unlockCut: 'New cutter: ', unlockTop: 'New topping: ', firstWin: 'First win bonus!', bigOrder: 'Big order!', dailyOrder: 'Daily special', dailyDone: 'Done today!',
-    shop: 'Decorate shop', back: 'Back', buy: 'Buy', owned: 'Owned', cantBuy: 'Not enough gold lol', d0: 'Checked cloth', d1: 'Cute plant', d2: 'Fairy lights', d3: 'Cookie shelf', d4: 'Chewy sign', d5: 'Fluffy rug',
-    adTitle: 'AD', adSkip: 'Skip', adClose: 'Close ✕', adText: 'Watch an ad and it counts as not burnt lol', adWatch: 'Watch ad to undo', adNo: 'Serve it burnt', adRevive: 'Un-burnt it lol', adFlee: 'Catch me lol',
-    ach: 'Achievements', a0: 'First chew', a1: 'First order', a2: 'Flame master', a3: 'Big order cleared', a4: 'Rich beginner', a5: 'Decor started', a6: 'Daily special', a7: '3 stars streak',
-    item: 'cookie', pieces: 'pieces', rewards: 'Rewards', xp: 'XP', plv: 'Shop Lv', bakeDone: 'Baked!', perfectBonus: 'Perfect bonus!'
+    thick: 'thick', normal: 'regular', thin: 'thin',
+    raw: 'Underbaked', perfect: 'Perfect', burnt: 'Burnt', torn: 'The dough snapped. Knead it again', miss: 'The cutter is off the dough',
+    firstTip: 'First order bonus', pullHint: 'Grab the dough and pull', chewy: 'Nicely chewy. +5🪙', tipLine: 'Tip', perfectCnt: 'Perfect bake bonus',
+    c0: 'Round', c1: 'Star', c2: 'Heart', c3: 'Square', c4: 'Triangle', c5: 'Flower', c6: 'Moon', c7: 'Diamond', c8: 'Cat', c9: 'Fish', c10: 'Clover', c11: 'Bolt', c12: 'Cloud', c13: 'Bear', c14: 'Drop', c15: 'Crown',
+    t0: 'No topping', t1: 'Choc chips', t2: 'Sprinkles', t3: 'Berry jam', t4: 'Almond', t5: 'Coconut', t6: 'Blueberry', t7: 'Gold leaf', t8: 'Cinnamon', topN: 'Topping',
+    fl0: 'Plain', fl1: 'Choco', fl2: 'Matcha', fl3: 'Berry', flN: 'Dough',
+    skip: 'Skip', lvUp: 'Level up', unlockCut: 'New cutter: ', unlockTop: 'New topping: ', unlockFlavor: 'New dough: ', firstWin: 'First win bonus',
+    bigOrder: 'Big order', vipOrder: 'VIP visit', dailyOrder: 'Daily special', dailyDone: 'Done for today',
+    shop: 'Shop', shopDecor: 'Decor', shopUp: 'Equipment upgrades', back: 'Back', buy: 'Buy', owned: 'Owned', cantBuy: 'Not enough gold', maxed: 'Max',
+    d0: 'Checked cloth', d1: 'Plant', d2: 'Fairy lights', d3: 'Display shelf', d4: 'Sign', d5: 'Rug', d6: 'Cookie tower', d7: 'Balloons', d8: 'Neon sign', d9: 'Golden trophy',
+    u0: 'Oven tuning', u1: 'Reinforced table', u2: 'Signage ads', uD0: 'Wider perfect zone', uD1: 'Dough tears less', uD2: 'Bigger tips',
+    adTitle: 'AD', adSkip: 'Skip', adClose: 'Close ✕', adText: 'Watch one ad and the burnt cookie never happened. Convenient world.', adWatch: 'Watch ad, undo it', adNo: 'Serve it burnt', adRevive: 'It never happened', adFlee: 'The skip button is not easy to catch',
+    ach: 'Achievements', a0: 'First touch', a1: 'Grand opening', a2: 'Master of flames', a3: 'Big order cleared', a4: 'First savings', a5: 'Decor beginner', a6: 'Special guest', a7: '3-star streak',
+    a8: '50 cookies', a9: 'Perfectionist', a10: 'Flavor palette', a11: 'Cutter collector', a12: 'Interior designer', a13: 'VIP service', a14: 'Full marks', a15: 'Equipment investor',
+    item: 'Next cookie', pieces: 'pieces', rewards: 'Rewards', xp: 'XP', plv: 'Shop Lv', bakeDone: 'Baked', perfectBonus: 'Perfect bonus',
+    slotT: 'Save slots', slotN: 'Slot', slotEmpty: 'Empty', slotNew: 'New game', slotPlay: 'Continue', slotDel: 'Delete', slotDelAsk: 'This slot will be permanently erased. Continue?', slotLast: 'Last played', slotOrders: 'Orders', changeSlot: 'Change slot',
+    startShift: 'Open shop', missions: 'Daily missions', mClaim: 'Claim', mDone: 'Done', mAll: 'All missions bonus',
+    m0: 'Perfectly baked cookies', m1: 'Orders completed', m2: '3-star results', m3: 'Cookies made', m4: 'Dough pulls', m5: 'Topped cookies', m6: 'Big/VIP orders', m7: 'Tip gold earned',
+    rank0: 'Apprentice', rank1: 'Baker', rank2: 'Senior baker', rank3: 'Artisan', rank4: 'Master', rank5: 'Legendary patissier', stat: 'Stats', cookiesMade: 'Cookies made', best: 'Best score',
+    perfectNote: 'Bake was perfect', rawNote: 'Still raw inside', burntNote: 'Tastes burnt', flavorMiss: 'Wrong dough type'
   }
 };
 let lang = 'ko';
 const T = (k) => LANG[lang][k] || LANG.ko[k] || k;
 
 const store = {
-  mem: null,
+  mem: {},
   ok: true,
-  load() {
-    try {
-      const raw = localStorage.getItem(CONFIG.saveKey);
-      if (!raw) return this.fresh();
-      const d = JSON.parse(raw);
-      if (!d || typeof d !== 'object' || !(d.v >= 1) || typeof d.gold !== 'number') return this.fresh();
-      return this.fix(d);
-    } catch (e) {
-      this.ok = false;
-      return this.mem || this.fresh();
-    }
+  slot: -1,
+  metaKey() { return CONFIG.saveKey + '_meta'; },
+  slotKey(i) { return CONFIG.saveKey + '_s' + i; },
+  read(key) {
+    let raw = null;
+    try { raw = localStorage.getItem(key); } catch (e) { this.ok = false; }
+    if (raw === null && this.mem[key] !== undefined) raw = this.mem[key];
+    if (raw === null || raw === undefined) return null;
+    try { return JSON.parse(raw); } catch (e) { return null; }
   },
-  fresh() { return { v: CONFIG.saveVersion, gold: 0, level: 0, firstDone: false, xp: 0, plv: 1, unlocked: 7, tops: 0, decor: 0, ach: 0, daily: -1, streak: 0, pulls: 0, burnt: 0, settings: Object.assign({}, CONFIG.defaults, { keys: Object.assign({}, CONFIG.defaults.keys) }) }; },
+  write(key, obj) {
+    const raw = JSON.stringify(obj);
+    this.mem[key] = raw;
+    if (!this.ok) return;
+    try { localStorage.setItem(key, raw); } catch (e) { this.ok = false; }
+  },
+  remove(key) {
+    delete this.mem[key];
+    try { localStorage.removeItem(key); } catch (e) { this.ok = false; }
+  },
+  valid(d) { return !!d && typeof d === 'object' && d.v >= 1 && typeof d.gold === 'number' && isFinite(d.gold); },
+  readSlot(i) { const d = this.read(this.slotKey(i)); return this.valid(d) ? this.fix(d) : null; },
+  deleteSlot(i) { this.remove(this.slotKey(i)); if (this.slot === i) this.slot = -1; },
+  boot() {
+    const base = this.fresh();
+    const m = this.read(this.metaKey());
+    if (m && m.settings && typeof m.settings === 'object') { const t = this.fresh(); t.settings = m.settings; base.settings = this.fix(t).settings; }
+    const old = this.read(CONFIG.saveKey);
+    if (this.valid(old) && !this.valid(this.read(this.slotKey(0)))) {
+      const d = this.fix(old);
+      this.write(this.slotKey(0), d);
+      if (!m) base.settings = d.settings;
+    }
+    return base;
+  },
+  fresh() {
+    return { v: CONFIG.saveVersion, gold: 0, level: 0, firstDone: false, xp: 0, plv: 1, unlocked: 7, tops: 0, flavors: 1, decor: 0, ach: 0, daily: -1, streak: 0, pulls: 0, burnt: 0, upOven: 0, upTable: 0, upPromo: 0, cookies: 0, perfects: 0, best: 0, mday: -1, mp0: 0, mp1: 0, mp2: 0, mclaim: 0, created: 0, played: 0, settings: Object.assign({}, CONFIG.defaults, { keys: Object.assign({}, CONFIG.defaults.keys) }) };
+  },
   fix(d) {
     const f = this.fresh();
     for (const k in f) if (k !== 'settings' && (typeof d[k] !== typeof f[k] || (typeof d[k] === 'number' && !isFinite(d[k])))) d[k] = f[k];
@@ -224,15 +432,16 @@ const store = {
     d.settings = st;
     d.v = CONFIG.saveVersion;
     d.gold = Math.max(0, Math.floor(d.gold)); d.level = Math.max(0, Math.floor(d.level));
+    d.unlocked |= 7; d.flavors |= 1;
+    d.upOven = clamp(Math.floor(d.upOven), 0, CONFIG.upMax); d.upTable = clamp(Math.floor(d.upTable), 0, CONFIG.upMax); d.upPromo = clamp(Math.floor(d.upPromo), 0, CONFIG.upMax);
     return d;
   },
   save(d) {
-    this.mem = d;
-    if (!this.ok) return;
-    try { localStorage.setItem(CONFIG.saveKey, JSON.stringify(d)); } catch (e) { this.ok = false; }
+    if (this.slot >= 0) { d.played = Date.now(); this.write(this.slotKey(this.slot), d); }
+    this.write(this.metaKey(), { slot: this.slot, settings: d.settings });
   }
 };
-let save = store.load();
+let save = store.boot();
 
 const canvas = $('c');
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: 'high-performance' });
@@ -424,6 +633,8 @@ function doughStep(dt) {
 }
 
 const doughCol = new THREE.Color(0xf3cf8c), paleCol = new THREE.Color(0xfff0cf);
+const flavorDough = [0xf3cf8c, 0x8a5a3a, 0x9cc46f, 0xf7a8b8], flavorPale = [0xfff0cf, 0xb98058, 0xcfe6a8, 0xffdde4];
+function setFlavorColors(f) { doughCol.setHex(flavorDough[f]); paleCol.setHex(flavorPale[f]); dstat.dirty = true; }
 function doughRefresh() {
   let maxS = 1;
   for (let k = 0; k < insideCount; k++) {
@@ -464,6 +675,17 @@ function polyPts(pts, verts, sub) {
     for (let k = 0; k < sub; k++) { const t = k / sub; pts.push(lerp(verts[i * 2], verts[j * 2], t), lerp(verts[i * 2 + 1], verts[j * 2 + 1], t)); }
   }
 }
+function unionPts(pts, c, flatY) {
+  for (let i = 0; i < 72; i++) {
+    const a = (i / 72) * 6.2832, dx = Math.cos(a), dy = Math.sin(a);
+    let best = 0;
+    for (let k = 0; k < c.length; k += 3) {
+      const ox2 = -c[k], oy2 = -c[k + 1], b = ox2 * dx + oy2 * dy, cc = ox2 * ox2 + oy2 * oy2 - c[k + 2] * c[k + 2], disc = b * b - cc;
+      if (disc >= 0) { const t = -b + Math.sqrt(disc); if (t > best) best = t; }
+    }
+    pts.push(dx * best, Math.max(flatY, dy * best));
+  }
+}
 function shapePts(kind) {
   const pts = [];
   if (kind === 0) for (let i = 0; i < 40; i++) { const a = (i / 40) * 6.2832; pts.push(Math.cos(a), Math.sin(a)); }
@@ -480,10 +702,16 @@ function shapePts(kind) {
     arcPts(pts, 0, cy, r, 152 * d, 388 * d, 20);
     pts.push(0.68, 1.0, Math.cos(72 * d) * r, cy + Math.sin(72 * d) * r);
   }
-  else {
+  else if (kind === 9) {
     for (let i = 0; i <= 16; i++) { const t = -2.2 + (4.4 * i) / 16; pts.push(0.2 + 0.8 * Math.cos(t), 0.5 * Math.sin(t)); }
     pts.push(-0.95, 0.65, -0.7, 0, -0.95, -0.65);
   }
+  else if (kind === 10) for (let i = 0; i < 72; i++) { const t = (i / 72) * 6.2832, r = 0.42 + 0.58 * Math.pow(Math.abs(Math.cos(2 * t)), 0.55); pts.push(Math.cos(t) * r, Math.sin(t) * r); }
+  else if (kind === 11) polyPts(pts, [0.3, 1, -0.5, 0, -0.05, 0, -0.3, -1, 0.5, 0.1, 0.05, 0.1, 0.55, 0.95], 2);
+  else if (kind === 12) unionPts(pts, [-0.55, -0.05, 0.5, 0, 0.2, 0.65, 0.58, -0.05, 0.48], -0.45);
+  else if (kind === 13) unionPts(pts, [0, -0.1, 0.8, -0.62, 0.62, 0.32, 0.62, 0.62, 0.32], -9);
+  else if (kind === 14) for (let i = 0; i < 48; i++) { const t = (i / 48) * 6.2832; pts.push(1.05 * Math.sin(t) * Math.sin(t / 2), -Math.cos(t) * 0.95 - 0.05); }
+  else polyPts(pts, [-0.9, -0.6, -0.9, 0.4, -0.45, -0.05, 0, 0.7, 0.45, -0.05, 0.9, 0.4, 0.9, -0.6], 3);
   return pts;
 }
 function insidePoly(pts, x, y) {
@@ -508,8 +736,8 @@ function buildCutter(kind, nameKey) {
   for (let a = -1; a <= 1.0001; a += 0.16) for (let b = -1; b <= 1.0001; b += 0.16) if (insidePoly(pts, a, b)) sm.push(a, b);
   return { geo, samples: Float32Array.from(sm), nameKey };
 }
-for (let i = 0; i < 10; i++) cutters.push(buildCutter(i, 'c' + i));
-const cutEmoji = ['⚪', '⭐', '❤️', '⬛', '🔺', '🌸', '🌙', '🔷', '🐱', '🐟'];
+for (let i = 0; i < 16; i++) cutters.push(buildCutter(i, 'c' + i));
+const cutEmoji = ['⚪', '⭐', '❤️', '⬛', '🔺', '🌸', '🌙', '🔷', '🐱', '🐟', '🍀', '⚡', '☁️', '🐻', '💧', '👑'];
 
 const cookieMat = new THREE.MeshStandardMaterial({ color: 0xf1c27a, roughness: 0.7, transparent: true, opacity: 1 });
 const cookie = new THREE.Mesh(cutters[0].geo, cookieMat);
@@ -526,11 +754,12 @@ scene.add(topMesh);
 const topDummy = new THREE.Object3D();
 const topCol = new THREE.Color();
 const sprinkleCols = [0xff5d8f, 0x4fc3f7, 0xffd54f, 0x81c784, 0xba68c8];
+const topColors = [0, 0x3a2012, 0, 0xc2183f, 0xd2a679, 0xfdfdf5, 0x3f5bd6, 0xffd54a, 0x8a4b1f];
 function placeToppings(kind, ci) {
   topMesh.visible = kind > 0;
   if (!kind) return;
   const s = cutters[ci].samples, n = s.length / 2, size = CONFIG.cutter.size;
-  const cnt = kind === 3 ? 6 : TC;
+  const cnt = kind === 3 ? 6 : kind === 6 ? 9 : TC;
   for (let i = 0; i < TC; i++) {
     if (i >= cnt) { topDummy.scale.setScalar(0); topDummy.position.set(0, 0, 0); topDummy.rotation.set(0, 0, 0); }
     else {
@@ -539,11 +768,16 @@ function placeToppings(kind, ci) {
       topDummy.rotation.set(0, i * 1.7, 0);
       if (kind === 1) topDummy.scale.set(1.1, 0.7, 1.1);
       else if (kind === 2) topDummy.scale.set(0.45, 0.45, 1.7);
-      else topDummy.scale.set(1.9, 0.6, 1.9);
+      else if (kind === 3) topDummy.scale.set(1.9, 0.6, 1.9);
+      else if (kind === 4) topDummy.scale.set(1.7, 0.45, 0.9);
+      else if (kind === 5) topDummy.scale.set(0.7, 0.5, 0.7);
+      else if (kind === 6) topDummy.scale.set(1.35, 1.35, 1.35);
+      else if (kind === 7) topDummy.scale.set(1.5, 0.18, 1.2);
+      else topDummy.scale.set(0.4, 0.4, 0.4);
     }
     topDummy.updateMatrix();
     topMesh.setMatrixAt(i, topDummy.matrix);
-    topMesh.setColorAt(i, topCol.setHex(kind === 1 ? 0x3a2012 : kind === 2 ? sprinkleCols[i % 5] : 0xc2183f));
+    topMesh.setColorAt(i, topCol.setHex(kind === 2 ? sprinkleCols[i % 5] : topColors[kind]));
   }
   topMesh.instanceMatrix.needsUpdate = true;
   if (topMesh.instanceColor) topMesh.instanceColor.needsUpdate = true;
@@ -608,7 +842,7 @@ function fxUpdate(dt) {
   }
   fxMesh.instanceMatrix.needsUpdate = true;
 }
-function onTear(x, z) { burst(x, 0.2, z, 8, 0xf6d9a0); flash('torn'); sfx('tear'); doShake(CONFIG.shake.tear); }
+function onTear(x, z) { if (G.rush) G.rush.torn++; burst(x, 0.2, z, 8, 0xf6d9a0); flash('torn'); sfx('tear'); doShake(CONFIG.shake.tear); }
 
 const audio = { ctx: null, master: null, bgmG: null, sfxG: null, voices: [], vi: 0, bgmV: [], noiseG: null, filt: null, next: 0, step: 0, vol: { master: CONFIG.audio.master, bgm: CONFIG.audio.bgm, sfx: CONFIG.audio.sfx }, vib: true, sizz: false };
 const vibrateOk = typeof navigator !== 'undefined' && typeof navigator.vibrate === 'function';
@@ -720,12 +954,16 @@ function unlockAudio() { audioInit(); }
 ['pointerdown', 'keydown', 'touchend'].forEach((n) => window.addEventListener(n, unlockAudio, { passive: true }));
 
 const CUST = [
-  { e: '🐰', col: 0xffb6c1, ko: { n: '몽실이', ask: '쫀득하게 부탁해 ㅋㅋ', good: '미쳤다 ㅋㅋ 쫀득 그 자체!', mid: '음~ 나쁘진 않네 ㅋㅋ', bad: '이건 좀 킹받네 ㅋㅋ' }, en: { n: 'Mongsil', ask: 'Make it chewy lol', good: 'Insane lol! So chewy!', mid: 'Hmm not bad lol', bad: 'That is kinda annoying lol' } },
-  { e: '🦦', col: 0xb08968, ko: { n: '쫀돌이', ask: '나 배고파 빨리빨리 ㅋㅋ', good: '와 이건 인정 ㅋㅋ', mid: '먹을 만하다~', bad: '배고픈데 눈물난다 ㅋㅋ' }, en: { n: 'Jjondol', ask: 'So hungry, hurry lol', good: 'Okay respect lol', mid: 'Edible~', bad: 'Hungry and crying lol' } },
-  { e: '🐸', col: 0x8fd694, ko: { n: '호이', ask: '이거 완전 내 취향 각이야 ㅋㅋ', good: '개구리가 울었다 ㅋㅋ 감동', mid: '그럭저럭 폴짝~', bad: '개굴… 이게 뭐야 ㅋㅋ' }, en: { n: 'Hoy', ask: 'This is totally my thing lol', good: 'The frog cried lol', mid: 'So-so, ribbit~', bad: 'Ribbit... what is this lol' } },
-  { e: '🐶', col: 0xf0c987, ko: { n: '뭉치', ask: '꼬리 흔들 준비 완료 ㅋㅋ', good: '꼬리 프로펠러 됐다 ㅋㅋ', mid: '멍! 괜찮아~', bad: '낑… 이건 아니야 ㅋㅋ' }, en: { n: 'Mungchi', ask: 'Tail wag ready lol', good: 'Tail propeller mode lol', mid: 'Woof! It is fine~', bad: 'Whimper... nope lol' } },
-  { e: '🐧', col: 0x9fb8d6, ko: { n: '쫑이', ask: '뒤뚱뒤뚱 기다리는 중 ㅋㅋ', good: '날아갈 것 같아 ㅋㅋ', mid: '뒤뚱~ 오케이', bad: '펭… 실망이야 ㅋㅋ' }, en: { n: 'Jjong', ask: 'Waddling and waiting lol', good: 'I could fly lol', mid: 'Waddle~ okay', bad: 'Peng... disappointed lol' } },
-  { e: '🐱', col: 0x6b6b7a, ko: { n: '깜장이', ask: '흥 별로 기대 안 해 ㅋㅋ', good: '…솔직히 맛있어 ㅋㅋ 인정', mid: '냥 그냥 그래', bad: '내 시간 돌려줘 ㅋㅋ' }, en: { n: 'Kkamjang', ask: 'Hmph, low expectations lol', good: '...honestly tasty lol', mid: 'Meh, so-so', bad: 'Give me my time back lol' } }
+  { e: '🐰', col: 0xffb6c1, ko: { n: '몽실', ask: '쫀득한 걸로 부탁드려요.', good: '이 식감이면 단골 확정이에요.', mid: '나쁘지 않네요. 재방문은 고민해볼게요.', bad: '솔직히 말해도 될까요. 아쉬워요.' }, en: { n: 'Mongsil', ask: 'Something chewy, please.', good: 'This texture makes me a regular.', mid: 'Not bad. I will think about coming back.', bad: 'May I be honest? Disappointing.' } },
+  { e: '🦦', col: 0xb08968, ko: { n: '수달 박', ask: '점심시간이 20분 남았어요. 빠르게요.', good: '이 속도에 이 맛이면 인정입니다.', mid: '먹을 만하네요. 시간도 아슬아슬했고요.', bad: '시간도 날리고 점심도 날렸네요.' }, en: { n: 'Otter Park', ask: 'Twenty minutes of lunch left. Quickly.', good: 'This speed and this taste. Respect.', mid: 'Edible. Timing was tight too.', bad: 'Lost my time and my lunch.' } },
+  { e: '🐸', col: 0x8fd694, ko: { n: '개구리 한', ask: '취향이 확고한 편입니다. 잘 부탁해요.', good: '기준을 넘었어요. 드문 일이죠.', mid: '합격선 근처까지는 왔어요.', bad: '이건 제 기준에 닿지 못했습니다.' }, en: { n: 'Frog Han', ask: 'I have firm tastes. Do your best.', good: 'Above my bar. That is rare.', mid: 'Near the passing line.', bad: 'This did not reach my standard.' } },
+  { e: '🐶', col: 0xf0c987, ko: { n: '댕이', ask: '기대하고 왔어요. 실망시키지 마세요.', good: '꼬리가 멈추질 않네요.', mid: '괜찮아요. 다음에 더 기대할게요.', bad: '…기대가 컸나 봅니다.' }, en: { n: 'Daeng', ask: 'I came with expectations. Do not let me down.', good: 'My tail will not stop.', mid: 'Fine. I expect more next time.', bad: '...Maybe my hopes were too high.' } },
+  { e: '🐧', col: 0x9fb8d6, ko: { n: '펭 선생', ask: '천천히 하셔도 됩니다. 아니, 적당히 빨리요.', good: '이건 칭찬 도장 찍어드립니다.', mid: '무난하군요. 무난한 게 제일 어렵긴 하죠.', bad: '교정이 필요한 쿠키입니다.' }, en: { n: 'Teacher Peng', ask: 'Take your time. Actually, somewhat quickly.', good: 'This earns a gold stamp.', mid: 'Decent. Decent is the hardest part.', bad: 'This cookie needs correction.' } },
+  { e: '🐱', col: 0x6b6b7a, ko: { n: '깜장', ask: '기대는 안 합니다. 그래도 해주세요.', good: '…맛있네요. 인정하죠.', mid: '그럭저럭. 그게 다예요.', bad: '내 시간을 돌려주세요.' }, en: { n: 'Kkamjang', ask: 'I expect nothing. Do it anyway.', good: '...It is good. I admit it.', mid: 'Passable. That is all.', bad: 'Give me my time back.' } },
+  { e: '🦉', col: 0xb89b72, ko: { n: '올빼미 평론가', ask: '오늘은 평론 차 들렀습니다. 기준은 높습니다.', good: '별 셋. 칼럼에 쓰겠습니다.', mid: '별 둘. 가능성은 보입니다.', bad: '별 하나. 칼럼은 정중하게 쓰겠습니다.' }, en: { n: 'Owl Critic', ask: 'I am here to review. My standards are high.', good: 'Three stars. It goes in my column.', mid: 'Two stars. Potential is visible.', bad: 'One star. I will word the column politely.' } },
+  { e: '🦊', col: 0xe8894a, ko: { n: '여우 사장', ask: '납품 건입니다. 품질 일정하게 부탁합니다.', good: '계약 연장합시다.', mid: '이번 건은 무사히 넘어가죠.', bad: '다음 분기 계약은 재검토해야겠네요.' }, en: { n: 'Boss Fox', ask: 'A supply order. Consistent quality, please.', good: 'Let us extend the contract.', mid: 'This one passes.', bad: 'We will have to review next quarter.' } },
+  { e: '🐲', col: 0x7fc8a9, ko: { n: '용 군', ask: '불은 제가 잘 압니다. 굽기는 어떨지 볼까요.', good: '불을 아는 손이군요.', mid: '불 조절이 아직 거칩니다.', bad: '불을 다루려면 더 배우셔야겠어요.' }, en: { n: 'Dragon Yong', ask: 'I know fire well. Let us see your baking.', good: 'You know fire.', mid: 'Your heat control is still rough.', bad: 'You need to learn more about fire.' } },
+  { e: '👻', col: 0xd9e4f5, ko: { n: '야근 유령', ask: '야근 중이라 당이 필요해요. 오래 기다렸습니다.', good: '살 것 같네요. 이미 죽었지만.', mid: '당은 충전됐어요. 영혼은 아직이고요.', bad: '이래서 퇴근이 안 되는 겁니다.' }, en: { n: 'Overtime Ghost', ask: 'Working late, I need sugar. I have waited ages.', good: 'I feel alive. Technically I am not.', mid: 'Sugar restored. Soul not yet.', bad: 'This is why I never get to leave.' } }
 ];
 const custGrp = new THREE.Group();
 const custBodyMat = new THREE.MeshStandardMaterial({ color: 0xffb6c1, roughness: 0.6 });
@@ -745,6 +983,8 @@ scene.add(custGrp);
 const cust = { cur: 0, anim: 0, type: '', enter: 0 };
 function custSet(i) {
   cust.cur = i % CUST.length;
+  $('avatar').textContent = CUST[cust.cur].e;
+  $('avatar').style.background = '#' + CUST[cust.cur].col.toString(16).padStart(6, '0');
   custBodyMat.color.setHex(CUST[cust.cur].col);
   cust.enter = 1; cust.anim = 0; cust.type = '';
 }
@@ -798,7 +1038,33 @@ sign.position.set(0, 1.1, -3.3);
 const rug = new THREE.Mesh(new THREE.CircleGeometry(2.3, 32), new THREE.MeshStandardMaterial({ color: 0xff9fb3 }));
 rug.rotation.x = -Math.PI / 2; rug.position.y = -0.005;
 rug.receiveShadow = true;
-const decorObjs = [null, plant, bulbs, shelf, sign, rug];
+const tower = new THREE.Group();
+for (let i = 0; i < 4; i++) { const m = new THREE.Mesh(new THREE.CylinderGeometry(0.4 - i * 0.07, 0.4 - i * 0.07, 0.12, 14), new THREE.MeshStandardMaterial({ color: i % 2 ? 0xd9a05a : 0xb9742a })); m.position.y = 0.06 + i * 0.13; tower.add(m); }
+tower.position.set(2.1, 0, -1.3);
+const balloons = new THREE.Group();
+[0xff6f91, 0x6fc3ff, 0xffd166].forEach((c, i) => {
+  const b = new THREE.Mesh(new THREE.SphereGeometry(0.22, 12, 10), new THREE.MeshStandardMaterial({ color: c, roughness: 0.3 }));
+  b.scale.y = 1.2; b.position.set(i * 0.3 - 0.3, 1.0 + (i % 2) * 0.15, 0);
+  const l = new THREE.Mesh(new THREE.CylinderGeometry(0.008, 0.008, 1.0, 4), new THREE.MeshBasicMaterial({ color: 0xffffff }));
+  l.position.set(i * 0.3 - 0.3, 0.5, 0);
+  balloons.add(b, l);
+});
+balloons.position.set(-2.2, 0, -2.2);
+const neonTex = makeTexture(256, (g, s) => {
+  g.fillStyle = '#12121c'; g.fillRect(0, 0, s, s);
+  g.shadowColor = '#ff4fa3'; g.shadowBlur = 18; g.fillStyle = '#ff9bd0'; g.font = 'bold 84px system-ui,sans-serif'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText('OPEN', s / 2, s / 2);
+});
+neonTex.wrapS = neonTex.wrapT = THREE.ClampToEdgeWrapping;
+const neon = new THREE.Mesh(new THREE.PlaneGeometry(1.3, 1.3), new THREE.MeshBasicMaterial({ map: neonTex }));
+neon.position.set(1.4, 1.5, -3.2);
+const trophy = new THREE.Group();
+const tBase = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.2, 0.5), new THREE.MeshStandardMaterial({ color: 0x5a3a24 }));
+tBase.position.y = 0.1;
+const tCup = new THREE.Mesh(new THREE.CylinderGeometry(0.22, 0.1, 0.4, 12), new THREE.MeshStandardMaterial({ color: 0xffd54a, metalness: 0.8, roughness: 0.25 }));
+tCup.position.y = 0.45;
+trophy.add(tBase, tCup);
+trophy.position.set(-1.4, 0, -2.6);
+const decorObjs = [null, plant, bulbs, shelf, sign, rug, tower, balloons, neon, trophy];
 for (let i = 1; i < decorObjs.length; i++) { decorObjs[i].visible = false; scene.add(decorObjs[i]); }
 function decorApply() {
   const d = save.decor;
@@ -826,7 +1092,7 @@ const env = { mix: 0, bgA: new THREE.Color(0xffe3bd), bgB: new THREE.Color(0x3a1
 function envUpdate(dt, target) {
   env.mix += (target - env.mix) * (1 - Math.exp(-5 * dt));
   const m = env.mix;
-  oven.visible = m > 0.03;
+  oven.visible = m > 0.03 && G.screen === 'play';
   scene.background.copy(env.bgA).lerp(env.bgB, m);
   hemi.intensity = lerp(1.0, 0.45, m);
   sun.intensity = lerp(1.7, 0.6, m);
@@ -838,6 +1104,10 @@ const camBase = new THREE.Vector3(), camLook = new THREE.Vector3(0, 0, -0.1), ca
 let camReady = false;
 function camUpdate(dt) {
   camTP.copy(camBase); camTL.set(0, 0, -0.1);
+  if (G.screen === 'intro' || G.screen === 'slots') {
+    const a = performance.now() * 0.00028;
+    camTP.set(Math.sin(a) * 1.6, camBase.y * 0.82, camBase.z * 0.92 + Math.cos(a) * 0.5); camTL.set(0, 0.25, -0.5);
+  }
   if (G.screen === 'play' || G.screen === 'result') {
     if (G.phase === 'bake') { camTP.set(0, camBase.y * 0.78, camBase.z * 0.8); camTL.set(0, 0.2, -0.3); }
     else if (G.phase === 'serve') { camTP.copy(camBase).multiplyScalar(0.66); camTL.set(G.sx, 0.1, G.sz + (G.screen === 'result' ? 0.3 : 0.2)); }
@@ -875,10 +1145,8 @@ function threadsUpdate() {
   threadAttr.needsUpdate = true;
 }
 
-const ACH = [
-  { id: 0, k: 'a0' }, { id: 1, k: 'a1' }, { id: 2, k: 'a2' }, { id: 3, k: 'a3' },
-  { id: 4, k: 'a4' }, { id: 5, k: 'a5' }, { id: 6, k: 'a6' }, { id: 7, k: 'a7' }
-];
+const ACH = [];
+for (let i = 0; i < 16; i++) ACH.push({ id: i, k: 'a' + i });
 const achQueue = [];
 let achBusy = false;
 function achNext() {
@@ -905,30 +1173,36 @@ function rng(seed) {
   let s = seed >>> 0;
   return () => { s = (s * 1664525 + 1013904223) >>> 0; return s / 4294967296; };
 }
-const cutUnlockAt = [0, 0, 0, 2, 4, 6, 8, 11, 14, 17];
-const topUnlockAt = [0, 1, 3, 6];
+const cutUnlockAt = [0, 0, 0, 2, 4, 6, 8, 10, 12, 15, 17, 20, 23, 26, 30, 34];
+const topUnlockAt = [0, 1, 3, 6, 9, 13, 18, 24, 31];
+const flavorUnlockAt = [0, 5, 11, 21];
 function unlockedList(mask, n) { const a = []; for (let i = 0; i < n; i++) if (mask & (1 << i)) a.push(i); return a; }
 function dayKey() { const d = new Date(); return Math.floor((d.getTime() - d.getTimezoneOffset() * 60000) / 86400000); }
 function makeOrder(level, daily) {
   const L = level % CONFIG.levels, tier = Math.floor(level / CONFIG.levels);
   const r = rng(daily ? dayKey() * 7919 + 17 : level * 977 + 13);
   const shapes = unlockedList(save.unlocked, cutters.length);
-  const tops = unlockedList(save.tops | 1, 4);
+  const tops = unlockedList(save.tops | 1, topUnlockAt.length);
+  const flv = unlockedList(save.flavors | 1, flavorUnlockAt.length);
   const big = !daily && CONFIG.bigOrders.indexOf(L) >= 0;
-  const n = daily ? 2 : big ? 3 : 1;
+  const vip = !daily && CONFIG.vipOrders.indexOf(L) >= 0;
+  const n = daily ? 2 : big ? 3 : vip ? 2 : 1;
   const items = [];
   for (let i = 0; i < n; i++) {
-    let shape = level === 0 && !daily ? 0 : shapes[Math.floor(r() * shapes.length)];
-    let thick = level === 0 && !daily ? 'normal' : ['normal', 'thick', 'thin'][Math.floor(r() * (L < 2 ? 2 : 3))];
+    const first = level === 0 && !daily;
+    const shape = first ? 0 : shapes[Math.floor(r() * shapes.length)];
+    let thick = first ? 'normal' : ['normal', 'thick', 'thin'][Math.floor(r() * (L < 2 ? 2 : 3))];
     if (L === 1) thick = 'thick';
-    const useTop = daily || L >= 3 ? r() < (daily || big ? 0.8 : 0.5) : false;
+    const useTop = daily || L >= 3 ? r() < (daily || big || vip ? 0.8 : 0.5) : false;
     const top = useTop && tops.length > 1 ? tops[1 + Math.floor(r() * (tops.length - 1))] : 0;
-    items.push({ shape, thick, top });
+    const flavor = !first && L >= 5 && flv.length > 1 && r() < 0.45 ? flv[1 + Math.floor(r() * (flv.length - 1))] : 0;
+    items.push({ shape, thick, top, flavor });
   }
-  return { level, daily: !!daily, big, items, cust: daily ? 5 : level % CUST.length, limit: CONFIG.score.timeLimit * n * (1 + tier * 0.1) };
+  const cust = daily ? 5 : vip ? 6 + (L % 4) : (level % 6);
+  return { level, daily: !!daily, big, vip, items, cust, limit: CONFIG.score.timeLimit * n * (1 + tier * 0.1) * (1 + Math.min(0.3, L * 0.004)) };
 }
 function itemText(it) {
-  return T('c' + it.shape) + ' · ' + T(it.thick) + (it.top ? ' · ' + T('t' + it.top) : '');
+  return (it.flavor ? T('fl' + it.flavor) + ' ' : '') + T('c' + it.shape) + ' · ' + T(it.thick) + (it.top ? ' · ' + T('t' + it.top) : '');
 }
 function needText(o) {
   let s = '';
@@ -937,12 +1211,14 @@ function needText(o) {
 }
 function sayOf(o) {
   const c = CUST[o.cust][lang];
-  return CUST[o.cust].e + ' ' + (o.big ? '🔥 ' + T('bigOrder') + ' ' : o.daily ? '⭐ ' + T('dailyOrder') + ' ' : '') + c.n + ': ' + c.ask;
+  return (o.big ? '🔥 ' + T('bigOrder') + ' ' : o.vip ? '👑 ' + T('vipOrder') + ' ' : o.daily ? '⭐ ' + T('dailyOrder') + ' ' : '') + c.n + ': ' + c.ask;
 }
 
-const G = { screen: 'title', phase: 'pull', ci: 0, top: 0, order: null, item: 0, results: [], t: 0, tSec: -1, bakeP: 0, sx: 0, sz: 0, serveT: 0, grabHinted: false, stampId: -1, revived: false, thickAvg: 0.3, cover: 1, baseScaleY: 0.3, daily: false, adT: 0, adReady: false, adFlee: 0, adCb: null, maxPull: 1, pullSfxT: 0 };
+const G = { flavor: 0, screen: 'title', phase: 'pull', ci: 0, top: 0, order: null, item: 0, results: [], t: 0, tSec: -1, bakeP: 0, sx: 0, sz: 0, serveT: 0, grabHinted: false, stampId: -1, revived: false, thickAvg: 0.3, cover: 1, baseScaleY: 0.3, daily: false, adT: 0, adReady: false, adFlee: 0, adCb: null, maxPull: 1, pullSfxT: 0 };
 const orderThick = { thick: [0.3, 0.5], normal: [0.22, 0.38], thin: [0.05, 0.2] };
-const topEmoji = ['🚫', '🍫', '🌈', '🍓'];
+const topEmoji = ['🚫', '🍫', '🌈', '🍓', '🌰', '🥥', '🫐', '✨', '🟤'];
+const flvEmoji = ['🍪', '🍫', '🍵', '🍓'];
+const flvBtns = [];
 
 let toastTimer = 0;
 function flash(key, ms) {
@@ -965,6 +1241,13 @@ for (let i = 0; i < cutters.length; i++) {
 for (let i = 0; i < 4; i++) {
   const b = document.createElement('button');
   b.className = 'btn sm';
+  b.addEventListener('click', () => { sfx('click'); selectFlavor(i); });
+  $('flv').appendChild(b);
+  flvBtns.push(b);
+}
+for (let i = 0; i < topEmoji.length; i++) {
+  const b = document.createElement('button');
+  b.className = 'btn sm';
   b.addEventListener('click', () => { sfx('click'); selectTop(i); });
   $('tops').appendChild(b);
   topBtns.push(b);
@@ -972,22 +1255,38 @@ for (let i = 0; i < 4; i++) {
 function refreshLocks() {
   for (let i = 0; i < cutBtns.length; i++) {
     const open = !!(save.unlocked & (1 << i));
-    cutBtns[i].textContent = cutEmoji[i] + ' ' + T('c' + i);
+    cutBtns[i].innerHTML = '<i>' + cutEmoji[i] + '</i><span>' + T('c' + i) + '</span>';
     cutBtns[i].classList.toggle('hide', !open);
   }
   for (let i = 0; i < 4; i++) {
+    flvBtns[i].innerHTML = '<i>' + flvEmoji[i] + '</i><span>' + T('fl' + i) + '</span>';
+    flvBtns[i].classList.toggle('hide', !(save.flavors & (1 << i)));
+  }
+  show('flv', (G.phase === 'pull' || G.phase === 'stamp') && save.flavors > 1);
+  for (let i = 0; i < topEmoji.length; i++) {
     const open = i === 0 || !!(save.tops & (1 << i));
-    topBtns[i].textContent = topEmoji[i] + ' ' + T('t' + i);
+    topBtns[i].innerHTML = '<i>' + topEmoji[i] + '</i><span>' + T('t' + i) + '</span>';
     topBtns[i].classList.toggle('hide', !open);
   }
 }
+const RANK_ICON = ['🥄', '🥐', '🍪', '🎂', '🏆', '👑'];
 function refreshTitle() {
-  $('tInfo').textContent = '🪙 ' + save.gold + '  ·  ' + T('plv') + ' ' + save.plv + '  ·  ' + T('ach') + ' ' + countBits(save.ach) + '/8';
-  $('bDaily').textContent = '⭐ ' + T('dailyOrder') + (save.daily === dayKey() ? ' ✔' : '');
-  $('bShop').textContent = '🛋️ ' + T('shop');
+  $('tInfo').innerHTML = '<span class="chip">🪙 ' + save.gold + '</span><span class="chip">🏠 ' + T('plv') + ' ' + save.plv + '</span><span class="chip">🏆 ' + countBits(save.ach) + '/16</span>';
+  $('rankBadge').textContent = RANK_ICON[rankOf()];
+  $('xpBar').firstElementChild.style.width = Math.min(100, Math.round(100 * save.xp / CONFIG.xpPerLevel)) + '%';
+  $('bRush2').textContent = T('rushBtn');
+  $('bSlotChg').textContent = T('changeSlot');
+  $('bRush').textContent = T('rushBtn');
+  $('bShare').textContent = T('rushShare'); $('bCard').textContent = T('rushCard'); $('bStory').textContent = T('rushStory'); $('bLink').textContent = T('rushLink'); $('bRushAgain').textContent = T('rushAgain'); $('bRushHome').textContent = T('rushHome'); $('rkName').placeholder = T('rushName');
+  $('rushSub').textContent = chal.t >= 0 ? fmt('chalType', { n: chal.n || T('chalFriend'), t: T('ty' + chal.t + 'n') }) : chal.s ? fmt('chalBanner', { n: chal.n || T('chalFriend'), s: chal.s }) : T('rushSub');
+  $('rank').textContent = T('rank' + rankOf()) + ' · ' + T('plv') + ' ' + save.plv;
+  $('bDaily').textContent = T('dailyOrder') + (save.daily === dayKey() ? ' ✔' : '');
+  $('bShop').textContent = T('shop');
 }
 function countBits(v) { let n = 0; while (v) { n += v & 1; v >>= 1; } return n; }
 function refreshTexts() {
+  $('cvEye').textContent = T('eyebrow'); $('cvT').textContent = T('title').toUpperCase(); $('cvTag').textContent = T('tagline'); $('bCover').textContent = T('coverStart');
+  $('slotT').textContent = T('slotT'); $('bSlotBack').textContent = T('back');
   $('tT').textContent = T('title'); $('tS').textContent = T('sub'); $('bStart').textContent = T('start');
   $('pT').textContent = T('pause'); $('bResume').textContent = T('resume'); $('bToTitle').textContent = T('toTitle');
   $('bKnead').textContent = T('knead'); $('bOut').textContent = T('out'); $('bNext').textContent = T('next');
@@ -999,10 +1298,17 @@ function refreshTexts() {
 }
 function refreshStampBtn() { $('bStamp').textContent = G.phase === 'stamp' ? T('stampOn') : T('stamp'); }
 function updateGold() { $('gold').textContent = '🪙 ' + save.gold; }
+function nchip(e, t) { return '<span class="nc"><em>' + e + '</em>' + t + '</span>'; }
+function needHtml(it) {
+  let h = nchip(cutEmoji[it.shape], T('c' + it.shape)) + '<span class="nc"><b class="th th' + (it.thick === 'thin' ? 1 : it.thick === 'thick' ? 3 : 2) + '"></b>' + T(it.thick) + '</span>';
+  if (it.top) h += nchip(topEmoji[it.top], T('t' + it.top));
+  if (it.flavor) h += nchip(flvEmoji[it.flavor], T('fl' + it.flavor));
+  return h;
+}
 function updateNeed() {
   if (!G.order) return;
   const it = G.order.items[G.item];
-  $('need').textContent = (G.order.items.length > 1 ? (G.item + 1) + '/' + G.order.items.length + ' · ' : '') + itemText(it) + (G.phase === 'pull' ? '  —  ' + T('pullHint') : '');
+  $('need').innerHTML = (G.order.items.length > 1 ? '<b>' + (G.item + 1) + '/' + G.order.items.length + '</b> ' : '') + needHtml(it) + (G.phase === 'pull' ? '<div class="nhint">' + T('pullHint') + '</div>' : '');
 }
 
 function selectCutter(i) {
@@ -1011,6 +1317,12 @@ function selectCutter(i) {
   cookie.geometry = cutters[i].geo;
   for (let k = 0; k < cutBtns.length; k++) cutBtns[k].classList.toggle('on', k === i);
   if (G.phase === 'stamp') updateGhost();
+}
+function selectFlavor(i) {
+  if (!(save.flavors & (1 << i))) return;
+  G.flavor = i;
+  setFlavorColors(i);
+  for (let k = 0; k < flvBtns.length; k++) flvBtns[k].classList.toggle('on', k === i);
 }
 function selectTop(i) {
   if (i && !(save.tops & (1 << i))) return;
@@ -1021,7 +1333,7 @@ function selectTop(i) {
 function setPhase(p) {
   G.phase = p;
   const pl = p === 'pull' || p === 'stamp';
-  show('cuts', pl); show('tops', pl); show('acts', pl);
+  show('cuts', pl); show('tops', pl); show('acts', pl); show('flv', pl && save.flavors > 1);
   show('bake', p === 'bake');
   cookie.visible = p === 'stamp' || p === 'bake' || p === 'serve';
   topMesh.visible = (p === 'bake' || p === 'serve') && G.top > 0;
@@ -1040,6 +1352,7 @@ function beginItem() {
   cookieMat.color.setHex(0xf1c27a);
   selectCutter(unlockedList(save.unlocked, cutters.length)[0]);
   selectTop(0);
+  selectFlavor(0);
   setPhase('pull');
   doughRefresh();
 }
@@ -1049,8 +1362,9 @@ function startGame(daily) {
   G.item = 0; G.results.length = 0; G.t = 0; G.tSec = -1;
   wakeOn();
   custSet(G.order.cust);
+  missionRoll();
   G.screen = 'play';
-  show('title', false); show('result', false); show('pause', false); show('shop', false);
+  show('title', false); show('slots', false); show('result', false); show('pause', false); show('shop', false);
   show('top', true); show('bot', true);
   $('say').textContent = sayOf(G.order);
   beginItem();
@@ -1074,6 +1388,7 @@ function doStamp() {
   cookie.position.set(G.sx, 0, G.sz);
   cookieMat.opacity = 1;
   cookieMat.color.setHex(0xf4dca8);
+  flavorTint();
   burst(G.sx, 0.3, G.sz, 14, 0xf6d9a0);
   sfx('stamp'); doShake(CONFIG.shake.stamp);
   G.thickAvg = cov.thick; G.cover = f; G.baseScaleY = cov.thick;
@@ -1086,6 +1401,11 @@ function doStamp() {
 }
 
 const cRaw = new THREE.Color(0xf4dca8), cGold = new THREE.Color(0xd49a4a), cBrown = new THREE.Color(0x7a4a22), cBurn = new THREE.Color(0x2a1a10);
+function flavorTint() {
+  cRaw.setHex(flavorPale[G.flavor]);
+  cGold.setHex(flavorDough[G.flavor]).multiplyScalar(0.85);
+  cBrown.copy(cGold).multiplyScalar(0.55);
+}
 function bakeColor(p) {
   const B = CONFIG.bake;
   if (p < B.zoneMin) return cookieMat.color.copy(cRaw).lerp(cGold, p / B.zoneMin * 0.6);
@@ -1104,7 +1424,7 @@ function bakeScore(p) {
 function takeOut() {
   if (G.phase !== 'bake' || G.screen !== 'play') return;
   const p = Math.min(G.bakeP, 1);
-  if (p > CONFIG.bake.burn && !G.revived) { offerAd(p); return; }
+  if (!G.rush && p > CONFIG.bake.burn && !G.revived) { offerAd(p); return; }
   finalizeItem(p);
 }
 function offerAd(p) {
@@ -1117,16 +1437,23 @@ function offerAd(p) {
   custReact('bad');
 }
 function finalizeItem(p) {
+  if (G.rush) { rushFinalize(p); return; }
   const B = CONFIG.bake, it = G.order.items[G.item];
   const r = orderThick[it.thick], th = G.thickAvg;
   const dist = th < r[0] ? r[0] - th : th > r[1] ? th - r[1] : 0;
   const thScore = clamp(1 - dist / 0.12, 0, 1);
   const topOk = it.top ? (G.top === it.top ? 1 : 0.6) : (G.top ? 0.85 : 1);
-  const acc = clamp(G.cover, 0, 1) * (G.ci === it.shape ? 1 : 0.35) * topOk;
+  const flvOk = G.flavor === (it.flavor || 0) ? 1 : 0.55;
+  const acc = clamp(G.cover, 0, 1) * (G.ci === it.shape ? 1 : 0.35) * topOk * flvOk;
+  if (flvOk < 1) flash('flavorMiss', 1100);
+  save.cookies++;
+  missionAdd(3, 1);
+  if (G.top) missionAdd(5, 1);
+  if (p >= B.zoneMin && p <= B.zoneMax) { save.perfects++; missionAdd(0, 1); }
   const fin = 0.5 * thScore + 0.5 * bakeScore(p);
   const state = p < B.zoneMin ? 'raw' : p <= B.zoneMax ? 'perfect' : p <= B.burn ? 'perfect' : 'burnt';
   G.results.push({ acc, fin, perfect: p >= B.zoneMin && p <= B.zoneMax });
-  flash(state === 'perfect' ? 'perfect' : state, 1100);
+  if (flvOk === 1) flash(state === 'perfect' ? 'perfect' : state, 1100);
   sfx(state === 'perfect' ? 'ding' : 'fail');
   setPhase('serve');
   G.serveT = 0;
@@ -1142,6 +1469,8 @@ function showResult() {
   const total = Math.round(100 * (CONFIG.score.wAcc * acc + CONFIG.score.wFin * fin + CONFIG.score.wSpd * spd));
   let tip = CONFIG.score.tipBase + Math.round(total * CONFIG.score.goldPerPoint);
   if (o.big) tip *= CONFIG.bonus.bigTip;
+  if (o.vip) tip *= 2;
+  tip = Math.round(tip * (1 + save.upPromo * CONFIG.promoStep));
   if (o.daily) tip *= CONFIG.bonus.daily;
   const lines = [];
   const perfBonus = perf * CONFIG.bonus.perfectBake;
@@ -1154,21 +1483,34 @@ function showResult() {
   while (save.xp >= CONFIG.xpPerLevel) { save.xp -= CONFIG.xpPerLevel; save.plv++; gold += CONFIG.bonus.levelUp; lines.push('🆙 ' + T('lvUp') + ' Lv' + save.plv + ' 🪙+' + CONFIG.bonus.levelUp); }
   if (o.daily) { save.daily = dayKey(); unlockAch(6); } else save.level++;
   for (let i = 0; i < cutters.length; i++) if (!(save.unlocked & (1 << i)) && save.level >= cutUnlockAt[i]) { save.unlocked |= 1 << i; lines.push('🔓 ' + T('unlockCut') + T('c' + i)); }
-  for (let i = 1; i < 4; i++) if (!(save.tops & (1 << i)) && save.level >= topUnlockAt[i]) { save.tops |= 1 << i; lines.push('🔓 ' + T('unlockTop') + T('t' + i)); }
+  for (let i = 1; i < topUnlockAt.length; i++) if (!(save.tops & (1 << i)) && save.level >= topUnlockAt[i]) { save.tops |= 1 << i; lines.push('🔓 ' + T('unlockTop') + T('t' + i)); }
+  for (let i = 1; i < flavorUnlockAt.length; i++) if (!(save.flavors & (1 << i)) && save.level >= flavorUnlockAt[i]) { save.flavors |= 1 << i; lines.push('🔓 ' + T('unlockFlavor') + T('fl' + i)); }
+  save.best = Math.max(save.best, total);
+  if (!o.daily) missionAdd(1, 1);
+  if (total >= 85) missionAdd(2, 1);
+  if (o.big || o.vip) missionAdd(6, 1);
+  missionAdd(7, tip);
   save.gold += gold;
   if (total >= 85) save.streak++; else save.streak = 0;
   store.save(save);
   updateGold(); refreshLocks();
   unlockAch(1);
   if (o.big) unlockAch(3);
+  if (o.vip) unlockAch(13);
+  if (total >= 98) unlockAch(14);
+  achCheck();
   if (save.streak >= 3) unlockAch(7);
   if (save.gold >= 100) unlockAch(4);
   const stars = total >= 85 ? '⭐⭐⭐' : total >= 60 ? '⭐⭐' : total >= 30 ? '⭐' : '💦';
-  $('rT').textContent = stars + ' ' + total;
-  $('rS').innerHTML = '<span>' + T('acc') + '</span><span>' + Math.round(acc * 100) + '</span><span>' + T('fin') + '</span><span>' + Math.round(fin * 100) + '</span><span>' + T('spd') + '</span><span>' + Math.round(spd * 100) + '</span>';
+  const sn = total >= 85 ? 3 : total >= 60 ? 2 : total >= 30 ? 1 : 0;
+  let sv = '';
+  for (let i = 0; i < 3; i++) sv += '<svg viewBox="0 0 24 24" class="' + (i < sn ? 'on' : 'off') + '" stroke-width="1.4" stroke-linejoin="round"><path d="M12 2l3 6.5 7 .9-5.2 4.9 1.4 7L12 17.8 5.8 21.3l1.4-7L2 9.4l7-.9z"/></svg>';
+  $('rT').innerHTML = '<div class="stars">' + sv + '</div><div class="rtot">' + total + '</div>';
+  const brow = (e, k, v) => '<div class="br"><em>' + e + '</em><span>' + T(k) + '</span><div class="bt"><i style="width:' + Math.round(v * 100) + '%"></i></div><span class="bv">' + Math.round(v * 100) + '</span></div>';
+  $('rS').innerHTML = brow('🎯', 'acc', acc) + brow('🔥', 'fin', fin) + brow('⚡', 'spd', spd);
   const kind = total >= 80 ? 'good' : total >= 45 ? 'mid' : 'bad';
   const c = CUST[o.cust][lang];
-  $('rM').innerHTML = CUST[o.cust].e + ' <b>' + c.n + '</b>: ' + c[kind] + '<br>' + lines.join('<br>');
+  $('rM').innerHTML = '<div class="rm"><div class="av" style="background:#' + CUST[o.cust].col.toString(16).padStart(6, '0') + '">' + CUST[o.cust].e + '</div><div><b>' + c.n + '</b>: ' + c[kind] + '<br>' + lines.join('<br>') + '</div></div>';
   custReact(kind);
   if (kind === 'good') { sfx('win'); vib([30, 40, 30]); burst(0, 1, -2.2, 24, 0xff7a9a); } else if (kind === 'bad') sfx('fail');
   sfx('coin');
@@ -1179,10 +1521,11 @@ function showResult() {
 function pauseGame() { if (G.screen !== 'play') return; joy.on = false; G.screen = 'pause'; show('pause', true); releaseAll(); setSizzle(false); }
 function resumeGame() { if (G.screen !== 'pause') return; G.screen = 'play'; show('pause', false); clockReset = true; }
 function toTitle() {
+  if (G.rush) { backToCover(); return; }
   G.screen = 'title';
-  show('title', true); show('pause', false); show('result', false); show('top', false); show('bot', false); show('shop', false); show('adOffer', false);
+  show('title', true); show('slots', false); show('pause', false); show('result', false); show('top', false); show('bot', false); show('shop', false); show('adOffer', false);
   setPhase('pull'); setSizzle(false); releaseAll();
-  refreshTitle();
+  refreshTitle(); renderMissions();
 }
 const ray = new THREE.Raycaster();
 const ndc = new THREE.Vector2();
@@ -1232,7 +1575,7 @@ canvas.addEventListener('pointerdown', (e) => {
     if (!beginGrab(s, p.x, p.z)) { s.id = -1; return; }
     try { canvas.setPointerCapture(e.pointerId); } catch (err) {}
     if (save.pulls === 0 && !G.grabHinted) { G.grabHinted = true; save.pulls = 1; save.gold += 5; store.save(save); updateGold(); flash('chewy', 900); burst(p.x, 0.3, p.z, 10, 0xffd36e); sfx('coin'); vib(15); unlockAch(0); }
-    sfx('pop');
+    sfx('pop'); missionAdd(4, 1);
   } else if (G.phase === 'stamp') {
     G.sx = clamp(p.x, -3, 3); G.sz = clamp(p.z, -3, 3);
     G.stampId = e.pointerId;
@@ -1276,7 +1619,9 @@ document.addEventListener('touchmove', (e) => { if (e.touches.length > 1 || e.ta
 
 
 function primary() {
-  if (G.screen === 'title') startGame(false);
+  if (G.screen === 'intro') startRush();
+  else if (G.screen === 'title') startGame(false);
+  else if (G.screen === 'result' && G.rush) startRush();
   else if (G.screen === 'result') { show('result', false); G.screen = 'play'; show('top', true); show('bot', true); startGame(false); }
   else if (G.screen === 'play') {
     if (G.phase === 'pull') toStamp();
@@ -1333,17 +1678,30 @@ $('bAdWatch').addEventListener('click', () => {
 });
 $('bAdNo').addEventListener('click', () => { show('adOffer', false); setPhase('bake'); finalizeItem(1); });
 
-const decorBtns = [];
+
 function renderShop() {
   const box = $('shopList');
-  if (!decorBtns.length) {
-    for (let i = 0; i < 6; i++) { const b = document.createElement('button'); b.className = 'btn'; b.addEventListener('click', () => buyDecor(i)); box.appendChild(b); decorBtns.push(b); }
-  }
+  box.textContent = '';
+  const nd = CONFIG.decorPrices.length;
   $('shopGold').textContent = '🪙 ' + save.gold;
-  for (let i = 0; i < 6; i++) {
-    const own = !!(save.decor & (1 << i));
-    decorBtns[i].textContent = T('d' + i) + ' — ' + (own ? '✔ ' + T('owned') : '🪙 ' + CONFIG.decorPrices[i]);
-    decorBtns[i].classList.toggle('on', own);
+  const sec = (t) => { const d = document.createElement('div'); d.className = 'sec'; d.textContent = t; box.appendChild(d); };
+  sec('🛋️ ' + T('secDecor'));
+  for (let i = 0; i < nd; i++) {
+    const own = !!(save.decor & (1 << i)), b = document.createElement('button');
+    b.className = 'card' + (own ? ' own' : '');
+    b.innerHTML = '<div class="ci">' + DEC_ICON[i] + '</div><div class="cn">' + T('d' + i) + '</div><div class="cp">' + (own ? T('owned') : '🪙 ' + CONFIG.decorPrices[i]) + '</div>';
+    b.addEventListener('click', () => buyDecor(i));
+    box.appendChild(b);
+  }
+  sec('⚙️ ' + T('secUp'));
+  for (let i = 0; i < 3; i++) {
+    const lv = save[upKeys[i]], max = lv >= CONFIG.upMax, b = document.createElement('button');
+    let pips = '';
+    for (let k = 0; k < CONFIG.upMax; k++) pips += '<b class="' + (k < lv ? 'on' : '') + '"></b>';
+    b.className = 'card wide' + (max ? ' own' : '');
+    b.innerHTML = '<div class="ci">' + UP_ICON[i] + '</div><div class="ct"><div class="cn">' + T('u' + i) + ' <small>Lv' + lv + '</small></div><div class="cd">' + T('uD' + i) + '</div><div class="pips">' + pips + '</div></div><div class="cp">' + (max ? T('maxed') : '🪙 ' + CONFIG.upCost[lv]) + '</div>';
+    b.addEventListener('click', () => buyUp(i));
+    box.appendChild(b);
   }
 }
 function buyDecor(i) {
@@ -1353,7 +1711,7 @@ function buyDecor(i) {
   save.decor |= 1 << i;
   store.save(save);
   decorApply(); renderShop(); refreshTitle(); updateGold();
-  sfx('coin'); unlockAch(5);
+  sfx('coin'); unlockAch(5); achCheck();
 }
 $('bShop').addEventListener('click', () => { sfx('click'); renderShop(); show('shop', true); });
 $('bShopBack').addEventListener('click', () => { sfx('click'); show('shop', false); refreshTitle(); });
@@ -1378,6 +1736,7 @@ window.addEventListener('keydown', (e) => {
     else if (!$('help').classList.contains('hide')) show('help', false);
     else if (!$('settings').classList.contains('hide')) closeSettings();
     else if (photo.on) setPhoto(false);
+    else if (G.screen === 'slots') $('bSlotBack').click();
     else if (G.screen === 'play') pauseGame();
     else if (G.screen === 'pause') resumeGame();
     return;
@@ -1386,11 +1745,11 @@ window.addEventListener('keydown', (e) => {
   if (k === KB.fs) { toggleFs(); return; }
   if (k === KB.photo) { setPhoto(!photo.on); return; }
   if (k === KB.help) { show('help', $('help').classList.contains('hide')); return; }
-  if (k === KB.act || k === 'Enter') { if (G.screen === 'ad' || G.screen === 'intro') return; e.preventDefault(); primary(); }
+  if (k === KB.act || k === 'Enter') { if (G.screen === 'ad') return; e.preventDefault(); primary(); }
   else if (G.screen === 'play') {
     if (k === KB.knead) kneadAgain();
     else if (k.startsWith('Digit')) { const n = (+k.slice(5) + 9) % 10; selectCutter(n); }
-    else if (k === KB.top) { let n = (G.top + 1) % 4; while (n && !(save.tops & (1 << n))) n = (n + 1) % 4; selectTop(n); }
+    else if (k === KB.top) { let n = (G.top + 1) % topEmoji.length; while (n && !(save.tops & (1 << n))) n = (n + 1) % topEmoji.length; selectTop(n); }
   }
 });
 $('bStart').addEventListener('click', () => { sfx('click'); startGame(false); });
@@ -1408,12 +1767,476 @@ $('bOut').addEventListener('click', takeOut);
 document.addEventListener('visibilitychange', () => { if (document.hidden) pauseGame(); if (audio.ctx) { if (document.hidden) audio.ctx.suspend(); else audio.ctx.resume(); } });
 window.addEventListener('blur', pauseGame);
 
-function endIntro() {
-  if (G.screen !== 'intro') return;
-  G.screen = 'title';
-  show('intro', false);
+function endIntro() { if (G.screen === 'intro') openSlots(); }
+$('bCover').addEventListener('click', () => { sfx('click'); endIntro(); });
+$('bSetCover').addEventListener('click', openSettings);
+const MISSION_TARGET = [3, 3, 2, 6, 10, 3, 1, 60];
+let missionKinds = [0, 1, 3];
+function missionRoll() {
+  const d = dayKey();
+  if (save.mday !== d) { save.mday = d; save.mp0 = 0; save.mp1 = 0; save.mp2 = 0; save.mclaim = 0; }
+  const r = rng(d * 31 + 7), pool = [0, 1, 2, 3, 4, 5, 6, 7];
+  missionKinds = [];
+  for (let i = 0; i < 3; i++) missionKinds.push(pool.splice(Math.floor(r() * pool.length), 1)[0]);
 }
-$('intro').addEventListener('pointerdown', endIntro);
+function missionAdd(kind, n) {
+  missionRoll();
+  for (let j = 0; j < 3; j++) if (missionKinds[j] === kind) save['mp' + j] = Math.min(MISSION_TARGET[kind], save['mp' + j] + n);
+}
+function claimMission(j) {
+  const k = missionKinds[j];
+  if ((save.mclaim & (1 << j)) || save['mp' + j] < MISSION_TARGET[k]) return;
+  save.mclaim |= 1 << j;
+  save.gold += CONFIG.missionReward;
+  if ((save.mclaim & 7) === 7 && !(save.mclaim & 8)) { save.mclaim |= 8; save.gold += CONFIG.missionAllBonus; flash('mAll', 1400); }
+  store.save(save);
+  sfx('coin'); updateGold(); refreshTitle(); renderMissions();
+}
+const MS_ICON = ['🔥', '📋', '⭐', '🍪', '👆', '🍓', '👑', '🪙'];
+const DEC_ICON = ['🧺', '🪴', '💡', '🗄️', '🪧', '🟫', '🍪', '🎈', '🌃', '🏆'];
+const UP_ICON = ['🔥', '🛠️', '📣'];
+function renderMissions() {
+  missionRoll();
+  const box = $('missions');
+  box.textContent = '';
+  const h = document.createElement('div');
+  h.className = 'mh';
+  h.textContent = '📅 ' + T('missions');
+  box.appendChild(h);
+  for (let j = 0; j < 3; j++) {
+    const k = missionKinds[j], row = document.createElement('div');
+    const v = save['mp' + j], tg = MISSION_TARGET[k];
+    const done = v >= tg, got = !!(save.mclaim & (1 << j));
+    row.className = 'ms' + (done ? ' done' : '');
+    row.style.marginTop = '.3rem';
+    row.innerHTML = '<div class="mi">' + MS_ICON[k] + '</div><div class="mb"><div class="mt">' + T('m' + k) + ' <small>' + v + '/' + tg + '</small></div><div class="bar"><i style="width:' + Math.round(100 * v / tg) + '%"></i></div></div>';
+    if (got) { const s = document.createElement('span'); s.className = 'ok'; s.textContent = '✔'; row.appendChild(s); }
+    else if (done) { const b = document.createElement('button'); b.className = 'btn big'; b.textContent = '🪙 ' + CONFIG.missionReward; b.addEventListener('click', () => claimMission(j)); row.appendChild(b); }
+    box.appendChild(row);
+  }
+}
+function rankOf() {
+  const th = [1, 3, 6, 10, 15, 21];
+  let r = 0;
+  for (let i = 0; i < th.length; i++) if (save.plv >= th[i]) r = i;
+  return r;
+}
+function achCheck() {
+  if (save.cookies >= 50) unlockAch(8);
+  if (save.perfects >= 10) unlockAch(9);
+  if ((save.flavors & 15) === 15) unlockAch(10);
+  if ((save.unlocked & 0xffff) === 0xffff) unlockAch(11);
+  if ((save.decor & 1023) === 1023) unlockAch(12);
+  if (save.upOven + save.upTable + save.upPromo >= 6) unlockAch(15);
+}
+const upKeys = ['upOven', 'upTable', 'upPromo'];
+function applyUpgrades() {
+  const B = CONFIG.bake;
+  B.zoneMin = B.baseMin - save.upOven * B.zoneStep;
+  B.zoneMax = B.baseMax + save.upOven * B.zoneStep;
+  CONFIG.dough.tearRatio = 4.6 + save.upTable * CONFIG.tearStep;
+}
+function buyUp(i) {
+  const lv = save[upKeys[i]];
+  if (lv >= CONFIG.upMax) return;
+  const c = CONFIG.upCost[lv];
+  if (save.gold < c) { flash('cantBuy'); sfx('fail'); return; }
+  save.gold -= c; save[upKeys[i]]++;
+  store.save(save);
+  applyUpgrades(); renderShop(); updateGold(); sfx('coin'); achCheck();
+}
+
+function adoptSave(d) {
+  d.settings = SET;
+  save = d;
+  G.revived = false;
+  decorApply(); applyUpgrades(); missionRoll();
+  applySettings(); refreshTexts(); renderMissions();
+}
+function openSlots() {
+  G.screen = 'slots';
+  show('intro', false); show('title', false); show('slots', true);
+  renderSlots();
+}
+function fmtDate(t) {
+  if (!t) return '';
+  const d = new Date(t);
+  return d.getFullYear() + '.' + (d.getMonth() + 1) + '.' + d.getDate();
+}
+function renderSlots() {
+  const box = $('slotList');
+  box.textContent = '';
+  const RI = ['🥄', '🥐', '🍪', '🎂', '🏆', '👑'];
+  for (let i = 0; i < 3; i++) {
+    const d = store.readSlot(i), row = document.createElement('div');
+    row.className = 'slot' + (d ? '' : ' empty');
+    row.setAttribute('role', 'button');
+    if (d) {
+      const ri = Math.min(5, [1, 3, 6, 10, 15, 21].filter((v) => d.plv >= v).length - 1);
+      row.innerHTML = '<div class="av">' + RI[ri] + '</div><div class="si"><b>' + T('rank' + ri) + '</b> · Lv' + d.plv + '<div class="chips"><span>🪙 ' + d.gold + '</span><span>📋 ' + d.level + '</span><span>🏆 ' + countBits(d.ach) + '/16</span>' + (d.played ? '<span>🕒 ' + fmtDate(d.played) + '</span>' : '') + '</div></div>';
+      const b = document.createElement('button');
+      b.className = 'btn sd io'; b.setAttribute('data-ic', 'trash');
+      b.setAttribute('aria-label', T('slotDel'));
+      b.addEventListener('click', (e) => { e.stopPropagation(); showDialog(T('slotDelAsk'), false, T('yes'), T('no'), () => { store.deleteSlot(i); renderSlots(); }); });
+      row.appendChild(b);
+    } else {
+      row.innerHTML = '<div class="av">＋</div><div class="si"><b>' + T('slotEmpty') + '</b><small>' + T('slotNew') + '</small></div>';
+    }
+    row.addEventListener('click', () => selectSlot(i));
+    box.appendChild(row);
+  }
+}
+function selectSlot(i) {
+  sfx('click');
+  const d = store.readSlot(i) || store.fresh();
+  store.slot = i;
+  adoptSave(d);
+  store.save(save);
+  G.screen = 'title';
+  show('slots', false); show('title', true);
+  refreshTitle();
+}
+$('bSlotBack').addEventListener('click', () => { sfx('click'); G.screen = 'intro'; show('slots', false); show('intro', true); });
+$('bSlotChg').addEventListener('click', () => { sfx('click'); store.slot = -1; show('title', false); openSlots(); });
+Object.assign(LANG.ko, {
+  rushBtn: '⚡ 60초 챌린지', rushSub: '세이브 없이 바로 시작', rushGo: 'GO!', rushPerfect: 'PERFECT +2초', rushMiss: 'MISS',
+  rushT: '60초 챌린지', rushScore: '점', rushStat: '쿠키 {c}개 · 최고 콤보 x{m} · 퍼펙트 {p}',
+  rushShare: '📤 친구에게 공유', rushCard: '🖼 카드 저장', rushLink: '🔗 링크 복사', rushAgain: '🔁 다시 도전', rushHome: '처음으로',
+  rushName: '이름 (카드에 표시)', rushBest: '내 최고 기록', rushNew: '신기록!',
+  rank0: '견습생', rank1: '반죽 숙련자', rank2: '쫀득 장인', rank3: '쿠키 마스터', rank4: '전설의 제빵사', rank5: '전설의 제빵사',
+  rushRank0: '견습생', rushRank1: '반죽 숙련자', rushRank2: '쫀득 장인', rushRank3: '쿠키 마스터', rushRank4: '전설의 제빵사',
+  chalBanner: '{n}님이 {s}점을 기록했습니다. 넘어보세요.', chalWin: '{n}님의 {s}점을 넘었습니다', chalLose: '{n}님의 {s}점까지 {d}점 남았습니다', chalFriend: '친구',
+  shareText: '쫀득 쿠키 가게 60초 챌린지 {s}점. 이 기록, 넘을 수 있나요?', cardLine: '이 기록, 넘을 수 있나요?', cardTag: '친구 한 명을 태그해 보세요', cardEye: '60 SECOND CHALLENGE',
+  combo: 'COMBO'
+});
+Object.assign(LANG.en, {
+  rushBtn: '⚡ 60-second challenge', rushSub: 'No save needed. Start now.', rushGo: 'GO!', rushPerfect: 'PERFECT +2s', rushMiss: 'MISS',
+  rushT: '60-Second Challenge', rushScore: 'pts', rushStat: '{c} cookies · best combo x{m} · {p} perfect',
+  rushShare: '📤 Share with a friend', rushCard: '🖼 Save card', rushLink: '🔗 Copy link', rushAgain: '🔁 Try again', rushHome: 'Home',
+  rushName: 'Name (shown on card)', rushBest: 'Personal best', rushNew: 'New record!',
+  rank0: 'Apprentice', rank1: 'Dough Adept', rank2: 'Chewy Artisan', rank3: 'Cookie Master', rank4: 'Legendary Baker', rank5: 'Legendary Baker',
+  rushRank0: 'Apprentice', rushRank1: 'Dough Adept', rushRank2: 'Chewy Artisan', rushRank3: 'Cookie Master', rushRank4: 'Legendary Baker',
+  chalBanner: '{n} scored {s}. Beat it.', chalWin: 'You beat {n}\'s {s}', chalLose: '{d} points short of {n}\'s {s}', chalFriend: 'A friend',
+  shareText: 'Chewy Cookie Shop 60-second challenge: {s} pts. Can you beat it?', cardLine: 'Can you beat this?', cardTag: 'Tag a friend who can beat it', cardEye: '60 SECOND CHALLENGE',
+  combo: 'COMBO'
+});
+
+Object.assign(LANG.ko, {
+  rushBtn: '⚡ 60초 쿠키 성향 테스트', rushSub: '60초면 나옵니다. 당신은 어떤 제빵사인가요?',
+  cardEye: '60 SECOND COOKIE TEST', cardLine: '이 유형, 누가 떠오르나요?', cardMy: '나의 쿠키 성향은',
+  rushStory: '📱 스토리 카드', chalType: '{n}님은 「{t}」 유형입니다. 당신은?',
+  shareText: '나는 「{t}」 유형 {e} {l} (60초 쿠키 성향 테스트 {s}점) 당신은?',
+  ty0n: '반죽 파괴자', ty0l: '늘리라고 했지 끊으라고는 안 했습니다.', ty0t: '일단 당기고 보는 친구를 태그하세요',
+  ty1n: '불꽃 도전자', ty1l: '"조금만 더"가 인생 모토. 오븐이 먼저 포기합니다.', ty1t: '"조금만 더"를 입에 달고 사는 친구를 태그하세요',
+  ty2n: '생반죽 신중파', ty2l: '불안해서 일찍 꺼냅니다. 속은 모르는 일입니다.', ty2t: '결정을 미루다 일찍 포기하는 친구를 태그하세요',
+  ty3n: '콤보 머신', ty3l: '한번 리듬을 타면 멈추지 않습니다. 오븐이 못 따라옵니다.', ty3t: '시작하면 끝까지 가는 친구를 태그하세요',
+  ty4n: '완벽주의 장인', ty4l: '쿠키 한 개에 인생을 겁니다. 손님은 기다리다 지칩니다.', ty4t: '디테일에 목숨 거는 친구를 태그하세요',
+  ty5n: '속도광', ty5l: '일단 굽고 생각합니다. 품질은 오븐이 알아서 합니다.', ty5t: '언제나 빨리빨리인 친구를 태그하세요',
+  ty6n: '토핑 중독자', ty6l: '쿠키보다 토핑이 주인공입니다. 반죽은 조연입니다.', ty6t: '뭐든 얹고 보는 친구를 태그하세요',
+  ty7n: '느긋한 힐러', ty7l: '서두르지 않습니다. 반죽도 그 점을 알아봅니다.', ty7t: '여유로운 친구를 태그하세요'
+});
+Object.assign(LANG.en, {
+  rushBtn: '⚡ 60-second cookie type test', rushSub: 'Takes 60 seconds. What kind of baker are you?',
+  cardEye: '60 SECOND COOKIE TEST', cardLine: 'Who does this remind you of?', cardMy: 'My cookie type is',
+  rushStory: '📱 Story card', chalType: '{n} is "{t}". What about you?',
+  shareText: 'I am "{t}" {e} {l} (60-second cookie test, {s} pts) What are you?',
+  ty0n: 'Dough Destroyer', ty0l: 'I said stretch it, not snap it.', ty0t: 'Tag the friend who pulls first and thinks later',
+  ty1n: 'Flame Chaser', ty1l: '"Just a bit longer" is the motto. The oven gives up first.', ty1t: 'Tag the friend who always says "just a bit longer"',
+  ty2n: 'Cautious Underbaker', ty2l: 'Takes it out early out of nerves. What is inside stays unknown.', ty2t: 'Tag the friend who quits early to be safe',
+  ty3n: 'Combo Machine', ty3l: 'Once in rhythm, unstoppable. The oven cannot keep up.', ty3t: 'Tag the friend who never stops once started',
+  ty4n: 'Perfectionist Artisan', ty4l: 'Bets a life on one cookie. Customers wait forever.', ty4t: 'Tag the friend obsessed with details',
+  ty5n: 'Speed Demon', ty5l: 'Bake first, think later. The oven handles quality.', ty5t: 'Tag the friend who is always in a rush',
+  ty6n: 'Topping Addict', ty6l: 'The topping is the star. The dough is a supporting role.', ty6t: 'Tag the friend who puts something on everything',
+  ty7n: 'Easygoing Healer', ty7l: 'In no hurry. The dough notices.', ty7t: 'Tag the most relaxed friend you know'
+});
+Object.assign(LANG.ko, { rushBtn: '60초 쿠키 성향 테스트', rushShare: '친구에게 공유', rushCard: '카드 저장', rushStory: '스토리', rushLink: '링크 복사', rushAgain: '다시 도전', rushHome: '처음으로' });
+Object.assign(LANG.en, { rushBtn: '60-second cookie type test', rushShare: 'Share with a friend', rushCard: 'Save card', rushStory: 'Story', rushLink: 'Copy link', rushAgain: 'Try again', rushHome: 'Home' });
+Object.assign(LANG.ko, { secDecor: '인테리어', secUp: '장비 업그레이드' });
+Object.assign(LANG.en, { secDecor: 'Decor', secUp: 'Upgrades' });
+const TY_EMOJI = ['💥', '🔥', '🧊', '⚡', '🎯', '🏃', '🍫', '🌿'];
+const TY_COLOR = ['#ff7a5c', '#ff9a3c', '#8fd3ff', '#ffe45e', '#9be07a', '#ffb04a', '#c58a5a', '#a8e6a1'];
+function rushType(R) {
+  const avg = R.cookies ? R.sum / R.cookies : 0;
+  if (R.torn >= 3) return 0;
+  if (R.burnt >= 2) return 1;
+  if (R.raw >= 2) return 2;
+  if (R.maxCombo >= 6) return 3;
+  if (avg >= 88 && R.cookies >= 3) return 4;
+  if (R.cookies >= 9) return 5;
+  if (R.cookies && R.top / R.cookies >= 0.5) return 6;
+  return 7;
+}
+const RUSH = { time: 60, bonus: 2, serve: 0.75, baseBake: CONFIG.bake.time };
+const rushKey = CONFIG.saveKey + '_rush';
+const chalParams = new URLSearchParams(location.search);
+const chalT = parseInt(chalParams.get('t'), 10);
+const chal = { s: Math.max(0, parseInt(chalParams.get('c'), 10) || 0), n: (chalParams.get('n') || '').slice(0, 12), t: chalT >= 0 && chalT < 8 ? chalT : -1 };
+function fmt(k, o) { let s = T(k); for (const p in o) s = s.split('{' + p + '}').join(o[p]); return s; }
+function rushData() {
+  const d = store.read(rushKey);
+  return d && typeof d.best === 'number' ? d : { best: 0, name: '' };
+}
+function flashRaw(text, ms) {
+  const el = $('toast');
+  el.textContent = text;
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), ms || 900);
+}
+function comboPop(text, big) {
+  const el = $('comboPop');
+  el.textContent = text;
+  el.classList.toggle('big', !!big);
+  el.classList.remove('go');
+  void el.offsetWidth;
+  el.classList.add('go');
+}
+function rushRankIdx(s) { return s < 400 ? 0 : s < 900 ? 1 : s < 1400 ? 2 : s < 2000 ? 3 : 4; }
+function rushOrder() {
+  const first = G.rush.n === 0;
+  const shape = first ? 0 : Math.floor(Math.random() * 10);
+  const top = first ? 0 : (Math.random() < 0.4 ? 1 + Math.floor(Math.random() * 3) : 0);
+  G.rush.n++;
+  return { level: 0, daily: false, big: false, vip: false, items: [{ shape, thick: 'normal', top, flavor: 0 }], cust: Math.floor(Math.random() * CUST.length), limit: 30 };
+}
+function updateRushHud() {
+  const R = G.rush;
+  $('rScore').textContent = R.score;
+  $('rCombo').textContent = R.combo >= 2 ? 'x' + R.combo + ' ' + T('combo') : '';
+}
+function startRush() {
+  sfx('click');
+  const d = store.fresh();
+  d.unlocked = 1023; d.tops = 15; d.flavors = 1; d.firstDone = true;
+  store.slot = -1;
+  adoptSave(d);
+  CONFIG.bake.time = RUSH.baseBake * 0.62;
+  G.rush = { left: RUSH.time, score: 0, combo: 0, maxCombo: 0, n: 0, cookies: 0, perfects: 0, sec: -1, raw: 0, burnt: 0, torn: 0, top: 0, sum: 0, type: 7 };
+  G.daily = false;
+  G.order = rushOrder();
+  G.item = 0; G.results.length = 0; G.t = 0; G.tSec = -1;
+  wakeOn();
+  custSet(G.order.cust);
+  G.screen = 'play';
+  show('intro', false); show('title', false); show('slots', false); show('result', false); show('pause', false); show('shop', false); show('rush', false);
+  show('top', true); show('bot', true); show('rushHud', true);
+  $('say').textContent = sayOf(G.order);
+  $('tmr').textContent = '⏱ ' + RUSH.time;
+  updateRushHud();
+  beginItem();
+  flashRaw(T('rushGo'), 900);
+  comboPop(T('rushGo'), true);
+}
+function rushNext() {
+  G.order = rushOrder();
+  G.item = 0; G.results.length = 0;
+  custSet(G.order.cust);
+  $('say').textContent = sayOf(G.order);
+  beginItem();
+}
+function rushTick(dt) {
+  const R = G.rush;
+  R.left -= dt;
+  const sec = Math.max(0, Math.ceil(R.left));
+  if (sec !== R.sec) {
+    R.sec = sec;
+    $('tmr').textContent = '⏱ ' + sec;
+    $('tmr').classList.toggle('warn', sec <= 10);
+    if (sec <= 5 && sec > 0) sfx('click');
+  }
+  if (R.left <= 0) rushEnd();
+}
+function rushFinalize(p) {
+  const B = CONFIG.bake, it = G.order.items[0], R = G.rush;
+  const r = orderThick[it.thick], th = G.thickAvg;
+  const dist = th < r[0] ? r[0] - th : th > r[1] ? th - r[1] : 0;
+  const thScore = clamp(1 - dist / 0.12, 0, 1);
+  const topOk = it.top ? (G.top === it.top ? 1 : 0.6) : (G.top ? 0.85 : 1);
+  const acc = clamp(G.cover, 0, 1) * (G.ci === it.shape ? 1 : 0.35) * topOk;
+  const fin = 0.5 * thScore + 0.5 * bakeScore(p);
+  const s = Math.round(100 * (0.5 * acc + 0.5 * fin));
+  const perfect = p >= B.zoneMin && p <= B.zoneMax;
+  const good = s >= 70;
+  if (p < B.zoneMin) R.raw++;
+  if (p > B.burn) R.burnt++;
+  if (G.top) R.top++;
+  R.sum += s;
+  R.combo = good ? R.combo + 1 : 0;
+  if (R.combo > R.maxCombo) R.maxCombo = R.combo;
+  const mult = R.combo > 1 ? Math.min(3, 1 + 0.25 * (R.combo - 1)) : 1;
+  const pts = Math.round(s * mult);
+  R.score += pts; R.cookies++;
+  if (perfect) { R.perfects++; R.left += RUSH.bonus; }
+  G.results.push({ acc, fin, perfect });
+  if (good) {
+    sfx('ding'); if (R.combo >= 3) sfx('win'); sfx('coin');
+    comboPop('+' + pts + (R.combo >= 2 ? '\nx' + R.combo + ' ' + T('combo') : ''), R.combo >= 3);
+    if (R.combo >= 3) doShake(CONFIG.shake.stamp * 1.4);
+  } else { sfx('fail'); comboPop(T('rushMiss'), false); }
+  if (perfect) setTimeout(() => flashRaw(T('rushPerfect'), 700), 350);
+  setPhase('serve');
+  G.serveT = 0;
+  burst(G.sx, 0.5, G.sz, 16 + Math.min(R.combo, 10) * 5, good ? 0xffd54a : 0xc9a27a);
+  updateRushHud();
+}
+function rushEnd() {
+  const R = G.rush;
+  if (!R || G.screen === 'result') return;
+  G.screen = 'result';
+  setSizzle(false); releaseAll();
+  $('tmr').classList.remove('warn');
+  const d = rushData();
+  const isNew = R.score > d.best;
+  if (isNew) d.best = R.score;
+  const nameEl = $('rkName');
+  if (!nameEl.value) nameEl.value = d.name || '';
+  store.write(rushKey, d);
+  const ri = rushRankIdx(R.score);
+  R.type = rushType(R);
+  $('rkTitle').textContent = T('cardMy');
+  $('rkType').innerHTML = '<span class="tb" style="--c:' + TY_COLOR[R.type] + '">' + TY_EMOJI[R.type] + '</span><span class="tn">' + T('ty' + R.type + 'n') + '</span>';
+  $('rkType').style.color = TY_COLOR[R.type];
+  $('rkLine').textContent = T('ty' + R.type + 'l');
+  $('rkRank').textContent = R.score + ' ' + T('rushScore') + ' · ' + T('rushRank' + ri);
+  $('rkStats').innerHTML = '<span>🍪 ' + R.cookies + '</span><span>⚡ x' + R.maxCombo + '</span><span>🔥 ' + R.perfects + '</span><span>🏅 ' + R.score + '</span>';
+  let vs = (isNew ? '🎉 ' + T('rushNew') + ' · ' : '') + T('rushBest') + ' ' + d.best;
+  if (chal.s) {
+    const n = chal.n || T('chalFriend');
+    vs += '\n' + (R.score > chal.s ? '🏆 ' + fmt('chalWin', { n, s: chal.s }) : fmt('chalLose', { n, s: chal.s, d: chal.s - R.score + 1 }));
+  }
+  $('rkVs').textContent = vs;
+  show('top', false); show('bot', false); show('rushHud', false); show('rush', true);
+  sfx(ri >= 2 ? 'win' : 'ding');
+  burst(0, 1, -1.5, 36, 0xffd54a);
+  vib([30, 40, 30]);
+}
+function rushStop() {
+  G.rush = null;
+  CONFIG.bake.time = RUSH.baseBake;
+  $('tmr').classList.remove('warn');
+  show('rushHud', false); show('rush', false);
+}
+function backToCover() {
+  rushStop();
+  G.screen = 'intro';
+  show('top', false); show('bot', false); show('result', false); show('pause', false); show('adOffer', false);
+  show('title', false); show('slots', false); show('intro', true);
+  setPhase('pull'); setSizzle(false); releaseAll();
+  refreshTexts();
+}
+function chalUrl() {
+  const d = rushData(), n = ($('rkName').value || d.name || '').trim().slice(0, 12);
+  const u = new URL(location.href);
+  u.search = '';
+  u.hash = '';
+  u.searchParams.set('c', G.rush ? G.rush.score : 0);
+  if (G.rush) u.searchParams.set('t', G.rush.type);
+  if (n) u.searchParams.set('n', n);
+  return u.toString();
+}
+function saveRushName() {
+  const d = rushData();
+  d.name = $('rkName').value.trim().slice(0, 12);
+  store.write(rushKey, d);
+}
+function wrapLines(g, text, maxW) {
+  const words = text.split(' '), lines = [];
+  let cur = '';
+  for (const w of words) {
+    const t = cur ? cur + ' ' + w : w;
+    if (g.measureText(t).width > maxW && cur) { lines.push(cur); cur = w; } else cur = t;
+  }
+  if (cur) lines.push(cur);
+  return lines;
+}
+function cardCanvas(H) {
+  H = H || 1350;
+  const R = G.rush, W = 1080, oy = (H - 1350) / 2, ty = R.type, col = TY_COLOR[ty], c = document.createElement('canvas');
+  c.width = W; c.height = H;
+  const g = c.getContext('2d');
+  const bg = g.createLinearGradient(0, 0, 0, H);
+  bg.addColorStop(0, '#24110a'); bg.addColorStop(1, '#7a3a1c');
+  g.fillStyle = bg; g.fillRect(0, 0, W, H);
+  const rg = g.createRadialGradient(W / 2, 520 + oy, 40, W / 2, 520 + oy, 620);
+  rg.addColorStop(0, col + '88'); rg.addColorStop(1, col + '00');
+  g.fillStyle = rg; g.fillRect(0, 0, W, H);
+  g.textAlign = 'center'; g.textBaseline = 'middle';
+  const font = (px, w) => { g.font = (w || 800) + ' ' + px + 'px system-ui,-apple-system,"Apple SD Gothic Neo","Noto Sans KR",sans-serif'; };
+  g.fillStyle = 'rgba(255,227,176,0.85)'; font(32, 700);
+  g.fillText(T('cardEye').split('').join(' '), W / 2, 110 + oy);
+  g.fillStyle = '#ffe3b0'; font(64, 900);
+  g.fillText(T('title'), W / 2, 185 + oy);
+  g.fillStyle = 'rgba(255,243,223,0.8)'; font(44, 700);
+  g.fillText(T('cardMy'), W / 2, 310 + oy);
+  font(230, 400); g.fillStyle = '#fff';
+  g.fillText(TY_EMOJI[ty], W / 2, 455 + oy);
+  g.shadowColor = col; g.shadowBlur = 50;
+  g.fillStyle = '#fff3df'; font(T('ty' + ty + 'n').length > 7 ? 104 : 130, 900);
+  g.fillText(T('ty' + ty + 'n'), W / 2, 685 + oy);
+  g.shadowBlur = 0;
+  font(46, 700); g.fillStyle = 'rgba(255,243,223,0.95)';
+  const lines = wrapLines(g, T('ty' + ty + 'l'), 880);
+  lines.slice(0, 3).forEach((l, i) => g.fillText(l, W / 2, 810 + oy + i * 64));
+  g.fillStyle = col; font(58, 900);
+  g.fillText(R.score + ' ' + T('rushScore') + ' · ' + T('rushRank' + rushRankIdx(R.score)), W / 2, 985 + oy);
+  font(34, 700); g.fillStyle = 'rgba(255,243,223,0.75)';
+  g.fillText(fmt('rushStat', { c: R.cookies, m: R.maxCombo, p: R.perfects }), W / 2, 1050 + oy);
+  const nm = ($('rkName').value || '').trim();
+  if (nm) { font(38, 700); g.fillStyle = '#ffd08a'; g.fillText(nm, W / 2, 1110 + oy); }
+  g.fillStyle = '#ffe3b0'; font(60, 900);
+  g.fillText(T('cardLine'), W / 2, 1185 + oy);
+  g.fillStyle = col; font(40, 800);
+  const tl = wrapLines(g, T('ty' + ty + 't'), 900);
+  tl.slice(0, 2).forEach((l, i) => g.fillText(l, W / 2, 1250 + oy + i * 52));
+  font(28, 600); g.fillStyle = 'rgba(255,243,223,0.5)';
+  g.fillText(location.host + location.pathname.replace(/index\.html$/, ''), W / 2, 1325 + oy);
+  return c;
+}
+function cardBlob(h) { return new Promise((res) => cardCanvas(h).toBlob(res, 'image/png')); }
+function copyText(t) {
+  try { navigator.clipboard.writeText(t); } catch (e) {
+    const ta = document.createElement('textarea');
+    ta.value = t; document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); } catch (e2) {}
+    ta.remove();
+  }
+  flashRaw(T('copied'), 900);
+}
+function shareText() {
+  const R = G.rush;
+  return fmt('shareText', { t: T('ty' + R.type + 'n'), e: TY_EMOJI[R.type], l: T('ty' + R.type + 'l'), s: R.score }) + ' ' + T('ty' + R.type + 't') + ' ' + chalUrl();
+}
+async function downloadCard(fmtKey) {
+  const blob = await cardBlob(fmtKey === 'story' ? 1920 : 1350);
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'chewy-cookie-' + (G.rush ? G.rush.score : 0) + '.png';
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+}
+async function shareRush() {
+  const text = shareText();
+  try {
+    if (navigator.share) {
+      const blob = await cardBlob();
+      const file = new File([blob], 'chewy-cookie-challenge.png', { type: 'image/png' });
+      if (navigator.canShare && navigator.canShare({ files: [file] })) { await navigator.share({ files: [file], text }); return; }
+      await navigator.share({ text });
+      return;
+    }
+  } catch (e) { if (e && e.name === 'AbortError') return; }
+  copyText(text);
+  downloadCard();
+}
+$('bRush').addEventListener('click', startRush);
+$('bRush2').addEventListener('click', startRush);
+$('bRushAgain').addEventListener('click', startRush);
+$('bRushHome').addEventListener('click', () => { sfx('click'); backToCover(); });
+$('bShare').addEventListener('click', shareRush);
+$('bCard').addEventListener('click', () => downloadCard('feed'));
+$('bStory').addEventListener('click', () => downloadCard('story'));
+$('bLink').addEventListener('click', () => copyText(shareText()));
+$('rkName').addEventListener('change', saveRushName);
 
 Object.assign(LANG.ko, {
   settings: '설정', sMaster: '마스터 볼륨', sBgm: 'BGM 볼륨', sSfx: '효과음 볼륨', sVib: '진동', sQual: '그래픽 품질', sFps: '프레임 제한', sRes: '해상도 스케일',
@@ -1422,9 +2245,9 @@ Object.assign(LANG.ko, {
   sExport: '세이브 내보내기', sImport: '세이브 가져오기', sReset: '데이터 초기화', sClose: '닫기', on: '켜짐', off: '꺼짐', qLow: '낮음', qMid: '보통', qHigh: '높음', qAuto: '자동',
   f30: '30', f60: '60', fAuto: '자동', posL: '왼쪽', posR: '오른쪽', noVib: '이 기기는 진동을 지원하지 않아요',
   kPause: '일시정지', kAct: '확인/찍기/꺼내기', kKnead: '다시 뭉치기', kTop: '토핑 바꾸기', kFs: '전체화면', kPhoto: '촬영 모드', kHelp: '단축키 안내',
-  pressKey: '키를 눌러줘...', resetAsk: '정말 다 지울 거야? 되돌릴 수 없어 ㅋㅋ', yes: '지울래', no: '아니야', copied: '복사했어!', importOk: '가져왔어!', importBad: '세이브가 이상해 ㅋㅋ', importGo: '가져오기', copy: '복사',
-  slow: '슬로모션', angle: '앵글', exit: '나가기', errTitle: '앗, 오류가 났어 ㅋㅋ', restart: '다시 시작', helpBody: '마우스/터치: 반죽 당기기 · 틀 위치 잡기\n멀티터치: 두 손가락 동시 당기기\n1~0: 틀 선택 · 마우스 휠 없음',
-  recovered: '반죽이 너무 끊겨서 다시 뭉쳤어!', dbgGold: '+골드', dbgNext: '다음 주문', dbgGod: '무적', dbgBig: '대형 주문', dbgAll: '전부 해금'
+  pressKey: '키를 누르세요…', resetAsk: '현재 슬롯의 진행 상황이 모두 삭제됩니다. 되돌릴 수 없습니다.', yes: '삭제', no: '취소', copied: '복사했습니다', importOk: '가져왔습니다', importBad: '세이브 데이터가 올바르지 않습니다', importGo: '가져오기', copy: '복사',
+  slow: '슬로모션', angle: '앵글', exit: '나가기', errTitle: '오류가 발생했습니다', restart: '다시 시작', helpBody: '마우스/터치: 반죽 당기기 · 틀 위치 잡기\n멀티터치: 두 손가락 동시 당기기\n1~0: 틀 선택 · 마우스 휠 없음',
+  recovered: '반죽이 심하게 끊겨 다시 뭉쳤습니다', dbgGold: '+골드', dbgNext: '다음 주문', dbgGod: '무적', dbgBig: '대형 주문', dbgAll: '전부 해금'
 });
 Object.assign(LANG.en, {
   settings: 'Settings', sMaster: 'Master volume', sBgm: 'BGM volume', sSfx: 'SFX volume', sVib: 'Vibration', sQual: 'Graphics quality', sFps: 'Frame cap', sRes: 'Resolution scale',
@@ -1433,9 +2256,9 @@ Object.assign(LANG.en, {
   sExport: 'Export save', sImport: 'Import save', sReset: 'Reset data', sClose: 'Close', on: 'On', off: 'Off', qLow: 'Low', qMid: 'Medium', qHigh: 'High', qAuto: 'Auto',
   f30: '30', f60: '60', fAuto: 'Auto', posL: 'Left', posR: 'Right', noVib: 'This device has no vibration',
   kPause: 'Pause', kAct: 'Confirm/Stamp/Take out', kKnead: 'Knead again', kTop: 'Next topping', kFs: 'Fullscreen', kPhoto: 'Photo mode', kHelp: 'Shortcuts',
-  pressKey: 'Press a key...', resetAsk: 'Erase everything? This cannot be undone lol', yes: 'Erase', no: 'No', copied: 'Copied!', importOk: 'Imported!', importBad: 'Bad save data lol', importGo: 'Import', copy: 'Copy',
-  slow: 'Slow-mo', angle: 'Angle', exit: 'Exit', errTitle: 'Oops, an error happened lol', restart: 'Restart', helpBody: 'Mouse/touch: pull dough, place cutter\nMulti-touch: pull with two fingers\n1-0: pick cutter',
-  recovered: 'Dough was too torn, kneaded again!', dbgGold: '+Gold', dbgNext: 'Next order', dbgGod: 'God', dbgBig: 'Big order', dbgAll: 'Unlock all'
+  pressKey: 'Press a key…', resetAsk: 'This slot will be erased. This cannot be undone.', yes: 'Erase', no: 'No', copied: 'Copied', importOk: 'Imported', importBad: 'Invalid save data', importGo: 'Import', copy: 'Copy',
+  slow: 'Slow-mo', angle: 'Angle', exit: 'Exit', errTitle: 'An error occurred', restart: 'Restart', helpBody: 'Mouse/touch: pull dough, place cutter\nMulti-touch: pull with two fingers\n1-0: pick cutter',
+  recovered: 'The dough was torn apart and has been kneaded again', dbgGold: '+Gold', dbgNext: 'Next order', dbgGod: 'God', dbgBig: 'Big order', dbgAll: 'Unlock all'
 });
 let SET = save.settings;
 const KB = SET.keys;
@@ -1774,7 +2597,8 @@ function update(dt) {
     }
     if (steps === CONFIG.maxSteps) acc = 0;
     joyUpdate(dt); recoverCheck(dt);
-    if (G.phase !== 'serve' && G.phase !== 'ad') {
+    if (G.rush) { if (G.phase !== 'ad') rushTick(dt); }
+    else if (G.phase !== 'serve' && G.phase !== 'ad') {
       G.t += dt;
       const sec = Math.floor(G.t);
       if (sec !== G.tSec) { G.tSec = sec; $('tmr').textContent = '⏱ ' + sec; }
@@ -1801,8 +2625,9 @@ function update(dt) {
       setSizzle(false);
       G.serveT += dt;
       cookie.rotation.y += dt * 2;
-      if (G.serveT > 1.8) {
-        if (G.item + 1 < G.order.items.length) { G.item++; beginItem(); flash('item', 600); }
+      if (G.serveT > (G.rush ? RUSH.serve : 1.8)) {
+        if (G.rush) rushNext();
+        else if (G.item + 1 < G.order.items.length) { G.item++; beginItem(); flash('item', 600); }
         else showResult();
       }
     }
@@ -1854,10 +2679,10 @@ selectCutter(0);
 setPhase('pull');
 G.screen = 'intro';
 show('intro', true);
-setTimeout(endIntro, 2600);
 requestAnimationFrame(frame);
 window.__G = G;
-window.__game = { SET: () => SET, photo, setPhoto, openSettings, cookie, camera, THREE, G, CONFIG, cutters, save: () => save, doughStep, primary, startGame, pauseGame, resumeGame, view, renderer, dstat, beginGrab, slots, takeOut, showRewardAd, endIntro, decorApply, unlockAch };
+window.__game = { SET: () => SET, photo, setPhoto, openSettings, cookie, camera, THREE, G, CONFIG, cutters, save: () => save, doughStep, primary, startGame, pauseGame, resumeGame, view, renderer, dstat, beginGrab, slots, takeOut, showRewardAd, endIntro, decorApply, unlockAch, openSlots, selectSlot, startRush, rushEnd, rushRankIdx, store, missionAdd, renderMissions, applyUpgrades, flavorUnlockAt, topUnlockAt, cutUnlockAt, achCheck, makeOrder };
+
 </script>
 </body>
 </html>
